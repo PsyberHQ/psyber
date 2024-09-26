@@ -8,7 +8,7 @@ const Section1 = () => {
         src="/homeSection1Bg.jpeg"
         alt="Logo"
         layout="fill"
-        className="absolute -z-10 object-fill opacity-50"
+        className="absolute -z-10 object-fill opacity-40"
       />
       <div className="w-full h-fit grid grid-cols-2 gap-[30px]">
         <div className="flex flex-col justify-center items-start">
