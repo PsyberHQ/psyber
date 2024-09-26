@@ -34,7 +34,7 @@ const Section3 = () => {
 
         <div className="m-auto">
           <Link href="/">
-            <button className="bg-[#BA68C8] m-auto w-[212px] h-[54px] text-[20px] rounded-[42px] text-white font-semibold  px-[14px] ">
+            <button className="bg-brand-button-purple m-auto w-[212px] h-[54px] text-[20px] rounded-[42px] text-white font-semibold  px-[14px] ">
               Start learning
             </button>
           </Link>

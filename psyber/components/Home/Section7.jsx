@@ -46,7 +46,7 @@ const Section7 = () => {
 
       <div className="m-auto w-fit">
         <Link href="/">
-          <button className="bg-[#BA68C8] m-auto w-fit h-[54px] text-[18px] rounded-[42px] text-white font-[700]  px-[22px] ">
+          <button className="bg-brand-button-purple m-auto w-fit h-[54px] text-[18px] rounded-[42px] text-white font-[700]  px-[22px] ">
             Join our community
           </button>
         </Link>

@@ -22,7 +22,7 @@ const Section8 = () => {
           </p>
 
           <Link href="/">
-            <button className="bg-[#BA68C8] m-auto w-fit h-[54px] text-[18px] rounded-[42px] text-white font-[700]  px-[22px] ">
+            <button className="bg-brand-button-purple m-auto w-fit h-[54px] text-[18px] rounded-[42px] text-white font-[700]  px-[22px] ">
               Sign up for early access
             </button>
           </Link>

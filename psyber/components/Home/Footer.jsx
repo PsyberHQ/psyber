@@ -75,7 +75,7 @@ const Footer = () => {
               placeholder="Enter your email"
               className="outline-none pl-2"
             />
-            <button className="bg-[#BA68C8] hover:bg-[#933ba3] w-[90px] h-[40px] md:text-[18px] text-[15px] rounded-[42px] text-white font-semibold  px-[2px]">
+            <button className="bg-brand-button-purple hover:bg-[#933ba3] w-[90px] h-[40px] md:text-[18px] text-[15px] rounded-[42px] text-white font-semibold  px-[2px]">
               Join
             </button>
           </div>

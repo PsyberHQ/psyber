@@ -25,7 +25,7 @@ const Section1 = () => {
           <br />
 
           <Link href="/">
-            <button className="bg-[#BA68C8] w-[212px] h-[58px] text-[20px] rounded-[42px] text-white font-semibold  px-4 ">
+            <button className="bg-brand-button-purple w-[212px] h-[58px] text-[20px] rounded-[42px] text-white font-semibold  px-4 ">
               Explore Psyber
             </button>
           </Link>

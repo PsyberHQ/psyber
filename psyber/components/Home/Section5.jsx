@@ -10,7 +10,7 @@ const Section5 = () => {
 
       <div className="m-auto w-fit">
         <Link href="/">
-          <button className="bg-[#BA68C8] m-auto w-[145px] h-[54px] text-[18px] rounded-[42px] text-white font-[700]  px-[14px] ">
+          <button className="bg-brand-button-purple m-auto w-[145px] h-[54px] text-[18px] rounded-[42px] text-white font-[700]  px-[14px] ">
             Get started?
           </button>
         </Link>
