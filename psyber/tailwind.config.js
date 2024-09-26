@@ -9,11 +9,12 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          'darkbrown': '#321C2A',
-          'black': '#000000',
-          'lightgreen': '#E8F5E4',
-          'button-color': '#4E4B49' 
-        }
+          darkbrown: "#321C2A",
+          black: "#000000",
+          lightgreen: "#E8F5E4",
+          "button-color": "#4E4B49",
+          "button-purple": "#BA68C8",
+        },
       },
     },
   },

@@ -41,7 +41,7 @@ const Header = () => {
 
       <div className="flex items-center">
         <Link href="/">
-          <button className="bg-[#BA68C8] w-[154px] h-[40px] text-[14px] rounded-[42px] text-white font-semibold px-4">
+          <button className=" bg-brand-button-purple  text-[14px] rounded-full px-8 py-3 text-white font-semibold ">
             Lets&rsquo;s get started
           </button>
         </Link>
