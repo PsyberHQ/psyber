@@ -2,26 +2,32 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="border-t-[3px] border-neutral-400  py-[30px] md:px-[4vw] px-[3vw]">
-      <div className="flex justify-between gap-[30px] flex-wrap items-start">
-        <div className="w-fit">
-          <Image src="/footerLogo.jpg" alt="Logo" width={140} height={140} />
+    <footer className="border-t-[3px] border-neutral-400 mt-[-17px] py-[30px] md:px-[4vw] px-[3vw]">
+      <div className="flex justify-between md:gap-[30px] gap-[24px] flex-wrap items-start">
+        <div className="">
+          <Image 
+            src="/footerLogo.jpg" 
+            alt="Logo" 
+            width={140} 
+            height={140} 
+            className="h-[60px] md:h-[90px] lg:h-[110px] w-[60px] md:w-[90px] lg:w-[110px]"
+            />
         </div>
 
         <div className="w-[100px]">
-          <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600] mb-[30px]">
+          <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600] sm:mb-[30px] mb-[15px]">
             Why Psyber?
           </p>
-          <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600] mb-[30px]">
+          <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600] sm:mb-[30px] mb-[15px]">
             How It works
           </p>
-          <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600] mb-[30px]">
+          <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600] sm:mb-[30px] mb-[15px]">
             Features
           </p>
         </div>
 
         <div className="w-[100px]">
-          <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600] mb-[30px] ">
+          <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600] sm:mb-[30px] mb-[15px] ">
             Rewards
           </p>
           <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
@@ -30,15 +36,15 @@ const Footer = () => {
         </div>
 
         <div className="w-[110px]">
-          <div className="text-left w-fit flex justify-center gap-2 items-center mb-[20px]">
-            <Image src="/telegram.jpg" alt="Logo" width={28} height={28} />
+          <div className="text-left w-fit flex justify-center gap-2 items-center sm:mb-[20px] mb-[10px]">
+            <Image src="/telegram.jpg" alt="Logo" width={1022} height={1022}  className="size-[28px]"/>
             <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
               Psyber
             </p>
           </div>
 
           <div className="flex justify-center gap-2 items-center">
-            <Image src="/twitter.jpg" alt="Logo" width={20} height={20} />
+            <Image src="/twitter.jpg" alt="Logo" width={1022} height={1022} className="size-[20px]"/>
             <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
               PsyberHQ
             </p>
@@ -46,15 +52,15 @@ const Footer = () => {
         </div>
 
         <div className="w-fit">
-          <div className="text-left w-fit flex justify-center gap-2 items-center mb-[20px]">
-            <Image src="/phone.jpg" alt="Logo" width={22} height={22} />
+          <div className="text-left w-fit flex justify-center gap-2 items-center sm:mb-[20px] mb-[10px]">
+            <Image src="/phone.png" alt="Logo" width={1022} height={1022} className="size-[22px]"/>
             <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
               0987654321
             </p>
           </div>
 
           <div className="flex justify-center gap-2 items-center">
-            <Image src="/envelop.jpeg" alt="Logo" width={20} height={20} />
+            <Image src="/envelop.jpeg" alt="Logo" width={1022} height={1022} className="h-[22px] w-[26px]"/>
             <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
               psyber@psyber
             </p>
@@ -67,7 +73,7 @@ const Footer = () => {
             innovation.
           </p>
 
-          <div className="w-[318px] p-2 rounded-[40px] border-2 border-neutral-500 flex gap-[10px] justify-between items-center">
+          <div className="md:w-[318px] w-[280px] h-[50px] md:h-[55px]  md:p-2 p-[5px] rounded-[40px] border-2 border-neutral-500 flex gap-[10px] justify-between items-center">
             <input
               type="email"
               name=""
