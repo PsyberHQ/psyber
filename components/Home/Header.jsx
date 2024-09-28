@@ -27,15 +27,9 @@ const Header = () => {
         isScrolled && "bg-white shadow-sm"
       }`}
     >
-      <div className="flex items-center">
+      <div className="flex items-center size-16">
         <Link href="/">
-          <Image
-            src="/logo.png"
-            alt="Logo"
-            width={1080}
-            height={720}
-            className="size-16"
-          />
+          <Image src="/logo.png" alt="Logo" width={1080} height={720} />
         </Link>
       </div>
 
