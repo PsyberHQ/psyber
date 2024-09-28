@@ -31,7 +31,14 @@ const Footer = () => {
 
         <div className="w-[110px]">
           <div className="text-left w-fit flex justify-center gap-2 items-center mb-[20px]">
-            <Image src="/telegram.jpg" alt="Logo" width={28} height={28} />
+            <Image
+              src="/telegram.jpg"
+              alt="Logo"
+              width={97}
+              height={97}
+              className="size-[20px]"
+            />
+
             <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
               Psyber
             </p>

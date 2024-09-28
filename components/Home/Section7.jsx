@@ -26,7 +26,13 @@ const Section7 = () => {
         </div>
 
         <div className="h-[140px] w-[370px] p-3 bg-[#D9D9D9] rounded-[50px] flex gap-[20px] justify-between items-center">
-          <Image src="/circleTelegram.png" alt="Logo" width={90} height={90} />
+          <Image
+            src="/circleTelegram.png"
+            alt="Logo"
+            width={1080}
+            height={1090}
+            className="size-[90px]"
+          />
           <p className="text-[14px] leading-[18px] font-[400] text-brand-darkbrown">
             <span className="font-bold">Telegram Community:</span> Join our
             vibrant Telegram groups where you can ask questions, discuss ideas
