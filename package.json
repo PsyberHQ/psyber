@@ -17,8 +17,11 @@
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@types/node": "22.7.4",
-    "@types/react": "18.3.10",
+    "@types/json5": "^2.2.0",
+    "@types/node": "^22.7.4",
+    "@types/react": "^18.3.10",
+    "@types/webidl-conversions": "^7.0.3",
+    "@types/whatwg-url": "^11.0.5",
     "eslint": "^8",
     "eslint-config-next": "14.2.13",
     "postcss": "^8",

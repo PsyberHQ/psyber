@@ -6,7 +6,7 @@ const Section3 = () => {
     <section className="md:px-[4vw] px-[3vw] md:pt-[60px] lg:pt-[70px] pt-[40px]  h-fit md:grid md:grid-cols-2 gap-4 items-center">
       <div className="flex flex-col flex-1 h-full  justify-end">
         <Image
-          src="/sectionThreeImg.jpg"
+          src="/sectionThreeImg.png"
           alt="Logo"
           width={550}
           height={550}
