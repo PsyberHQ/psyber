@@ -24,7 +24,7 @@ const Section1 = () => {
             prioritizing your mental well-being.
           </p>
           <br />
-          <Link href="/">
+          <Link href="/app">
             <button className="button w-[140px] md:w-[212px] h-[40px] md:h-[50px] sm:text-[16px] text-[14px] md:text-[20px] rounded-[32px] md:rounded-[42px] text-white font-semibold md:px-4 px-[10px] ">
               Explore Psyber
             </button>

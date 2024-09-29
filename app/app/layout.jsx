@@ -15,18 +15,13 @@ export default function RootLayout({ children }) {
         </div>
       </nav>
       <div
-        className="min-h-screen bg-cover bg-center"
+        className="min-h-screen fixed inset-0  -z-10 bg-cover bg-center"
         style={{
           backgroundImage: "url('/bg.jpeg')",
         }}
-      >
-        {children}
-      </div>
-      <Footer
-        className="
-         bottom-0 left-0 right-0 bg-white/30
-      "
-      />
+      ></div>
+      <div className="min-h-screen">{children}</div>
+      <Footer />
     </div>
   );
 }
