@@ -40,7 +40,7 @@ const Header = () => {
       </div>
 
 
-     <Link href="/">
+     <Link href="/app">
       <button className="button">
        Let's get started
       </button>

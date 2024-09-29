@@ -40,7 +40,7 @@ const Section3 = () => {
         <br />
 
         <div className="m-auto w-fit">
-          <Link href="/">
+          <Link href="/app">
             <button className="button m-auto md:w-[200px] w-[140px] md:h-[50px] h-[40px] sm:text-[16px] text-[14px] md:text-[20px] rounded-[42px] text-white font-semibold  px-[14px] ">
               Start learning
             </button>
