@@ -79,11 +79,11 @@ const Footer = () => {
 
           <div className="flex justify-center gap-2 items-center">
             <Image
-              src="/envelop.jpeg"
+              src="/envelop.png"
               alt="Logo"
               width={1022}
               height={1022}
-              className="h-[22px] w-[26px]"
+              className="h-[20px] w-[22px]"
             />
             <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
               psyber@psyber
