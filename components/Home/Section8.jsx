@@ -3,8 +3,8 @@ import Link from "next/link";
 
 const Section8 = () => {
   return (
-    <section className="md:px-[4vw] px-[3vw] py md:pt-[40px] h-fit grid md:grid-cols-2 gap-4 items-center">
-      <div className="max-w-[692px]">
+    <section className="md:px-[4vw] px-[3vw] py md:pt-[40px] h-fit md:grid md:grid-cols-10  gap-4 items-center ">
+      <div className="max-w-[692px] col-span-6">
         <h1 className="md:text-[40px] text-2xl font-gloock font-[600] text-brand-darkbrown md:leading-[44px] leading-[31px] sm:text-left text-center">
           What&rsquo;s Next on Your Psyber Journey?
         </h1>
@@ -28,14 +28,15 @@ const Section8 = () => {
           </Link>
         </div>
       </div>
-
-      <Image 
-        src="/girl.png" 
-        alt="Logo" 
-        width={390} 
-        height={390} 
-        className="sm:mt-0 mt-[-20px]"
+      <div className="overflow-hidden md:col-span-4">
+        <Image
+          src="/girl.png"
+          alt="Logo"
+          width={864}
+          height={1230}
+          className="sm:mt-0 object-contain max-md:max-h-[400px] h-[500px] "
         />
+      </div>
     </section>
   );
 };
