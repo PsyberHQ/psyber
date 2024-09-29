@@ -1,7 +1,7 @@
 const Section6 = () => {
   return (
     <section className="md:px-[4vw] px-[3vw] md:py-[50px] pt-[30px] bg-gradient-to-b from-[#F4F4F3] to-white">
-      <h1 className="md:text-[40px] text-2xl md:leading-[47px] leading-[31px] sm:w-fit w-[310px] m-auto text-center font-gloock font-[600] text-brand-darkbrown sm:mb-[40px] mb-[25px]">
+      <h1 className="md:text-[40px] text-2xl md:leading-[47px] leading-[31px] w-fit  m-auto text-center font-gloock font-[600] text-brand-darkbrown sm:mb-[40px] mb-[25px]">
         Join the Psyber Community – Never Feel Left Behind.
       </h1>
 

@@ -41,7 +41,7 @@ const Header = () => {
 
 
      <Link href="/">
-      <button className="shadow-custom-light bg-gradient-to-br from-[#efbff6] to-[#731981]  w-[150px]  md:w-[212px] h-[40px] md:h-[50px] sm:text-[16px] text-[14px] md:text-[20px] rounded-[32px] md:rounded-[42px] text-white font-semibold md:px-4 px-[12px]">
+      <button className="button">
        Let's get started
       </button>
       </Link>
