@@ -11,16 +11,18 @@ const Section5 = () => {
         <Image 
            src="/fiveSteps.png" 
            alt="5 steps to get started" 
-           width={1000}
-           height={600}
+           width={4696} 
+           height={1120}
+           quality={100}
            className="sm:block hidden"
          />
 
          <Image 
            src="/fiveStepsMobile.png" 
            alt="5 steps to get started" 
-           width={300}
-           height={600}
+           width={1317}
+           height={2353}
+           quality={100}
            className="sm:hidden"
          />
       </div>
