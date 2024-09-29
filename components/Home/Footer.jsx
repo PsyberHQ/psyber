@@ -44,7 +44,7 @@ const Footer = () => {
           </div>
 
           <div className="flex justify-center gap-2 items-center">
-            <Image src="/twitter.jpg" alt="Logo" width={1022} height={1022} className="size-[20px]"/>
+            <Image src="/twitter.png" alt="Logo" width={1022} height={1022} className="size-[20px]"/>
             <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
               PsyberHQ
             </p>

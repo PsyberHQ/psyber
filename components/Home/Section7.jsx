@@ -18,7 +18,7 @@ const Section7 = () => {
       <div className="flex flex-wrap gap-4 justify-center items-center h-fit">
         <div className="sm:h-[120px] h-fit sm:w-[370px] w-full  p-[14px] bg-[#D9D9D9] rounded-[50px] flex gap-[12px] justify-between items-center">
           <Image src="/circleTwitter.png" alt="Logo" width={76} height={76} />
-          <p className="text-[12px] leading-[16px] font-[400] font-urbanist text-brand-darkbrown">
+          <p className="md:text-[14px] text-[13px] leading-[16px] font-[400] font-urbanist text-brand-darkbrown">
             <span className="font-bold">Twitter Significance:</span> Twitter is
             the hub for Web3 users, and by using Psyber, you'll be able to
             immerse yourself in conversations, trends, and events that define
@@ -28,7 +28,7 @@ const Section7 = () => {
 
         <div className="sm:h-[120px] h-fit sm:w-[370px] w-full  p-[14px] bg-[#D9D9D9] rounded-[50px] flex gap-[12px] justify-between items-center">
           <Image src="/circleTelegram.png" alt="Logo" width={76} height={76} />
-          <p className="text-[12px] leading-[18px] font-[400] font-urbanist text-brand-darkbrown">
+          <p className="md:text-[14px] text-[13px] leading-[18px] font-[400] font-urbanist text-brand-darkbrown">
             <span className="font-bold">Telegram Community:</span> Join our
             vibrant Telegram groups where you can ask questions, discuss ideas
             and connect with fellow learners.
@@ -37,7 +37,7 @@ const Section7 = () => {
 
         <div className="sm:h-[120px] h-fit sm:w-[370px] w-full  p-[14px] bg-[#D9D9D9] rounded-[50px] flex gap-[12px] justify-between items-center">
           <Image src="/circleSolana.png" alt="Logo" width={96} height={196} className="size-20"/>
-          <p className="text-[12px] leading-[18px] font-[400] font-urbanist text-brand-darkbrown">
+          <p className="md:text-[14px] text-[13px] leading-[18px] font-[400] font-urbanist text-brand-darkbrown">
             <span className="font-bold">Social Rewards:</span> Earn tokens not
             just by completing tasks, but also for sharing your achievements on
             Twitter and engaging in the Telegram community.

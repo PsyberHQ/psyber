@@ -49,8 +49,8 @@ const Section4B = () => {
       <Image 
         src="/section4mobile.png" 
         alt="your web3 journey simplified" 
-        width={1055}
-        height={1000}
+        width={755}
+        height={1062}
         className="sm:hidden block"
          />
     </>
