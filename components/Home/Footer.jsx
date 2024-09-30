@@ -1,4 +1,6 @@
+import { Linden_Hill } from "next/font/google";
 import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -37,62 +39,71 @@ const Footer = () => {
 
         <div className="w-[110px]">
           <div className="text-left w-fit flex justify-center gap-2 items-center sm:mb-[20px] mb-[10px]">
-            <Image
-              src="/telegram.jpg"
-              alt="Logo"
-              width={1022}
-              height={1022}
-              className="size-[28px]"
-            />
+             <a href="https://t.me/PsyberHQ">
+                <Image
+                  src="/telegram.jpg"
+                  alt="Logo"
+                  width={1022}
+                  height={1022}
+                  className="size-[28px]"
+                />
+              </a>
             <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
               Psyber
             </p>
           </div>
 
           <div className="flex justify-center gap-2 items-center">
-            <Image
-              src="/twitter.png"
-              alt="Logo"
-              width={1022}
-              height={1022}
-              className="size-[20px]"
-            />
-            <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
-              PsyberHQ
-            </p>
+              <a href="https://t.me/PsyberHQ"> 
+                <Image
+                  src="/twitter.png"
+                  alt="Logo"
+                  width={1022}
+                  height={1022}
+                  className="size-[20px]"
+                />
+              </a>
+              <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
+                <a href="https://t.me/PsyberHQ">PsyberHQ</a>
+              </p>
+            
           </div>
         </div>
 
         <div className="w-fit">
           <div className="text-left w-fit flex justify-center gap-2 items-center sm:mb-[20px] mb-[10px]">
-            <Image
-              src="/phone.png"
-              alt="Logo"
-              width={1022}
-              height={1022}
-              className="size-[22px]"
-            />
-            <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
-              0987654321
+            <a href="tel:+1234567890">
+              <Image
+                src="/phone.png"
+                alt="Logo"
+                width={1022}
+                height={1022}
+                className="size-[22px]"
+              />
+            </a>
+            <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600] hover:underline">
+             <a href="tel:+1234567890">+2349038279790</a>
             </p>
           </div>
 
           <div className="flex justify-center gap-2 items-center">
-            <Image
-              src="/envelop.png"
-              alt="Logo"
-              width={1022}
-              height={1022}
-              className="h-[20px] w-[22px]"
-            />
-            <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600]">
-              psyber@psyber
+            <a href="mailto:psyberofficial@gmail.com">
+              <Image
+                src="/envelop.png"
+                alt="Logo"
+                width={1022}
+                height={1022}
+                className="h-[20px] w-[22px]"
+              />
+            </a>
+            <p className="md:text-[15px] text-[14px] text-brand-darkbrown font-inter font-[600] hover:underline">
+              <a href="mailto:psyberofficial@gmail.com">psyberofficial01@gmail.com</a>
             </p>
           </div>
         </div>
 
         <div className="w-[320px] mx-auto">
-          <p className="mb-[30px] font-[700]">
+          <p className="mb-[30px] font-[700] md:text-base text-sm">
             Join our mailing list for your weekly dose of wellness and Web3
             innovation.
           </p>
@@ -105,12 +116,15 @@ const Footer = () => {
               placeholder="Enter your email"
               className="outline-none pl-2"
             />
-            <button className="button w-[90px] !h-[40px] md:text-[18px] text-[15px] rounded-[42px] text-white font-semibold py-0 px-[2px]">
-              Join
-            </button>
+            <Link href="">
+              <button className="button w-[90px] h-[40px] md:text-[18px] text-[15px] rounded-[42px] text-white font-semibold py-0 px-[6px]">
+                Join
+              </button>
+            </Link>
           </div>
         </div>
       </div>
+      <p className="md:text-base text-small text-[#6F6C90]">Copyright @ Psyber | All Rights Reserved</p>
     </footer>
   );
 };

@@ -22,7 +22,7 @@ const Section8 = () => {
           </p>
 
           <Link href="/app">
-            <button className="shadow-custom-light bg-gradient-to-br from-[#efbff6] to-[#731981] m-auto md:w-[268px] w-[220px] md:h-[50px] h-[40px] sm:text-[15px] text-[14px] md:text-[18px] rounded-[42px] text-white font-[700]  px-[22px] mb-[28px]">
+            <button className="shadow-custom-light bg-gradient-to-br from-[#efbff6] to-[#731981] hover:bg-[#71177f] m-auto md:w-[268px] w-[220px] md:h-[50px] h-[40px] sm:text-[15px] text-[14px] md:text-[18px] rounded-[42px] text-white font-[700]  px-[22px] mb-[28px]">
               Sign up for early access
             </button>
           </Link>
