@@ -117,14 +117,14 @@ const Footer = () => {
               className="outline-none pl-2"
             />
             <Link href="">
-              <button className="button w-[90px] h-[40px] md:text-[18px] text-[15px] rounded-[42px] text-white font-semibold py-0 px-[6px]">
+              <button className="hover:bg-[#71177f] bg-gradient-to-br from-[#efbff6] to-[#731981] md:w-[90px] w-[70px] h-[40px] md:text-[18px] text-[15px] rounded-[42px] text-white font-semibold py-0 px-[6px]">
                 Join
               </button>
             </Link>
           </div>
         </div>
       </div>
-      <p className="md:text-base text-small text-[#6F6C90]">Copyright @ Psyber | All Rights Reserved</p>
+      <p className="md:text-[15px] text-[13px] text-[#6F6C90]">Copyright @ Psyber | All Rights Reserved</p>
     </footer>
   );
 };
