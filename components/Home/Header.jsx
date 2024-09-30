@@ -41,9 +41,9 @@ const Header = () => {
 
 
      <Link href="/app">
-      <button className="button hover:bg-[#71177f] bg-gradient-to-br from-[#efbff6] to-[#731981]">
-       Let's get started
-      </button>
+        <button className="button hover:bg-[#71177f] bg-gradient-to-br from-[#efbff6] to-[#731981]">
+        Let's get started
+        </button>
       </Link>
     </nav>
   );
