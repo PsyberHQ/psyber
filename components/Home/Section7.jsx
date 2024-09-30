@@ -47,8 +47,8 @@ const Section7 = () => {
       <br/>
       
       <div className="m-auto w-fit">
-        <Link href="/">
-          <button className="shadow-custom-light bg-gradient-to-br from-[#efbff6] to-[#731981] m-auto w-fit md:h-[50px] h-[40px] sm:text-[16px] text-[14px] md:text-[20px]  rounded-[42px] text-white font-[700]  px-[22px] ">
+        <Link href="/https://t.me/PsyberHQ">
+          <button className="shadow-custom-light bg-gradient-to-br from-[#efbff6] to-[#731981] hover:bg-[#71177f] m-auto w-fit md:h-[50px] h-[40px] sm:text-[16px] text-[14px] md:text-[20px]  rounded-[42px] text-white font-[700]  px-[22px] ">
             Join our community
           </button>
         </Link>
