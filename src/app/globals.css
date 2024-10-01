@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+} */
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.bg-gradient-to-l {
+  background-image: radial-gradient(
+    circle at left,
+    rgba(255, 255, 255, 0.413) 41.3%,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 0%,
+    #ba68c8
+  );
+}
+.button {
+  @apply h-[40px] w-[150px] rounded-[32px] bg-gradient-to-br from-[#efbff6] to-[#731981] px-[12px] text-[14px] font-semibold text-white shadow-custom-light sm:text-[16px] md:h-[50px] md:w-[212px] md:rounded-[42px] md:px-4 md:text-[20px];
+}
