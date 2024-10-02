@@ -9,7 +9,7 @@ const Login = async () => {
     redirect('/app');
   }
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col p-20 min-w-[512px] items-center justify-center">
       <div className="mb-4">
         <Image
           src="/mediBrain.png"
