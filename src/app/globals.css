@@ -38,3 +38,12 @@
 .button {
   @apply h-[40px] w-[150px] rounded-[32px] bg-gradient-to-br from-[#efbff6] to-[#731981] px-[12px] text-[14px] font-semibold text-white shadow-custom-light sm:text-[16px] md:h-[50px] md:w-[212px] md:rounded-[42px] md:px-4 md:text-[20px];
 }
+
+/* CSS class to hide scrollbar */
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
