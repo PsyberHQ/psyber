@@ -9,8 +9,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <Providers>
-      <nav className="fixed left-0 right-0 top-0 z-50 p-8">
-        <div className="flex items-center justify-between">
+      <nav className="sticky top-0 p-1  w-full">
+        <div className="flex items-center justify-between  w-full">
           <div className="h-fit w-fit">
             <Link href="/">
               <Image
@@ -18,13 +18,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 alt=" Psyber Logo"
                 width={372}
                 height={472}
-                className="size-12 w-fit object-contain"
+                className="md:size-24 size-7  w-fit object-contain"
               />
             </Link>
           </div>
           {session && (
             <div className="flex items-center justify-center gap-4">
-              <button className="flex gap-2 rounded-full bg-white py-2 pl-4 pr-6 text-sm font-semibold text-[#7047A3]">
+              <button className="flex items-center gap-2 rounded-full bg-white md:py-2 py-[5px] md:px-4 px-[14px] text-sm font-bold text-[#7047A3]">
                 <Image
                   src="/coinIcon.png"
                   alt="Coin Image"
@@ -34,8 +34,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 />
                 0 Tokens
               </button>
-              <details className="relative mr-4">
-                <summary className="flex size-14 cursor-pointer items-center">
+              <details className="relative md:mr-4 mr-2 ">
+                <summary className="flex md:size-14 size-12 cursor-pointer items-center ">
                   <Image
                     title="This is Your Profile Image"
                     src={session?.user?.image || ''}
@@ -56,11 +56,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <div
         className="fixed inset-0 -z-10 min-h-screen bg-cover bg-center"
         style={{
-          backgroundImage: "url('/bg.jpeg')",
+          backgroundImage: "url('/bg.jpeg')"
         }}
       ></div>
       <div className="flex min-h-screen items-center justify-center">
-        <div className="my-28 w-max min-w-[512px] overflow-hidden rounded-lg bg-white shadow-xl">
+        <div className="my-28 w-max  rounded-lg bg-white shadow-xl">
           {children}
         </div>
       </div>
