@@ -8,6 +8,7 @@ interface IUser extends Document {
   createdAt: Date;
   level: number;
   xp: number;
+  badge?: string;
 }
 
 // User schema
@@ -46,18 +47,15 @@ const UserSchema = new Schema<IUser>(
       type: Number,
       default: 0,
     },
+    badge: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
   { timestamps: true }
 );
 
 const UserModel = mongoose.models.User || mongoose.model<IUser>('User', UserSchema);
-
-// UserSchema.pre('save', async function (next) {
-//   if (this.isModified('password')) {
-//     const hashedPassword = await bcrypt.hash(this.password, 10);
-//     this.password = hashedPassword;
-//   }
-//   next();
-// }
 
 export { UserModel };
