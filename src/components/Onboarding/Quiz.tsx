@@ -74,7 +74,7 @@ const Quiz = () => {
   };
 
   if (submitLoading) {
-    return <div>Loading...</div>;
+    return <div className='md:p-24 p-20 rounded-[20px]'>Loading...</div>;
   }
 
   if (submitted) {
@@ -95,7 +95,7 @@ const Quiz = () => {
   }
 
   return (
-    <div className="mx-auto w-fit max-w-lg">
+    <div className="mx-auto w-fit max-w-lg py-6 px-4 rounded-[16px]">
       <h2 className="mb-6 text-center text-xl font-semibold">
         #{currQuesNum + 1} {questions[currQuesNum].question}
       </h2>
@@ -118,13 +118,13 @@ const Quiz = () => {
       <div className="mt-8 flex justify-between">
         <button
           onClick={handleSkip}
-          className="rounded-full bg-gray-200 px-6 py-2 transition-colors hover:bg-gray-300"
+          className="rounded-full bg-gray-200 px-6 py-2 font-bold transition-colors hover:bg-gray-300"
         >
           Skip
         </button>
         <button
           onClick={handleNext}
-          className="rounded-full bg-green-500 px-6 py-2 text-white transition-colors hover:bg-green-600"
+          className="rounded-full bg-green-500 font-bold px-6 py-2 text-white transition-colors hover:bg-green-600"
         >
           {currQuesNum < questions.length - 1 ? 'Next' : 'Finish'}
         </button>
