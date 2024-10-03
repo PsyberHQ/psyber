@@ -17,7 +17,7 @@ const Page = async () => {
   }
 
   return (
-    <div className="grid h-full max-h-[70vh] min-w-[60vw] max-w-[80vw] grid-cols-10 overflow-scroll hide-scrollbar">
+    <div className="p-4 grid h-full max-h-[70vh] bg-red-400 xl:min-w-[60vw]  min-w-full  xl:max-w-[80vw] md:max-w-[95vw] grid-cols-10 overflow-scroll hide-scrollbar">
       <TaskParent />
     </div>
   );

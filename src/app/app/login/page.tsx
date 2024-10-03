@@ -9,7 +9,7 @@ const Login = async () => {
     redirect('/app');
   }
   return (
-    <div className="flex flex-col p-20 min-w-[512px] items-center justify-center">
+    <div className="flex flex-col md:p-[4vw] p-[3vw]  pb-10 items-center justify-center text-center">
       <div className="mb-4">
         <Image
           src="/mediBrain.png"
@@ -20,7 +20,7 @@ const Login = async () => {
         />
       </div>
       <h1 className="mb-2 text-3xl font-bold text-gray-800">Welcome to Psyber</h1>
-      <p className="mb-6 text-gray-600">Your journey to mastering web3 starts here!</p>
+      <p className="mb-6 text-gray-600 w-fit m-auto">Your journey to mastering web3 starts here!</p>
 
       <GoogleSignInBtn />
 

@@ -60,20 +60,20 @@ const TaskParent = () => {
   const firstName = session?.data?.user?.name?.split(' ')[0];
   return (
     <>
-      <div className="col-span-6 flex flex-col items-start justify-start p-10">
-        <div className="sticky left-0 top-0 z-50 -ml-3 mb-10 flex h-min w-[100%] items-center rounded-lg bg-white pl-10">
-          <div className="mr-4">
+      <div className="col-span-6 flex flex-wrap items-start justify-start p-10 bg-blue-400">
+        <div className="sticky left-0 top-0 z-50 mb-10 flex h-fit w-fit m-auto flex-wrap items-center  border-red-300 border-2 rounded-lg bg-white p-4">
+          <div className="">
             <Image
               src="/mediBrain.png"
               alt="Meditating Brain"
-              className="w-24"
+              className="md:w-20 w-18"
               height={972}
               width={1148}
             />
           </div>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800">Hi {firstName}</h1>
-            <p className="text-gray-600">Here are your tasks for today</p>
+          <div className='w-fit m-auto'>
+            <h1 className="md:text-3xl text-xl font-bold text-gray-800">Hi {firstName}</h1>
+            <p className="text-gray-600 md:text-base text-sm">Here are your tasks for today</p>
           </div>
         </div>
         <div className="h-min w-full">
