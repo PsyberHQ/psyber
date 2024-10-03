@@ -216,7 +216,7 @@ const EndResult = () => {
             height={521}
             className="size-24 w-fit object-contain pl-2"
           />
-          <p>Hurrayy</p>
+          <p className='font-bold'>Hurrayy!</p>
         </div>
         <div>
           <h1 className="mb-2 text-center text-3xl font-bold">50</h1>
@@ -243,7 +243,7 @@ const EndResult = () => {
           height={521}
           className="size-24 w-fit object-contain pl-2"
         />
-        <p>Hurrayy</p>
+        <p className='font-bold'>Hurrayy!</p>
       </div>
       <div>
         <h1 className="mb-2 text-center text-3xl font-bold">Quiz Completed</h1>

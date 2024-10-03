@@ -12,6 +12,7 @@ const TaskDesc = ({
 }) => {
   return (
     <>
+    <div className="bg-green-500">
       <h2 className="mb-4 text-2xl font-bold">Task {task.id}</h2>
       <p className="mb-6">{task.description}</p>
       <div className="mb-6">
@@ -27,6 +28,7 @@ const TaskDesc = ({
           Start task {task.id}
         </button>
       </Link>
+      </div>
     </>
   );
 };

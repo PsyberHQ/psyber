@@ -74,18 +74,19 @@ const Quiz = () => {
   };
 
   if (submitLoading) {
-    return <div className='md:p-24 p-20 rounded-[20px]'>Loading...</div>;
+    return <div className='md:p-24 p-20 rounded-[20px] md:text-3xl text-2xl'>Loading...</div>;
   }
 
   if (submitted) {
     return (
-      <div className="mx-auto w-fit max-w-lg">
-        <h2 className="mb-6 text-center text-xl font-semibold">Quiz Completed!</h2>
+      <div className="mx-auto w-fit max-w-lg md:p-10 p-6 md:px-[4vw] px-[3vw]">
+        {/* <h2 className="mb-6 text-center text-xl font-semibold">Quiz Completed!</h2> */}
         <div className="space-y-4">
-          <p className="text-center">&quot;{submitted.badge}&quot;</p>
-          <p className="text-center">{submitted.comment}</p>
-          <p>what this means for you</p>
-          <p className="text-center">{submitted.comment2}</p>
+          <p className='md:text-xl text-base text-neutral-700'>You web 3.0 readiness level is</p>
+          <p className="text-center md:text-4xl text-2xl">&quot;{submitted.badge}&quot;</p><br />
+          <p className="text-center text-[#F47C92]">{submitted.comment}</p>
+          <p className='text-neutral-700 w-fit m-auto mb-3'>what this means for you</p>
+          <p className="text-center w-fit m-auto md:text-xl text-base">{submitted.comment2}</p>
         </div>
         <Link href="/app">
           <button className="button">Start your journey</button>
