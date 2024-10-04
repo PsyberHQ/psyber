@@ -1,7 +1,9 @@
 import SignOutBtn from '@/components/App/SignOutBtn';
+import WalletBtn from '@/components/WalletBtn';
 import dbConnect from '@/lib/dbConnect';
 import Providers from '@/lib/Providers';
 import { UserModel } from '@/model/User';
+import { WalletModel } from '@/model/Wallet';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,6 +17,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   });
   // const userLevel = user?.level || 0;
   const userToken = user?.xp || 0;
+  const userWallet = await WalletModel.findOne({
+    user: user?._id,
+  });
+  console.log('userWallet', userWallet);
+
   return (
     <Providers>
       <nav className="fixed left-0 right-0 top-0 z-50 p-8">
@@ -32,6 +39,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
           {session && (
             <div className="flex items-center justify-center gap-4">
+              {userWallet && <WalletBtn />}
               <button className="flex gap-2 rounded-full bg-white py-2 pl-4 pr-6 text-sm font-semibold text-[#7047A3]">
                 <Image
                   src="/coinIcon.png"

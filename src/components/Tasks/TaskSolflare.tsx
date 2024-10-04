@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import WalletBtn from '../WalletBtn';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 const LessonHeader = ({
   title,
@@ -132,208 +134,181 @@ const SolflareRedirect = ({ onClick }: { onClick: () => void }) => (
     <Link
       target="_blank"
       href="https://chromewebstore.google.com/detail/solflare-wallet/bhhhlbepdkbapadjdnnojkbgioiodbic?pli=1"
+      onClick={() => {
+        onClick();
+      }}
     >
-      <button
-        onClick={() => {
-          onClick();
-        }}
-        className="w-fit rounded-xl bg-white px-4 py-2 font-bold text-black shadow-lg shadow-green-600 hover:bg-white/90"
-      >
+      <button className="w-fit rounded-xl bg-white px-4 py-2 font-bold text-black shadow-lg shadow-green-600 hover:bg-white/90">
         Go To Solflare
       </button>
     </Link>
   </div>
 );
 
-// const Quiz = ({
-//   quiz,
-//   nextQues,
-// }: {
-//   quiz: { question: string; options: { id: number; content: string }[]; correctAnswer: number };
-//   nextQues: () => void;
-// }) => {
-//   const [showResult, setShowResult] = useState(false);
-//   const [isCorrect, setIsCorrect] = useState(false);
-//   const [options, setOptions] = useState(quiz.options);
-//   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+const SolflareConnect = ({ onConnected }: { onConnected: () => void }) => {
+  const [connectwallet, setConnectWallet] = useState(false);
+  const wallet = useWallet();
+  console.log('wallet', wallet);
 
-//   useEffect(() => {
-//     setOptions(quiz.options);
-//   }, [quiz]);
+  useEffect(() => {
+    const updateUser = async () => {
+      try {
+        await fetch('/api/user-level', {
+          method: 'POST',
+          body: JSON.stringify({ taskId: task.id, walletAddress: wallet?.publicKey?.toBase58() }),
+        });
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    if (wallet.connected) {
+      updateUser();
+      onConnected();
+    }
+  }, [onConnected, wallet.connected, wallet?.publicKey]);
 
-//   const onAnswer = (answerId: number) => {
-//     setIsCorrect(answerId === quiz.correctAnswer);
-//     setShowResult(true);
-//     setSelectedOption(answerId);
-//   };
+  return (
+    <div className="absolute inset-0 flex h-full flex-col items-center gap-8 overflow-scroll rounded-lg bg-[#7047A3] p-6 text-white md:p-20">
+      <div>
+        <h1 className="mb-2 text-center text-3xl font-bold">
+          Welcome back! Ready to connect your solflare wallet?
+        </h1>
+      </div>
+      <div>
+        <h1 className="font-bold">
+          You{"'"}re just a step away from fully integrating your solflare wallet with psyber.{' '}
+        </h1>
+        <ol className="pl-6" style={{ listStyleType: 'disc' }}>
+          <li>
+            Click {'"'}connect wallet{'"'} to get started.
+          </li>
+          <li>Choose solflare from the available wallet options.</li>
+          <li>Authorize the connection with solflare, and you{"'"}re all set!</li>
+        </ol>
+      </div>
+      {connectwallet ? (
+        <div className="py mt-10 w-fit rounded-xl px-4">
+          <WalletBtn />
+        </div>
+      ) : (
+        <button
+          onClick={() => {
+            setConnectWallet(true);
+          }}
+          className="mt-10 w-fit rounded-xl bg-white px-4 py-2 font-bold text-black shadow-lg shadow-green-600 hover:bg-white/90"
+        >
+          Connect Wallet
+        </button>
+      )}
+    </div>
+  );
+};
 
-//   return (
-//     <div className="absolute inset-0 flex h-full flex-col items-center rounded-lg bg-white">
-//       {showResult ? (
-//         <div
-//           className={`mb-4 w-full py-8 text-center text-white ${isCorrect ? 'bg-[#16C86D]' : 'bg-[#E93052]'}`}
-//         >
-//           <p className="mb-2 text-xl font-bold">
-//             {isCorrect ? "Wohoo! That's correct" : "That's incorrect!"}
-//           </p>
-//         </div>
-//       ) : (
-//         <>
-//           <Image
-//             src="/mediBrain.png"
-//             alt="Book"
-//             width={521}
-//             height={521}
-//             className="size-24 w-fit object-contain"
-//           />
-//         </>
-//       )}
-//       <div className="flex h-full flex-col items-center justify-between p-20 pt-10">
-//         <div className="">
-//           <h2 className="mb-4 text-xl font-bold">{quiz.question}</h2>
-//           <div className="flex flex-col items-center justify-center space-y-4">
-//             {options.map((option: { id: number; content: string }) => (
-//               <button
-//                 key={option.id}
-//                 onClick={() => onAnswer(option.id)}
-//                 className={`w-full rounded-full px-6 py-3 text-center shadow-md ${
-//                   showResult && option.id === quiz.correctAnswer
-//                     ? 'bg-green-500 text-white'
-//                     : selectedOption === option.id
-//                       ? 'bg-red-500 text-white'
-//                       : 'border border-[#F47C92] hover:bg-gray-100'
-//                 }`}
-//                 disabled={showResult}
-//               >
-//                 {option.content}
-//               </button>
-//             ))}
-//           </div>
-//         </div>
-//         <div>
-//           <button
-//             onClick={() => {
-//               if (showResult) {
-//                 setShowResult(false);
-//                 nextQues();
-//                 setSelectedOption(null);
-//               }
-//             }}
-//             className="mt-4 w-fit rounded-full bg-[#7047A3] px-8 py-3 font-bold text-white"
-//           >
-//             Next
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// const EndResult = () => {
-//   const [showToken, setShowToken] = useState(false);
-//   const [showEndScreen, setShowEndScreen] = useState(false);
-//   if (showEndScreen) {
-//     return (
-//       <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg p-20">
-//         <div className="flex flex-col items-center justify-center">
-//           <Image
-//             src="/mediBrain.png"
-//             alt="Book"
-//             width={521}
-//             height={521}
-//             className="size-24 w-fit object-contain pl-2"
-//           />
-//           <p>Hurrayy!!</p>
-//         </div>
-//         <div>
-//           <h1 className="mb-2 text-center text-3xl font-bold">You’re progressing wonderfully!</h1>
-//           <p className="text-center text-[#F47C92]">
-//             You have the power to unlock the web3 world. Every challenge makes you stronger!
-//           </p>
-//         </div>
-//         <div className="flex flex-col items-center justify-center">
-//           <Image
-//             src="/LoadingGreenBars.png"
-//             alt="Book"
-//             width={521}
-//             height={521}
-//             className="w-20 object-contain"
-//           />
-//           {/* <Link href="/app"> */}
-//           <button
-//             onClick={() => {
-//               window.location.href = '/app';
-//             }}
-//             className="mt-10 w-full rounded-full bg-green-500 px-4 py-2 text-white shadow-md hover:bg-green-600"
-//           >
-//             I{"'"}m ready for the next task!
-//           </button>
-//           {/* </Link> */}
-//         </div>
-//       </div>
-//     );
-//   }
-//   if (showToken) {
-//     return (
-//       <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg p-20">
-//         <div className="flex flex-col items-center justify-center">
-//           <Image
-//             src="/mediBrain.png"
-//             alt="Book"
-//             width={521}
-//             height={521}
-//             className="size-24 w-fit object-contain pl-2"
-//           />
-//           <p>Hurrayy!!</p>
-//         </div>
-//         <div>
-//           <h1 className="mb-2 text-center text-3xl font-bold">50</h1>
-//         </div>
-//         <div>
-//           <h1 className="mb-2 text-center text-3xl font-bold">Token collected</h1>
-//           <div className="flex flex-col items-center justify-center gap-8">
-//             <button
-//               onClick={() => setShowEndScreen(true)}
-//               className="mt-10 w-fit rounded-full bg-green-500 px-6 py-3 font-bold text-white shadow-md hover:bg-green-600"
-//             >
-//               Continue
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-//   return (
-//     <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg p-20">
-//       <div className="flex flex-col items-center justify-center">
-//         <Image
-//           src="/mediBrain.png"
-//           alt="Book"
-//           width={521}
-//           height={521}
-//           className="size-24 w-fit object-contain pl-2"
-//         />
-//         <p>Hurrayy!!</p>
-//       </div>
-//       <div>
-//         <h1 className="mb-2 text-center text-3xl font-bold">Quiz Completed</h1>
-//       </div>
-//       <div>
-//         <h1 className="mb-2 text-center text-3xl font-bold">
-//           Great job! you{"'"}ve completed your first task!
-//         </h1>
-//         <div className="flex flex-col items-center justify-center gap-8">
-//           <button
-//             onClick={() => setShowToken(true)}
-//             className="mt-10 w-fit rounded-full bg-green-500 px-6 py-3 font-bold text-white shadow-md hover:bg-green-600"
-//           >
-//             Continue
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+const EndResult = () => {
+  const [showToken, setShowToken] = useState(false);
+  const [showEndScreen, setShowEndScreen] = useState(false);
+  if (showEndScreen) {
+    return (
+      <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg p-20 pt-10">
+        <div className="flex flex-col items-center justify-center">
+          <Image
+            src="/mediBrain.png"
+            alt="Book"
+            width={521}
+            height={521}
+            className="size-24 w-fit object-contain pl-2"
+          />
+          <p>Hurrayy!!</p>
+        </div>
+        <div>
+          <h1 className="mb-2 text-center text-3xl font-bold">You’re progressing wonderfully!</h1>
+          <p className="text-center text-[#F47C92]">
+            You have the power to unlock the web3 world. Every challenge makes you stronger!
+          </p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <Image
+            src="/LoadingGreenBars.png"
+            alt="Book"
+            width={521}
+            height={521}
+            className="w-20 object-contain"
+          />
+          {/* <Link href="/app"> */}
+          <button
+            onClick={() => {
+              window.location.href = '/app';
+            }}
+            className="mt-10 w-full rounded-full bg-green-500 px-4 py-2 text-white shadow-md hover:bg-green-600"
+          >
+            I{"'"}m ready for the next task!
+          </button>
+          {/* </Link> */}
+        </div>
+      </div>
+    );
+  }
+  if (showToken) {
+    return (
+      <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg p-20">
+        <div className="flex flex-col items-center justify-center">
+          <Image
+            src="/mediBrain.png"
+            alt="Book"
+            width={521}
+            height={521}
+            className="size-24 w-fit object-contain pl-2"
+          />
+          <p>Hurrayy!!</p>
+        </div>
+        <div>
+          <h1 className="mb-2 text-center text-3xl font-bold">100</h1>
+        </div>
+        <div>
+          <h1 className="mb-2 text-center text-3xl font-bold">Token collected</h1>
+          <div className="flex flex-col items-center justify-center gap-8">
+            <button
+              onClick={() => setShowEndScreen(true)}
+              className="mt-10 w-fit rounded-full bg-green-500 px-6 py-3 font-bold text-white shadow-md hover:bg-green-600"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg p-20 pt-10">
+      <div className="flex flex-col items-center justify-center">
+        <Image
+          src="/mediBrain.png"
+          alt="Book"
+          width={521}
+          height={521}
+          className="size-24 w-fit object-contain pl-2"
+        />
+        <p>Hurrayy!!</p>
+      </div>
+      <div>
+        <h1 className="mb-2 text-center text-3xl font-bold">Quiz Completed</h1>
+      </div>
+      <div>
+        <h1 className="mb-2 text-center text-3xl font-bold">
+          Great job! you{"'"}ve completed Wallet Connection task!
+        </h1>
+        <div className="flex flex-col items-center justify-center gap-8">
+          <button
+            onClick={() => setShowToken(true)}
+            className="mt-10 w-fit rounded-full bg-green-500 px-6 py-3 font-bold text-white shadow-md hover:bg-green-600"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const task = {
   id: '03',
@@ -392,6 +367,10 @@ const TaskSolflare = () => {
 
   const [showSolflareRedirect, setShowSolflareRedirect] = useState(false);
 
+  const [showSolflareConnect, setShowSolflareConnect] = useState(false);
+
+  const [showResult, setShowResult] = useState(false);
+
   const startLesson = () => {
     setShowLessonHeader(false);
     setShowLessonContent(true);
@@ -412,6 +391,12 @@ const TaskSolflare = () => {
 
   const handleShowConnect = () => {
     setShowSolflareRedirect(false);
+    setShowSolflareConnect(true);
+  };
+
+  const handleOnConnected = async () => {
+    setShowSolflareConnect(false);
+    setShowResult(true);
   };
 
   return (
@@ -433,8 +418,8 @@ const TaskSolflare = () => {
       )}
 
       {showSolflareRedirect && <SolflareRedirect onClick={handleShowConnect} />}
-      {/* {showQuiz && <Quiz nextQues={handleNextQuestion} />} */}
-      {/* {showResult && <EndResult />} */}
+      {showSolflareConnect && <SolflareConnect onConnected={handleOnConnected} />}
+      {showResult && <EndResult />}
     </div>
   );
 };
