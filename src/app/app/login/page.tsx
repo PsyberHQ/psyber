@@ -1,13 +1,7 @@
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
 import GoogleSignInBtn from '@/components/App/GoogleSignInBtn';
 import Image from 'next/image';
 
 const Login = async () => {
-  const session = await getServerSession();
-  if (session) {
-    redirect('/app');
-  }
   return (
     <div className="flex flex-col p-20 min-w-[512px] items-center justify-center">
       <div className="mb-4">
