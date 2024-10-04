@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     if (task > level + 1) {
       return NextResponse.json({ error: 'User skipped tasks', redirect: true }, { status: 400 });
     }
-    const taskReward = task <= 2 ? 50 : task === 3 ? 100 : task === 4 ? 0 : 0;
+    const taskReward = task <= 2 ? 50 : task === 3 ? 100 : 0;
     try {
       await UserModel.updateOne(
         { _id: user._id },

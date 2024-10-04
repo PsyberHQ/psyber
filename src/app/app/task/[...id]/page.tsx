@@ -6,7 +6,6 @@ import { useParams } from 'next/navigation';
 const Page = () => {
   const { id } = useParams();
   const taskNumber = parseInt(id as string);
-  console.log('taskNumber', taskNumber);
 
   return (
     <div className="relative flex min-h-[70vh] min-w-[60vw] items-center justify-center">

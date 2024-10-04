@@ -19,7 +19,6 @@ const TasksList = ({
   currentTaskToDo: number;
 }) => {
   const ref = useRef<HTMLDivElement | null>(null);
-  console.log('ref', ref);
 
   useEffect(() => {
     if (ref.current) {
