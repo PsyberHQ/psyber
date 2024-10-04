@@ -81,19 +81,30 @@ const Quiz = () => {
   if (submitted) {
     return (
       <div className="mx-auto w-fit min-w-[60vw] max-w-lg p-20 pt-10">
-        <h2 className="mb-6 text-center text-xl font-semibold">Quiz Completed!</h2>
-        <div className="space-y-4">
-          <p className="text-center text-3xl font-bold">&quot;{submitted.badge}&quot;</p>
-          <p className="text-center">{submitted.comment}</p>
-          <p className="text-center text-slate-400">what this means for you</p>
-          <p className="text-center text-xl font-semibold text-gray-800">{submitted.comment2}</p>
+        <div className="flex w-full items-center justify-center">
+          <Image
+            src="/mediBrain.png"
+            alt="Meditating Brain"
+            className="mx-auto w-36"
+            height={972}
+            width={1148}
+          />
         </div>
-        <div className="flex items-center justify-center">
-          <Link href="/app">
-            <button className="rounded-full bg-green-500 px-6 py-3 text-white transition-colors hover:bg-green-600">
-              Start your journey
-            </button>
-          </Link>
+        <div className="space-x-5">
+          <h2 className="mb-6 text-center font-semibold">Your web 3.0 readiness level is</h2>
+          <div className="space-y-4">
+            <p className="text-center text-3xl font-bold">&quot;{submitted.badge}&quot;</p>
+            <p className="text-center text-[#F47C92]">{submitted.comment}</p>
+            <p className="text-center text-slate-400">what this means for you</p>
+            <p className="text-center text-xl font-semibold text-gray-800">{submitted.comment2}</p>
+          </div>
+          <div className="mt-6 flex items-center justify-center">
+            <Link href="/app">
+              <button className="rounded-full bg-green-500 px-6 py-3 text-white shadow-md transition-colors hover:bg-green-600">
+                Start your journey
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     );
