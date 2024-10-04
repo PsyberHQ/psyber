@@ -230,22 +230,20 @@ const EndResult = () => {
         </div>
         <div className="flex flex-col items-center justify-center">
           <Image
-            src="/LoadingGreenBars.png"
+            src="/Loader.gif"
             alt="Book"
             width={521}
             height={521}
-            className="w-20 object-contain"
+            className="w-16 scale-110 object-contain"
           />
-          {/* <Link href="/app"> */}
           <button
             onClick={() => {
               window.location.href = '/app';
             }}
-            className="mt-10 w-full rounded-full bg-green-500 px-4 py-2 text-white shadow-md hover:bg-green-600"
+            className="mt-6 w-fit rounded-full bg-green-500 px-4 py-2 text-white shadow-md hover:bg-green-600"
           >
             I{"'"}m ready for the next task!
           </button>
-          {/* </Link> */}
         </div>
       </div>
     );
