@@ -15,6 +15,7 @@ const TaskDesc = ({
   useEffect(() => {
     const fetchUserLevel = async () => {
       const response = await fetch('/api/user-level');
+
       const data = await response.json();
       setUserLevel(data.level);
     };
