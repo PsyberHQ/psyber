@@ -75,7 +75,20 @@ const Quiz = () => {
   };
 
   if (submitLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="p-10">
+        <div className="flex flex-col items-center justify-center p-6">
+          <Image
+            src="/Loader.gif"
+            alt="Book"
+            width={521}
+            height={521}
+            className="w-16 scale-110 object-contain"
+          />
+        </div>
+        <p className="text-center text-slate-400">Calculating your web 3.0 readiness level....</p>
+      </div>
+    );
   }
 
   if (submitted) {
