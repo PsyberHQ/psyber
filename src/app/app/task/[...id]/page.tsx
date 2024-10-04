@@ -1,5 +1,6 @@
 'use client';
 import TaskSimpleLessonQuiz from '@/components/Tasks/TaskSimpleLessonQuiz';
+import TaskSolfalre from '@/components/Tasks/TaskSolflare';
 import Fulltasks from '@/lib/const/fullTasks';
 import { useParams } from 'next/navigation';
 
@@ -9,8 +10,12 @@ const Page = () => {
 
   return (
     <div className="relative flex min-h-[70vh] min-w-[60vw] items-center justify-center">
-      {taskNumber >= 1 && taskNumber <= Fulltasks.length ? (
-        <TaskSimpleLessonQuiz task={Fulltasks[taskNumber - 1]} />
+      {taskNumber >= 1 && taskNumber <= Fulltasks.length + 1 ? (
+        taskNumber == 3 ? (
+          <TaskSolfalre />
+        ) : (
+          <TaskSimpleLessonQuiz task={Fulltasks[taskNumber - 1]} />
+        )
       ) : (
         <div className="flex flex-col items-center justify-center">
           <h1 className="text-3xl font-bold text-gray-800">Task not found</h1>
