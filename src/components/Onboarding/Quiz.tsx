@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import questions from '@/lib/const/initQuizQuestions';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Quiz = () => {
   const session = useSession();
@@ -79,40 +80,65 @@ const Quiz = () => {
 
   if (submitted) {
     return (
-      <div className="mx-auto w-fit max-w-lg">
+      <div className="mx-auto w-fit min-w-[60vw] max-w-lg p-20 pt-10">
         <h2 className="mb-6 text-center text-xl font-semibold">Quiz Completed!</h2>
         <div className="space-y-4">
-          <p className="text-center">&quot;{submitted.badge}&quot;</p>
+          <p className="text-center text-3xl font-bold">&quot;{submitted.badge}&quot;</p>
           <p className="text-center">{submitted.comment}</p>
-          <p>what this means for you</p>
-          <p className="text-center">{submitted.comment2}</p>
+          <p className="text-center text-slate-400">what this means for you</p>
+          <p className="text-center text-xl font-semibold text-gray-800">{submitted.comment2}</p>
         </div>
-        <Link href="/app">
-          <button className="button">Start your journey</button>
-        </Link>
+        <div className="flex items-center justify-center">
+          <Link href="/app">
+            <button className="rounded-full bg-green-500 px-6 py-3 text-white transition-colors hover:bg-green-600">
+              Start your journey
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto w-fit max-w-lg">
-      <h2 className="mb-6 text-center text-xl font-semibold">
-        #{currQuesNum + 1} {questions[currQuesNum].question}
-      </h2>
-      <div className="space-y-4">
-        {questions[currQuesNum].options.map((option, index) => (
-          <button
-            key={index}
-            onClick={() => handleAnswer(option.points)}
-            className={`w-full rounded-full px-4 py-3 text-center transition-colors ${
-              selectedAnswer === option.points
-                ? 'bg-purple-600 text-white'
-                : 'bg-gray-100 hover:bg-gray-200'
-            }`}
-          >
-            {option.text}
-          </button>
-        ))}
+    <div className="mx-auto w-fit min-w-[60vw] max-w-lg p-20 pt-10">
+      <div className="flex">
+        <div className="w-fit">
+          <Image
+            src="/mediBrain.png"
+            alt="Meditating Brain"
+            className="mx-auto w-36"
+            height={972}
+            width={1148}
+          />
+        </div>
+        <div className="flex flex-col items-start justify-center">
+          <h1 className="text-2xl font-bold text-gray-800">
+            Let{"'"}s Get Started on Your Web 3.0 Journey
+          </h1>
+          <h2 className="text-gray-600">
+            First, let{"'"}s assess your readiness to ensure you get the most out of this experience
+          </h2>
+        </div>
+      </div>
+      <div className="mt-6 flex flex-col items-center justify-center">
+        <div className="flex w-full flex-col space-y-4">
+          <h2 className="mb-6 text-center text-xl font-semibold">
+            #{currQuesNum + 1} {questions[currQuesNum].question}
+          </h2>
+          {questions[currQuesNum].options.map((option, index) => (
+            <button
+              key={index}
+              onClick={() => handleAnswer(option.points)}
+              className={`rounded-full px-4 py-3 text-center shadow-md transition-colors ${
+                selectedAnswer === option.points
+                  ? 'bg-[#7047A3] text-white'
+                  : 'border border-[#F47C92] hover:bg-gray-100'
+              }`}
+            >
+              {option.text}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="mt-8 flex justify-between">
@@ -123,6 +149,7 @@ const Quiz = () => {
           Skip
         </button>
         <button
+          disabled={selectedAnswer === null && currQuesNum < questions.length - 1 ? true : false}
           onClick={handleNext}
           className="rounded-full bg-green-500 px-6 py-2 text-white transition-colors hover:bg-green-600"
         >

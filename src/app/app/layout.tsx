@@ -1,12 +1,20 @@
 import SignOutBtn from '@/components/App/SignOutBtn';
+import dbConnect from '@/lib/dbConnect';
 import Providers from '@/lib/Providers';
+import { UserModel } from '@/model/User';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession();
-
+  const email = session?.user?.email;
+  await dbConnect();
+  const user = await UserModel.findOne({
+    email,
+  });
+  // const userLevel = user?.level || 0;
+  const userToken = user?.xp || 0;
   return (
     <Providers>
       <nav className="fixed left-0 right-0 top-0 z-50 p-8">
@@ -32,7 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   height={472}
                   className="size-6 rounded-full"
                 />
-                0 Tokens
+                {userToken || 0} Tokens
               </button>
               <details className="relative mr-4">
                 <summary className="flex size-14 cursor-pointer items-center">
@@ -60,9 +68,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         }}
       ></div>
       <div className="flex min-h-screen items-center justify-center">
-        <div className="my-28 w-max min-w-[512px] overflow-hidden rounded-lg bg-white shadow-xl">
-          {children}
-        </div>
+        <div className="overflow-hidden rounded-lg bg-white shadow-xl">{children}</div>
       </div>
     </Providers>
   );
