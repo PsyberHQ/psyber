@@ -360,11 +360,12 @@ const TaskSimpleLessonQuiz = ({ task }: { task: TaskWithLessonQuiz }) => {
   useEffect(() => {
     const updateProgress = async () => {
       try {
-        const res = await fetch('/api/user-level', {
+        // const res =
+        await fetch('/api/user-level', {
           method: 'POST',
           body: JSON.stringify({ taskId: task.id }),
         });
-        const data = await res.json();
+        // const data = await res.json();
       } catch (error) {
         console.error('Error:', error);
       }

@@ -62,6 +62,9 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     console.error('Error saving quiz result:', error);
-    return NextResponse.json({ error: 'Failed to save quiz result' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to save quiz result', errorDetails: error },
+      { status: 500 }
+    );
   }
 }

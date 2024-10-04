@@ -24,7 +24,7 @@ const page = async () => {
           <button className="mx-auto mt-10 flex w-fit max-w-xs items-center justify-center rounded-full border px-4 py-2 font-semibold text-slate-400 shadow-sm">
             I{"'"}m Existing Web3.0 User
           </button>
-          <span className="mt-2 block text-center text-gray-400">comming soon !</span>
+          <span className="mt-2 block text-center text-gray-400">coming soon !</span>
         </div>
         <Link href="/app/onboarding/new">
           <button className="mx-auto mt-10 flex w-fit max-w-xs items-center justify-center rounded-full bg-[#7047A3] px-4 py-2 shadow-md font-semibold text-white hover:bg-[#933ba3]">
