@@ -20,8 +20,7 @@
     "next-auth": "^4.24.8",
     "pino": "^9.4.0",
     "react": "^18.3.1",
-    "react-dom": "^18",
-    "viem": "^2.21.18"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

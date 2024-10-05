@@ -86,7 +86,7 @@ const Quiz = () => {
             className="w-16 scale-110 object-contain"
           />
         </div>
-        <p className="text-center text-slate-400">Calculating your web 3.0 readiness level....</p>
+        <p className="text-center text-slate-500">Calculating your web 3.0 readiness level....</p>
       </div>
     );
   }
