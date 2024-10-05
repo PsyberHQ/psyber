@@ -1,13 +1,12 @@
 'use client';
-
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { useEffect, useState } from 'react';
 
 const WalletBtn = () => {
-  return (
-    <div className="">
-      <WalletMultiButton />
-    </div>
-  );
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+  return <WalletMultiButton />;
 };
 
 export default WalletBtn;

@@ -8,19 +8,15 @@ export async function middleware(request: NextRequest) {
     const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
 
     if (!token && path !== '/app/login') {
-      //   console.log('No token found, redirecting to login.');
       return NextResponse.redirect(new URL('/app/login', request.url));
     }
     if (!token && path === '/app/login') {
-      //   console.log('redirected to login.');
       return NextResponse.next();
     }
     if (path === '/app/login') {
-      //   console.log('User already authenticated, redirecting to app.');
       return NextResponse.redirect(new URL('/app', request.url));
     }
 
-    // console.log('User authenticated:', token);
     return NextResponse.next();
   } catch (error) {
     console.error('Error in middleware:', error);
@@ -29,5 +25,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/app/:path*'],
+  matcher: ['/app/:path*', '/api/init-quiz', '/api/user-level'],
 };

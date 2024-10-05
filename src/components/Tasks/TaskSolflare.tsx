@@ -148,7 +148,6 @@ const SolflareRedirect = ({ onClick }: { onClick: () => void }) => (
 const SolflareConnect = ({ onConnected }: { onConnected: () => void }) => {
   const [connectwallet, setConnectWallet] = useState(false);
   const wallet = useWallet();
-  console.log('wallet', wallet);
 
   useEffect(() => {
     const updateUser = async () => {

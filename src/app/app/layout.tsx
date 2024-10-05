@@ -20,7 +20,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const userWallet = await WalletModel.findOne({
     user: user?._id,
   });
-  console.log('userWallet', userWallet);
 
   return (
     <Providers>
