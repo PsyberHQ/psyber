@@ -5,7 +5,7 @@ import { Wallet } from '@/components/Wallet';
 const urbanist = Urbanist({
   subsets: ['latin'],
   variable: '--font-urbanist',
-  weight: ['100', '400', '600'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
 });
 
 const gloock = Gloock({
@@ -22,7 +22,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${urbanist.variable} ${gloock.variable} antialiased`}>
+      <body
+        className={`${urbanist.variable} ${gloock.variable} font-urbanist tracking-[0.01rem] antialiased`}
+      >
         <Wallet>{children}</Wallet>
       </body>
     </html>
