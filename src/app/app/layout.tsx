@@ -74,8 +74,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           backgroundImage: "url('/bg.jpeg')",
         }}
       ></div>
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="overflow-hidden rounded-lg bg-white shadow-xl">{children}</div>
+      <div className="relative mt-[120px] flex min-h-[calc(100vh-120px)] items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="-mt-10 max-h-[90%] max-w-[80%] overflow-auto rounded-xl bg-white shadow-xl hide-scrollbar">
+            {children}
+          </div>
+        </div>
       </div>
     </Providers>
   );

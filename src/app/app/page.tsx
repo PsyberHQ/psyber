@@ -65,7 +65,7 @@ const Page = async () => {
   }
   const userLevel = user.level;
   return (
-    <div className="hide-scrollbar grid max-h-[70vh] min-w-[60vw] max-w-[80vw] grid-cols-10 overflow-scroll">
+    <div className="hide-scrollbar grid grid-cols-10">
       <TaskParent
         initTasks={initTasks.map((task, index) => {
           return {
