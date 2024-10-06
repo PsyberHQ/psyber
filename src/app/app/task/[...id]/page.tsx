@@ -1,29 +1,17 @@
-'use client';
-import TaskSimpleLessonQuiz from '@/components/Tasks/TaskSimpleLessonQuiz';
-import TaskSolfalre from '@/components/Tasks/TaskSolflare';
-import Fulltasks from '@/lib/const/fullTasks';
-import { useParams } from 'next/navigation';
+import TaskMain from '@/components/Tasks/TasksMain';
+import dbConnect from '@/lib/dbConnect';
+import { UserModel } from '@/model/User';
+import { getServerSession } from 'next-auth';
 
-const Page = () => {
-  const { id } = useParams();
-  const taskNumber = parseInt(id as string);
+const Page = async () => {
+  const session = await getServerSession();
+  const email = session?.user?.email;
+  await dbConnect();
+  const user = await UserModel.findOne({
+    email,
+  });
 
-  return (
-    <div className="relative flex min-h-[70vh] min-w-[60vw] items-center justify-center">
-      {taskNumber >= 1 && taskNumber <= Fulltasks.length + 1 ? (
-        taskNumber == 3 ? (
-          <TaskSolfalre />
-        ) : (
-          <TaskSimpleLessonQuiz task={Fulltasks[taskNumber - 1]} />
-        )
-      ) : (
-        <div className="flex flex-col items-center justify-center">
-          <h1 className="text-3xl font-bold text-gray-800">Task not found</h1>
-          <p className="text-gray-600">The task you are looking for does not exist.</p>
-        </div>
-      )}
-    </div>
-  );
+  return <TaskMain userLevel={user.level} />;
 };
 
 export default Page;

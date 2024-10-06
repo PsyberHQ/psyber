@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import WalletBtn from '../WalletBtn';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { LessonType, TaskWithImageType } from '@/Types/Task';
 
 const LessonHeader = ({
   title,
@@ -55,7 +56,7 @@ const LessonContent = ({
   index,
   handleNextContent,
 }: {
-  lesson: { content: { id: number; type: string; image: string }[]; specialImage?: string };
+  lesson: LessonType;
   index: number;
   handleNextContent: () => void;
 }) => {
@@ -82,7 +83,7 @@ const LessonContent = ({
         {lesson.content[idx].type === 'image' && (
           <div className="flex justify-center">
             <Image
-              src={lesson.content[idx].image}
+              src={lesson.content[idx].image || ''}
               alt="Lesson Image"
               width={1021}
               height={1021}
@@ -142,26 +143,33 @@ const SolflareRedirect = ({ onClick }: { onClick: () => void }) => (
   </div>
 );
 
-const SolflareConnect = ({ onConnected }: { onConnected: () => void }) => {
+const SolflareConnect = ({ onConnected, taskId }: { taskId: number; onConnected: () => void }) => {
   const [connectwallet, setConnectWallet] = useState(false);
   const wallet = useWallet();
 
   useEffect(() => {
     const updateUser = async () => {
       try {
-        await fetch('/api/user-level', {
+        const a = await fetch('/api/user-level', {
           method: 'POST',
-          body: JSON.stringify({ taskId: task.id, walletAddress: wallet?.publicKey?.toBase58() }),
+          body: JSON.stringify({ taskId, walletAddress: wallet?.publicKey?.toBase58() }),
         });
+        const b = await a.json();
+        if (b.redirect) {
+          window.location.href = '/app';
+        }
       } catch (error) {
         console.error('Error:', error);
       }
     };
-    if (wallet.connected) {
-      updateUser();
-      onConnected();
-    }
-  }, [onConnected, wallet.connected, wallet?.publicKey]);
+    const doIT = async () => {
+      if (wallet.connected) {
+        await updateUser();
+        onConnected();
+      }
+    };
+    doIT();
+  }, [onConnected, taskId, wallet]);
 
   return (
     <div className="absolute inset-0 flex h-full flex-col items-center gap-8 overflow-scroll rounded-lg bg-[#7047A3] p-6 text-white md:p-20">
@@ -261,10 +269,7 @@ const EndResult = () => {
         <div>
           <h1 className="mb-2 text-center text-3xl font-bold">Token collected</h1>
           <div className="flex flex-col items-center justify-center gap-8">
-            <button
-              onClick={() => setShowEndScreen(true)}
-              className="mt-10 w-fit green-btn"
-            >
+            <button onClick={() => setShowEndScreen(true)} className="green-btn mt-10 w-fit">
               Continue
             </button>
           </div>
@@ -290,10 +295,7 @@ const EndResult = () => {
           Great job! you{"'"}ve completed Wallet Connection task!
         </h1>
         <div className="flex flex-col items-center justify-center gap-8">
-          <button
-            onClick={() => setShowToken(true)}
-            className="mt-10 w-fit green-btn"
-          >
+          <button onClick={() => setShowToken(true)} className="green-btn mt-10 w-fit">
             Continue
           </button>
         </div>
@@ -302,65 +304,13 @@ const EndResult = () => {
   );
 };
 
-const task = {
-  id: '03',
-  title: 'Solfalre',
-  description:
-    'Learn about digital wallets, why they are important in web 3.0, and how they differ from traditional online accounts in web 2.0',
-  learningTip:
-    'Focus on understanding why digital wallets are essential in web 3.0. this will help you see how they provide more control and security for your digital assets.',
-  reward: '100 tokens',
-  lessons: [
-    {
-      id: 1,
-      title: 'Introduction to solflare',
-      specialImage: '/solflareLogo.png',
-      content: [
-        {
-          id: 1,
-          type: 'image',
-          image: '/solflareLesson1.png',
-        },
-        {
-          id: 2,
-          type: 'image',
-          image: '/solflareLesson2.png',
-        },
-        {
-          id: 3,
-          type: 'image',
-          image: '/solflareLesson3.png',
-        },
-        {
-          id: 4,
-          type: 'image',
-          image: '/solflareLesson4.png',
-        },
-        {
-          id: 5,
-          type: 'image',
-          image: '/solflareLesson5.png',
-        },
-        {
-          id: 6,
-          type: 'image',
-          image: '/solflareLesson6.png',
-        },
-      ],
-    },
-  ],
-};
-
-const TaskSolflare = () => {
+const TaskWithImage = ({ task }: { task: TaskWithImageType }) => {
   const totallessons = task.lessons.length;
   const [showLessonHeader, setShowLessonHeader] = useState(true);
   const [currLesson, setCurrLesson] = useState(0);
   const [showLessonContent, setShowLessonContent] = useState(false);
-
   const [showSolflareRedirect, setShowSolflareRedirect] = useState(false);
-
   const [showSolflareConnect, setShowSolflareConnect] = useState(false);
-
   const [showResult, setShowResult] = useState(false);
 
   const startLesson = () => {
@@ -410,10 +360,12 @@ const TaskSolflare = () => {
       )}
 
       {showSolflareRedirect && <SolflareRedirect onClick={handleShowConnect} />}
-      {showSolflareConnect && <SolflareConnect onConnected={handleOnConnected} />}
+      {showSolflareConnect && (
+        <SolflareConnect onConnected={handleOnConnected} taskId={task.index} />
+      )}
       {showResult && <EndResult />}
     </div>
   );
 };
 
-export default TaskSolflare;
+export default TaskWithImage;

@@ -1,6 +1,5 @@
 import { Urbanist, Gloock } from 'next/font/google';
 import './globals.css';
-import { Wallet } from '@/components/Wallet';
 
 const urbanist = Urbanist({
   subsets: ['latin'],
@@ -25,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${urbanist.variable} ${gloock.variable} font-urbanist tracking-[0.01rem] antialiased`}
       >
-        <Wallet>{children}</Wallet>
+        {children}
       </body>
     </html>
   );
