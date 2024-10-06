@@ -16,6 +16,7 @@ type Answer = {
   index: number; // Refers to the question index
   answer: string;
 };
+
 export async function POST(request: Request) {
   try {
     await dbConnect();
@@ -40,7 +41,6 @@ export async function POST(request: Request) {
           return total; // Skip to the next answer
         }
         const selectedOption = question.options.find((option) => option.text === answer.answer);
-        console.log('selectedOption:', selectedOption);
         return total + (selectedOption ? selectedOption.points : 0);
       }, 0);
     };

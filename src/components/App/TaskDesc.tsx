@@ -21,6 +21,7 @@ const TaskDesc = ({
     };
     fetchUserLevel();
   }, []);
+  const CanUserPerform = userLevel >= parseInt(task.id) || userLevel < parseInt(task.id) - 1;
   return (
     <>
       <h2 className="mb-4 text-2xl font-bold">Task {task.id}</h2>
@@ -33,11 +34,12 @@ const TaskDesc = ({
         <h3 className="mb-2 font-semibold">⭐ Reward</h3>
         <p className="text-sm"> {task.reward}</p>
       </div>
-      <Link href={userLevel >= parseInt(task.id) ? '/app' : '/app/task/' + task.id}>
+      <Link href={CanUserPerform ? '/app' : '/app/task/' + task.id}>
         <button
+          disabled={CanUserPerform}
           className={
             'w-full rounded-full px-4 py-3 font-bold text-white transition duration-300 ' +
-            (userLevel >= parseInt(task.id)
+            (CanUserPerform
               ? ' pointer-events-none cursor-not-allowed bg-gray-300 text-black'
               : ' cursor-pointer bg-green-500 hover:bg-green-600')
           }

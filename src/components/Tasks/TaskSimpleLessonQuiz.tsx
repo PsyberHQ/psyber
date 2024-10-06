@@ -1,4 +1,4 @@
-import { TaskWithLessonQuiz } from '@/Types/Task';
+import { ContentType, LessonType, QuizType, TaskWithLessonQuizType } from '@/Types/Task';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
@@ -40,10 +40,7 @@ const LessonHeader = ({
         ))}
       </div>
       <div className="flex items-center justify-center">
-        <button
-          onClick={startLesson}
-          className="mt-10 w-fit green-btn"
-        >
+        <button onClick={startLesson} className="green-btn mt-10 w-fit">
           Continue
         </button>
       </div>
@@ -56,7 +53,7 @@ const LessonContent = ({
   index,
   handleNextContent,
 }: {
-  lesson: { content: { heading: string; content: string }[] };
+  lesson: LessonType;
   index: number;
   handleNextContent: () => void;
 }) => (
@@ -65,20 +62,12 @@ const LessonContent = ({
       <h2 className="mb-2 text-2xl font-bold">Lesson: {index + 1}</h2>
     </div>
     <div className="overflow-scroll px-10 pb-10">
-      {lesson.content.map(
-        (
-          content: {
-            heading: string;
-            content: string;
-          },
-          index: number
-        ) => (
-          <div key={index} className="mb-4">
-            <h2 className="mb-4 text-xl font-bold">{content.heading}</h2>
-            <p className="mb-4">{content.content}</p>
-          </div>
-        )
-      )}
+      {lesson.content.map((content: ContentType, idx) => (
+        <div key={idx} className="mb-4">
+          <h2 className="mb-4 text-xl font-bold">{content.heading}</h2>
+          <p className="mb-4">{content.content}</p>
+        </div>
+      ))}
       <div className="flex w-full items-center justify-center gap-4 rounded-t-lg bg-white">
         <button
           onClick={handleNextContent}
@@ -113,22 +102,13 @@ const QuizIntro = ({ onStart }: { onStart: () => void }) => (
         <li>You will receive instant feedback after each question.</li>
       </ol>
     </div>
-    <button
-      onClick={onStart}
-      className="w-fit green-btn"
-    >
+    <button onClick={onStart} className="green-btn w-fit">
       Start Quiz
     </button>
   </div>
 );
 
-const Quiz = ({
-  quiz,
-  nextQues,
-}: {
-  quiz: { question: string; options: { id: number; content: string }[]; correctAnswer: number };
-  nextQues: () => void;
-}) => {
+const Quiz = ({ quiz, nextQues }: { quiz: QuizType; nextQues: () => void }) => {
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [options, setOptions] = useState(quiz.options);
@@ -240,7 +220,7 @@ const EndResult = () => {
             onClick={() => {
               window.location.href = '/app';
             }}
-            className="mt-6 w-fit green-btn"
+            className="green-btn mt-6 w-fit"
           >
             I{"'"}m ready for the next task!
           </button>
@@ -267,10 +247,7 @@ const EndResult = () => {
         <div>
           <h1 className="mb-2 text-center text-3xl font-bold">Token collected</h1>
           <div className="flex flex-col items-center justify-center gap-8">
-            <button
-              onClick={() => setShowEndScreen(true)}
-              className="mt-10 green-btn"
-            >
+            <button onClick={() => setShowEndScreen(true)} className="green-btn mt-10">
               Continue
             </button>
           </div>
@@ -298,10 +275,7 @@ const EndResult = () => {
           Great job! you{"'"}ve completed your first task!
         </h1>
         <div className="flex flex-col items-center justify-center gap-8">
-          <button
-            onClick={() => setShowToken(true)}
-            className="mt-10 green-btn"
-          >
+          <button onClick={() => setShowToken(true)} className="green-btn mt-10">
             Continue
           </button>
         </div>
@@ -310,7 +284,7 @@ const EndResult = () => {
   );
 };
 
-const TaskSimpleLessonQuiz = ({ task }: { task: TaskWithLessonQuiz }) => {
+const TaskSimpleLessonQuiz = ({ task }: { task: TaskWithLessonQuizType }) => {
   const totallessons = task.lessons.length;
   const [showLessonHeader, setShowLessonHeader] = useState(true);
   const [currLesson, setCurrLesson] = useState(0);
@@ -360,14 +334,14 @@ const TaskSimpleLessonQuiz = ({ task }: { task: TaskWithLessonQuiz }) => {
       try {
         await fetch('/api/user-level', {
           method: 'POST',
-          body: JSON.stringify({ taskId: task.id }),
+          body: JSON.stringify({ taskId: task.index }),
         });
       } catch (error) {
         console.error('Error:', error);
       }
     };
     if (showResult) updateProgress();
-  }, [showResult, task.id]);
+  }, [showResult, task.index]);
 
   return (
     <div className="flex h-full flex-1 flex-col">
