@@ -1,12 +1,25 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
-import { InitQuizModel } from '@/model/InitQuiz';
+import { InitQuizQuestionsModel, InitQuizResultsModel } from '@/model/InitQuiz';
 import { UserModel } from '@/model/User';
-
+type Option = {
+  text: string;
+  points: number;
+};
+type Question = {
+  _id: string;
+  index: number;
+  question: string;
+  options: Option[];
+};
+type Answer = {
+  index: number; // Refers to the question index
+  answer: string;
+};
 export async function POST(request: Request) {
   try {
     await dbConnect();
-    const { userEmail, score } = await request.json();
+    const { userEmail, answers } = await request.json();
     const user = await UserModel.findOne({ email: userEmail });
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
@@ -17,9 +30,26 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    const questions = await InitQuizQuestionsModel.find({}).sort({ index: 1 });
+    const calculateScore = (answers: Answer[], questions: Question[]): number => {
+      return answers.reduce((total: number, answer: Answer) => {
+        const question = questions[answer.index - 1]; // Access the question by index
+        if (!question || !question.options) {
+          console.warn(`Question not found for index ${answer.index}`);
+          return total; // Skip to the next answer
+        }
+        const selectedOption = question.options.find((option) => option.text === answer.answer);
+        console.log('selectedOption:', selectedOption);
+        return total + (selectedOption ? selectedOption.points : 0);
+      }, 0);
+    };
+
+    const score = calculateScore(answers, questions);
+
     const userId = user['_id'];
     const badge =
-      score == 20
+      score === 20
         ? 'Visionary'
         : score >= 15
           ? 'Adventurer'
@@ -27,7 +57,7 @@ export async function POST(request: Request) {
             ? 'Explorer'
             : 'Beginner';
 
-    const quizResult = new InitQuizModel({
+    const quizResult = new InitQuizResultsModel({
       userId,
       score,
       badge,
@@ -51,7 +81,6 @@ export async function POST(request: Request) {
       {
         message: 'Quiz result saved successfully',
         userId,
-        score,
         badge,
         comment:
           "You're just starting your web3 journey, and that's perfectly okay! Everyone begins somewhere. With a bit of guidance, you'll quickly pick up the basics.",
@@ -66,5 +95,27 @@ export async function POST(request: Request) {
       { error: 'Failed to save quiz result', errorDetails: error },
       { status: 500 }
     );
+  }
+}
+
+export async function GET() {
+  try {
+    await dbConnect();
+    const questions = await InitQuizQuestionsModel.find({}).sort({ index: 1 });
+    const sendQuestions = questions.map((question) => {
+      return {
+        question: question.question,
+        options: question.options.map((option: { text: string; points: number }) => {
+          return {
+            text: option.text,
+          };
+        }),
+        answer: question.answer,
+      };
+    });
+    return NextResponse.json({ questions: sendQuestions });
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json({ error: 'Failed to fetch questions' }, { status: 500 });
   }
 }

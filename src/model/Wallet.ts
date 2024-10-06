@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-interface IWallet extends Document {
+interface WalletType extends Document {
   address: string;
   type: 'primary' | 'secondary';
   chain: 'ethereum' | 'solana';
@@ -8,7 +8,7 @@ interface IWallet extends Document {
 }
 
 // Wallet schema
-const WalletSchema = new Schema<IWallet>(
+const WalletSchema = new Schema<WalletType>(
   {
     address: {
       type: String,
@@ -34,6 +34,6 @@ const WalletSchema = new Schema<IWallet>(
   { timestamps: true }
 );
 
-const WalletModel = mongoose.models.Wallet || mongoose.model<IWallet>('Wallet', WalletSchema);
+const WalletModel = mongoose.models.Wallet || mongoose.model<WalletType>('Wallet', WalletSchema);
 
 export { WalletModel };

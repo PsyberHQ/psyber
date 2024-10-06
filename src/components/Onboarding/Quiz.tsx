@@ -1,40 +1,46 @@
 'use client';
-import React, { useState } from 'react';
-import questions from '@/lib/const/initQuizQuestions';
+import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { InitQuizQuestionsType } from '@/model/InitQuiz';
+import LoaderComp from '../LoaderComp';
 
 const Quiz = () => {
   const session = useSession();
+  const [questions, setQuestions] = useState<InitQuizQuestionsType[]>([]);
   const [currQuesNum, setCurrQuesNum] = useState<number>(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [score, setScore] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [answers, setanswers] = useState<
+    {
+      index: number;
+      answer: string;
+    }[]
+  >([]);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitted, setSubmitted] = useState<{
-    score: number;
     badge: string;
     comment: string;
     comment2: string;
     message: string;
     userId: string;
   } | null>(null);
+  const [postAns, setPostAns] = useState(false);
 
-  const handleAnswer = (points: number) => {
-    setSelectedAnswer(points);
+  const handleAnswer = (text: string) => {
+    setSelectedAnswer(text);
   };
 
   const handleNext = () => {
     if (selectedAnswer !== null) {
-      setScore(score + selectedAnswer);
+      setanswers([...answers, { index: currQuesNum + 1, answer: selectedAnswer }]);
     }
 
     if (currQuesNum < questions.length - 1) {
       setCurrQuesNum(currQuesNum + 1);
       setSelectedAnswer(null);
     } else {
-      // Quiz completed, handle finish here
-      handleFinish();
+      setPostAns(true);
     }
   };
 
@@ -43,57 +49,55 @@ const Quiz = () => {
       setCurrQuesNum(currQuesNum + 1);
       setSelectedAnswer(null);
     } else {
-      handleFinish();
+      setPostAns(true);
     }
   };
 
-  const handleFinish = async () => {
-    try {
-      setSubmitLoading(true);
-      const response = await fetch('/api/init-quiz', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userEmail: session.data?.user?.email,
-          score,
-        }),
-      });
-
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      const response = await fetch('/api/init-quiz');
       const data = await response.json();
-      if (response.ok) {
-        setSubmitted(data);
-      } else if (data.redirect && response.status === 400 && data.error) {
-        window.location.href = '/app';
-      }
-    } catch (error) {
-      console.error('Error saving quiz result:', error);
-    } finally {
-      setSubmitLoading(false);
-    }
-  };
+      setQuestions(data.questions);
+    };
+    if (questions.length === 0) fetchQuestions();
+    const handleFinish = async () => {
+      try {
+        setSubmitLoading(true);
+        const response = await fetch('/api/init-quiz', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userEmail: session.data?.user?.email,
+            answers,
+          }),
+        });
 
-  if (submitLoading) {
+        const data = await response.json();
+        if (response.ok) {
+          setSubmitted(data);
+        } else if (data.redirect && response.status === 400 && data.error) {
+          window.location.href = '/app';
+        }
+      } catch (error) {
+        console.error('Error saving quiz result:', error);
+      } finally {
+        setSubmitLoading(false);
+      }
+    };
+    if (postAns) handleFinish();
+  }, [answers, postAns, questions, session.data?.user?.email]);
+
+  if (submitLoading || !questions.length) {
     return (
-      <div className="p-10">
-        <div className="flex flex-col items-center justify-center p-6">
-          <Image
-            src="/Loader.gif"
-            alt="Book"
-            width={521}
-            height={521}
-            className="w-16 scale-110 object-contain"
-          />
-        </div>
-        <p className="text-center text-slate-500">Calculating your web 3.0 readiness level....</p>
-      </div>
+      <LoaderComp text={submitLoading ? 'Submitting your answers...' : 'Loading questions...'} />
     );
   }
 
   if (submitted) {
     return (
-      <div className="mx-auto w-fit min-w-[60vw] max-w-lg p-20 pt-10">
+      <div className="max-w-[812px] p-6 pt-0 xs:p-10 xs:pt-0 md:p-20 md:pt-0">
         <div className="flex w-full items-center justify-center">
           <Image
             src="/mediBrain.png"
@@ -113,9 +117,7 @@ const Quiz = () => {
           </div>
           <div className="mt-6 flex items-center justify-center">
             <Link href="/app">
-              <button className="rounded-full bg-green-500 px-6 py-3 text-white shadow-md transition-colors hover:bg-green-600">
-                Start your journey
-              </button>
+              <button className="green-btn !py-3">Start your journey</button>
             </Link>
           </div>
         </div>
@@ -124,7 +126,7 @@ const Quiz = () => {
   }
 
   return (
-    <div className="mx-auto w-fit min-w-[60vw] max-w-lg p-20 pt-10">
+    <div className="p-10 !py-6 md:p-20">
       <div className="flex">
         <div className="w-fit">
           <Image
@@ -145,16 +147,16 @@ const Quiz = () => {
         </div>
       </div>
       <div className="mt-6 flex flex-col items-center justify-center">
-        <div className="flex w-full flex-col space-y-4">
+        <div className="flex w-fit flex-col space-y-4">
           <h2 className="mb-6 text-center text-xl font-semibold">
-            #{currQuesNum + 1} {questions[currQuesNum].question}
+            #{currQuesNum + 1} {questions[currQuesNum]?.question}
           </h2>
-          {questions[currQuesNum].options.map((option, index) => (
+          {questions[currQuesNum]?.options.map((option, index) => (
             <button
               key={index}
-              onClick={() => handleAnswer(option.points)}
+              onClick={() => handleAnswer(option.text)}
               className={`rounded-full px-4 py-3 text-center shadow-md transition-colors ${
-                selectedAnswer === option.points
+                selectedAnswer === option.text
                   ? 'bg-[#7047A3] text-white'
                   : 'border border-[#F47C92] hover:bg-gray-100'
               }`}
@@ -162,23 +164,25 @@ const Quiz = () => {
               {option.text}
             </button>
           ))}
-        </div>
-      </div>
 
-      <div className="mt-8 flex justify-between">
-        <button
-          onClick={handleSkip}
-          className="rounded-full bg-gray-200 px-6 py-2 transition-colors hover:bg-gray-300"
-        >
-          Skip
-        </button>
-        <button
-          disabled={selectedAnswer === null && currQuesNum < questions.length - 1 ? true : false}
-          onClick={handleNext}
-          className="rounded-full bg-green-500 px-6 py-2 text-white transition-colors hover:bg-green-600"
-        >
-          {currQuesNum < questions.length - 1 ? 'Next' : 'Finish'}
-        </button>
+          <div className="mt-10 flex w-full justify-between">
+            <button
+              onClick={handleSkip}
+              className="rounded-full bg-gray-200 px-6 py-2 transition-colors hover:bg-gray-300"
+            >
+              Skip
+            </button>
+            <button
+              disabled={
+                selectedAnswer === null && currQuesNum < questions.length - 1 ? true : false
+              }
+              onClick={handleNext}
+              className="green-btn"
+            >
+              {currQuesNum < questions.length - 1 ? 'Next' : 'Finish'}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
