@@ -75,8 +75,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         }}
       ></div>
       <div className="relative mt-[120px] flex min-h-[calc(100vh-120px)] items-center justify-center">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="-mt-10 max-h-[90%] max-w-[80%] overflow-auto rounded-xl bg-white shadow-xl hide-scrollbar">
+        <div className="absolute inset-0 flex items-start justify-center">
+          <div className="hide-scrollbar max-h-[90%] max-w-[80%] overflow-auto rounded-xl bg-white shadow-xl max-md:max-h-[95%] max-md:max-w-[90%]">
             {children}
           </div>
         </div>

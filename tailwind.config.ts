@@ -25,6 +25,10 @@ const config: Config = {
           'button-purple': '#BA68C8',
         },
       },
+      screens: {
+        xs: '325px',
+        '2xl': '1536px',
+      },
     },
   },
   plugins: [],

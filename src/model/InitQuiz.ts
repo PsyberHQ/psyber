@@ -1,26 +1,74 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
-const InitQuiz = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'User',
-    unique: true,
-  },
-  score: {
-    type: Number,
-    required: true,
-  },
-  badge: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+interface InitQuizResultsType extends Document {
+  userId: mongoose.Schema.Types.ObjectId;
+  score: number;
+  badge: string;
+  createdAt: Date;
+}
 
-const InitQuizModel = mongoose.models.InitQuiz || mongoose.model('InitQuiz', InitQuiz);
+const InitQuizResults = new mongoose.Schema<InitQuizResultsType>(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+      unique: true,
+    },
+    score: {
+      type: Number,
+      required: true,
+    },
+    badge: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-export { InitQuizModel };
+interface InitQuizQuestionsType extends Document {
+  index: number;
+  question: string;
+  options: {
+    text: string;
+    points: number;
+  }[];
+}
+
+const InitQuizQuestions = new mongoose.Schema<InitQuizQuestionsType>(
+  {
+    index: {
+      type: Number,
+      required: true,
+    },
+    question: {
+      type: String,
+      required: true,
+    },
+    options: [
+      {
+        text: {
+          type: String,
+          required: true,
+        },
+        points: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
+const InitQuizQuestionsModel =
+  mongoose.models.InitQuizQuestions ||
+  mongoose.model<InitQuizQuestionsType>('InitQuizQuestions', InitQuizQuestions);
+
+const InitQuizResultsModel =
+  mongoose.models.InitQuizResults ||
+  mongoose.model<InitQuizResultsType>('InitQuizResults', InitQuizResults);
+
+export { InitQuizResultsModel, InitQuizQuestionsModel };
+export type { InitQuizResultsType, InitQuizQuestionsType };

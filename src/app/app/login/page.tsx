@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const Login = async () => {
   return (
-    <div className="flex flex-col p-20 min-w-[512px] items-center justify-center">
+    <div className="flex flex-col items-center justify-center max-xs:p-6 p-10 md:p-20 max-md:text-center max-md:pt-6">
       <div className="mb-4">
         <Image
           src="/mediBrain.png"

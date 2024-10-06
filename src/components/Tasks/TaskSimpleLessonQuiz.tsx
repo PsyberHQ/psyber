@@ -42,7 +42,7 @@ const LessonHeader = ({
       <div className="flex items-center justify-center">
         <button
           onClick={startLesson}
-          className="mt-10 w-fit rounded-full bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-600"
+          className="mt-10 w-fit green-btn"
         >
           Continue
         </button>
@@ -115,7 +115,7 @@ const QuizIntro = ({ onStart }: { onStart: () => void }) => (
     </div>
     <button
       onClick={onStart}
-      className="w-fit rounded-full bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-600"
+      className="w-fit green-btn"
     >
       Start Quiz
     </button>
@@ -240,7 +240,7 @@ const EndResult = () => {
             onClick={() => {
               window.location.href = '/app';
             }}
-            className="mt-6 w-fit rounded-full bg-green-500 px-4 py-2 text-white shadow-md hover:bg-green-600"
+            className="mt-6 w-fit green-btn"
           >
             I{"'"}m ready for the next task!
           </button>
@@ -269,7 +269,7 @@ const EndResult = () => {
           <div className="flex flex-col items-center justify-center gap-8">
             <button
               onClick={() => setShowEndScreen(true)}
-              className="mt-10 w-fit rounded-full bg-green-500 px-6 py-3 font-bold text-white shadow-md hover:bg-green-600"
+              className="mt-10 green-btn"
             >
               Continue
             </button>
@@ -300,7 +300,7 @@ const EndResult = () => {
         <div className="flex flex-col items-center justify-center gap-8">
           <button
             onClick={() => setShowToken(true)}
-            className="mt-10 w-fit rounded-full bg-green-500 px-6 py-3 font-bold text-white shadow-md hover:bg-green-600"
+            className="mt-10 green-btn"
           >
             Continue
           </button>

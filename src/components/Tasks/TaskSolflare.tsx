@@ -42,10 +42,7 @@ const LessonHeader = ({
         ))}
       </div>
       <div className="flex items-center justify-center">
-        <button
-          onClick={startLesson}
-          className="mt-10 w-fit rounded-full bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-600"
-        >
+        <button onClick={startLesson} className="green-btn mt-10">
           Continue
         </button>
       </div>
@@ -100,7 +97,7 @@ const LessonContent = ({
                 handleNextContent();
               } else setIdx(idx + 1);
             }}
-            className="mt-4 w-fit rounded-full bg-green-500 p-4 px-5 py-3 font-bold text-white hover:bg-green-600"
+            className="green-btn mt-4"
           >
             Next
           </button>
@@ -237,7 +234,7 @@ const EndResult = () => {
             onClick={() => {
               window.location.href = '/app';
             }}
-            className="mt-6 w-fit rounded-full bg-green-500 px-4 py-2 text-white shadow-md hover:bg-green-600"
+            className="green-btn mt-6 w-fit"
           >
             I{"'"}m ready for the next task!
           </button>
@@ -266,7 +263,7 @@ const EndResult = () => {
           <div className="flex flex-col items-center justify-center gap-8">
             <button
               onClick={() => setShowEndScreen(true)}
-              className="mt-10 w-fit rounded-full bg-green-500 px-6 py-3 font-bold text-white shadow-md hover:bg-green-600"
+              className="mt-10 w-fit green-btn"
             >
               Continue
             </button>
@@ -295,7 +292,7 @@ const EndResult = () => {
         <div className="flex flex-col items-center justify-center gap-8">
           <button
             onClick={() => setShowToken(true)}
-            className="mt-10 w-fit rounded-full bg-green-500 px-6 py-3 font-bold text-white shadow-md hover:bg-green-600"
+            className="mt-10 w-fit green-btn"
           >
             Continue
           </button>
