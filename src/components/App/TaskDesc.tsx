@@ -24,7 +24,7 @@ const TaskDesc = ({
   const CanUserPerform = userLevel >= parseInt(task.id) || userLevel < parseInt(task.id) - 1;
   return (
     <>
-      <h2 className="mb-4 text-2xl font-bold">Task {task.id}</h2>
+      <h2 className="font-gliker mb-4 text-2xl">Task {task.id}</h2>
       <p className="mb-6">{task.description}</p>
       <div className="mb-6">
         <h3 className="mb-2 font-semibold">✨ Learning tip</h3>

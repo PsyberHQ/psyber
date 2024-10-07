@@ -37,7 +37,7 @@ const TaskParent = ({
             />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Hi {firstName}</h1>
+            <h1 className="font-gliker text-3xl font-normal text-gray-800">Hi {firstName}</h1>
             <p className="text-gray-600">Here are your tasks for today</p>
           </div>
         </div>

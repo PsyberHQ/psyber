@@ -1,7 +1,7 @@
 const Section2 = () => {
   return (
     <section className="h-fit bg-[#B28FD529] px-[3vw] py-[30px] md:px-[4vw] md:py-[50px] md:pt-[50px]">
-      <h1 className="m-auto w-fit text-center font-gloock text-2xl font-[600] leading-[30px] text-brand-darkbrown md:text-[40px] md:leading-[47px]">
+      <h1 className="m-auto w-fit text-center font-gliker text-2xl  leading-[30px] text-brand-darkbrown md:text-[40px] md:leading-[47px]">
         Web3 is Complex – But It <br /> Doesn&rsquo;t Have to be Stressful.
       </h1>
       <br />

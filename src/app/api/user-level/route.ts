@@ -61,14 +61,12 @@ export async function POST(request: Request) {
 
       if (walletAddress) {
         await WalletModel.create(
-          [
-            {
-              address: walletAddress,
-              type: 'primary',
-              chain: 'solana',
-              user: user._id,
-            },
-          ],
+          {
+            address: walletAddress,
+            type: 'primary',
+            chain: 'solana',
+            user: user._id,
+          },
           { session: walletSession }
         );
       }

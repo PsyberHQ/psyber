@@ -11,7 +11,7 @@ const Section7 = () => {
         backgroundPosition: 'center',
       }}
     >
-      <h1 className="m-auto mb-[5px] mt-[90px] w-fit text-center font-gloock text-[24px] font-[600] text-brand-darkbrown sm:mb-[25px] md:text-[32px]">
+      <h1 className="font-gliker m-auto mb-[5px] mt-[90px] w-fit text-center text-[24px] text-brand-darkbrown sm:mb-[25px] md:text-[32px]">
         Community Highlight
       </h1>
       <br />

@@ -1,6 +1,7 @@
 import { ContentType, LessonType, QuizType, TaskWithLessonQuizType } from '@/Types/Task';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import TaskEndOk from './TaskEndOk';
 
 const LessonHeader = ({
   title,
@@ -24,11 +25,11 @@ const LessonHeader = ({
       />
     </div>
     <div>
-      <h1 className="mb-2 text-center text-3xl font-bold">
+      <h1 className="font-gliker mb-2 text-center text-3xl">
         Lesson
         <span className="font-bold"> {currentPart}</span>
       </h1>
-      <h2 className="mb-2 text-center text-2xl font-bold">{title}</h2>
+      <h2 className="font-gliker mb-2 text-center text-3xl">{title}</h2>
     </div>
     <div className="mt-4 w-full">
       <div className="flex gap-1">
@@ -59,7 +60,7 @@ const LessonContent = ({
 }) => (
   <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg">
     <div className="w-full bg-[#F47C92] px-10 py-6 text-white">
-      <h2 className="mb-2 text-2xl font-bold">Lesson: {index + 1}</h2>
+      <h2 className="font-gliker mb-2 text-2xl">Lesson: {index + 1}</h2>
     </div>
     <div className="overflow-scroll px-10 pb-10">
       {lesson.content.map((content: ContentType, idx) => (
@@ -92,7 +93,7 @@ const QuizIntro = ({ onStart }: { onStart: () => void }) => (
       />
     </div>
     <div>
-      <h1 className="mb-2 text-center text-3xl font-bold">Quiz Time</h1>
+      <h1 className="font-gliker mb-2 text-center text-3xl">Quiz Time</h1>
     </div>
     <div>
       <h1 className="font-bold">Instructions:</h1>
@@ -128,9 +129,26 @@ const Quiz = ({ quiz, nextQues }: { quiz: QuizType; nextQues: () => void }) => {
     <div className="absolute inset-0 flex h-full flex-col items-center rounded-lg bg-white">
       {showResult ? (
         <div
-          className={`mb-4 w-full py-8 text-center text-white ${isCorrect ? 'bg-[#16C86D]' : 'bg-[#E93052]'}`}
+          className={`mb-4 flex w-full items-center justify-center gap-2 py-8 text-center text-white ${isCorrect ? 'bg-[#16C86D]' : 'bg-[#E93052]'}`}
         >
-          <p className="mb-2 text-xl font-bold">
+          {isCorrect ? (
+            <Image
+              src="/checkIcon.png"
+              alt="check"
+              width={521}
+              height={521}
+              className="w-12 object-contain"
+            />
+          ) : (
+            <Image
+              src="/cross.png"
+              alt="cross"
+              width={521}
+              height={521}
+              className="w-12 object-contain"
+            />
+          )}
+          <p className="font-gliker text-xl md:text-3xl">
             {isCorrect ? "Wohoo! That's correct" : "That's incorrect!"}
           </p>
         </div>
@@ -179,104 +197,6 @@ const Quiz = ({ quiz, nextQues }: { quiz: QuizType; nextQues: () => void }) => {
             className="mt-4 w-fit rounded-full bg-[#7047A3] px-8 py-3 font-bold text-white"
           >
             Next
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const EndResult = () => {
-  const [showToken, setShowToken] = useState(false);
-  const [showEndScreen, setShowEndScreen] = useState(false);
-  if (showEndScreen) {
-    return (
-      <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg p-20">
-        <div className="flex flex-col items-center justify-center">
-          <Image
-            src="/mediBrain.png"
-            alt="Book"
-            width={521}
-            height={521}
-            className="size-24 w-fit object-contain pl-2"
-          />
-          <p>Hurrayy!!</p>
-        </div>
-        <div>
-          <h1 className="mb-2 text-center text-3xl font-bold">You’re progressing wonderfully!</h1>
-          <p className="text-center text-[#F47C92]">
-            You have the power to unlock the web3 world. Every challenge makes you stronger!
-          </p>
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          <Image
-            src="/Loader.gif"
-            alt="Book"
-            width={521}
-            height={521}
-            className="w-16 scale-110 object-contain"
-          />
-          <button
-            onClick={() => {
-              window.location.href = '/app';
-            }}
-            className="green-btn mt-6 w-fit"
-          >
-            I{"'"}m ready for the next task!
-          </button>
-        </div>
-      </div>
-    );
-  }
-  if (showToken) {
-    return (
-      <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg p-20">
-        <div className="flex flex-col items-center justify-center">
-          <Image
-            src="/mediBrain.png"
-            alt="Book"
-            width={521}
-            height={521}
-            className="size-24 w-fit object-contain pl-2"
-          />
-          <p>Hurrayy!!</p>
-        </div>
-        <div>
-          <h1 className="mb-2 text-center text-3xl font-bold">50</h1>
-        </div>
-        <div>
-          <h1 className="mb-2 text-center text-3xl font-bold">Token collected</h1>
-          <div className="flex flex-col items-center justify-center gap-8">
-            <button onClick={() => setShowEndScreen(true)} className="green-btn mt-10">
-              Continue
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg p-20">
-      <div className="flex flex-col items-center justify-center">
-        <Image
-          src="/mediBrain.png"
-          alt="Book"
-          width={521}
-          height={521}
-          className="size-24 w-fit object-contain pl-2"
-        />
-        <p>Hurrayy!!</p>
-      </div>
-      <div>
-        <h1 className="mb-2 text-center text-3xl font-bold">Quiz Completed</h1>
-      </div>
-      <div>
-        <h1 className="mb-2 text-center text-3xl font-bold">
-          Great job! you{"'"}ve completed your first task!
-        </h1>
-        <div className="flex flex-col items-center justify-center gap-8">
-          <button onClick={() => setShowToken(true)} className="green-btn mt-10">
-            Continue
           </button>
         </div>
       </div>
@@ -363,7 +283,7 @@ const TaskSimpleLessonQuiz = ({ task }: { task: TaskWithLessonQuizType }) => {
 
       {showQuizIntro && <QuizIntro onStart={handleStartQuiz} />}
       {showQuiz && <Quiz quiz={task.quiz[currentQuestionIndex]} nextQues={handleNextQuestion} />}
-      {showResult && <EndResult />}
+      {showResult && <TaskEndOk tokens={Number(task.reward.split(' ')[0])} />}
     </div>
   );
 };
