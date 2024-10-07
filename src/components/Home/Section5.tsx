@@ -4,7 +4,7 @@ import Image from 'next/image';
 const Section5 = () => {
   return (
     <section className="px-[3vw] py-[25px] md:px-[4vw] md:py-[40px]">
-      <h1 className="m-auto mb-[30px] w-[250px] text-center font-gloock text-2xl font-[600] leading-[31px] text-brand-darkbrown md:mb-[40px] md:w-[470px] md:text-[40px] md:leading-[47px]">
+      <h1 className="font-gliker m-auto mb-[30px] w-[250px] text-center text-2xl leading-[31px] text-brand-darkbrown md:mb-[40px] md:w-[470px] md:text-[40px] md:leading-[47px]">
         How Psyber Makes Web3 Easy for You{' '}
       </h1>
       <div className="m-auto mb-[50px] w-fit">

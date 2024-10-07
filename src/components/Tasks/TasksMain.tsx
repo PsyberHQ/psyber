@@ -40,7 +40,7 @@ const TaskMain = ({ userLevel }: { userLevel: number }) => {
   }
 
   return (
-    <div className="relative flex h-fit min-h-[70vh] min-w-[60vw] items-center justify-center">
+    <div className="relative flex h-full min-h-[70vh] min-w-[60vw] items-center justify-center">
       {task.type === 'TaskWithLessonQuiz' && <TaskSimpleLessonQuiz task={task} />}
       {task.type === 'TaskWithImage' && <TaskWithImage task={task} />}
     </div>

@@ -1,18 +1,23 @@
 'use client';
 import Image from 'next/image';
-import SignOutBtn from './SignOutBtn';
 import { useEffect, useRef } from 'react';
 import { Session } from 'next-auth';
+import SignOutBtn from './SignOutBtn';
 
 const UserAvatar = ({ session }: { session: Session | null }) => {
   const ref = useRef<HTMLDetailsElement | null>(null);
   useEffect(() => {
-    document.addEventListener('mousedown', () => {
-      if (ref?.current?.open) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (ref?.current?.open && !ref.current.contains(e?.target as Node)) {
         ref.current.open = false;
       }
-    });
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
+
   return (
     <details ref={ref} className="relative mr-4">
       <summary className="flex size-12 cursor-pointer items-center">

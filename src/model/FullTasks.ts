@@ -43,7 +43,7 @@ const TaskSchema = new Schema({
   type: { type: String, enum: ['TaskWithLessonQuiz', 'TaskWithImage'], required: true },
 });
 
-// Create a Model for the Unified Task Schema
+// Unified Task Schema
 const FullTasksModel =
   mongoose.models.FullTasks || mongoose.model<Document>('FullTasks', TaskSchema);
 

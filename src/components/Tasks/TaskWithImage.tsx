@@ -4,14 +4,15 @@ import React, { useEffect, useState } from 'react';
 import WalletBtn from '../WalletBtn';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { LessonType, TaskWithImageType } from '@/Types/Task';
+import TaskEndOk from './TaskEndOk';
 
 const LessonHeader = ({
-  title,
+  lesson,
   currentPart,
   totalParts,
   startLesson,
 }: {
-  title: string;
+  lesson: LessonType;
   currentPart: number;
   totalParts: number;
   startLesson: () => void;
@@ -19,19 +20,19 @@ const LessonHeader = ({
   <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg bg-[#7047A3] p-20 text-white">
     <div className="flex justify-center">
       <Image
-        src="/book.png"
+        src={lesson.specialImage || '/book.png'}
         alt="Book"
-        width={121}
-        height={121}
+        width={521}
+        height={521}
         className="size-20 w-fit object-contain"
       />
     </div>
     <div>
-      <h1 className="mb-2 text-center text-3xl font-bold">
+      <h1 className="font-gliker mb-2 text-center text-3xl">
         Lesson
         <span className="font-bold"> {currentPart}</span>
       </h1>
-      <h2 className="mb-2 text-center text-2xl font-bold">{title}</h2>
+      <h2 className="font-gliker mb-2 text-center text-2xl">{lesson.title}</h2>
     </div>
     <div className="mt-4 w-full">
       <div className="flex gap-1">
@@ -64,7 +65,7 @@ const LessonContent = ({
   return (
     <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg">
       <div className="flex w-full items-center justify-between bg-[#F47C92] px-10 py-6 text-white">
-        <h2 className="mb-2 text-2xl font-bold">
+        <h2 className="font-gliker mb-2 text-2xl">
           {index === 0 ? 'Introduction to Solflare' : 'Steps'}
         </h2>
         {lesson.specialImage && (
@@ -120,7 +121,7 @@ const SolflareRedirect = ({ onClick }: { onClick: () => void }) => (
       />
     </div>
     <div>
-      <h1 className="mb-2 text-center text-3xl font-bold">
+      <h1 className="font-gliker mb-2 text-center text-3xl">
         Ready to create your wallet? Click &apos;Go to solflare&apos; and create one now!
       </h1>
     </div>
@@ -174,7 +175,7 @@ const SolflareConnect = ({ onConnected, taskId }: { taskId: number; onConnected:
   return (
     <div className="absolute inset-0 flex h-full flex-col items-center gap-8 overflow-scroll rounded-lg bg-[#7047A3] p-6 text-white md:p-20">
       <div>
-        <h1 className="mb-2 text-center text-3xl font-bold">
+        <h1 className="font-gliker mb-2 text-center text-3xl">
           Welcome back! Ready to connect your solflare wallet?
         </h1>
       </div>
@@ -204,102 +205,6 @@ const SolflareConnect = ({ onConnected, taskId }: { taskId: number; onConnected:
           Connect Wallet
         </button>
       )}
-    </div>
-  );
-};
-
-const EndResult = () => {
-  const [showToken, setShowToken] = useState(false);
-  const [showEndScreen, setShowEndScreen] = useState(false);
-  if (showEndScreen) {
-    return (
-      <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg p-20 pt-10">
-        <div className="flex flex-col items-center justify-center">
-          <Image
-            src="/mediBrain.png"
-            alt="Book"
-            width={521}
-            height={521}
-            className="size-24 w-fit object-contain pl-2"
-          />
-          <p>Hurrayy!!</p>
-        </div>
-        <div>
-          <h1 className="mb-2 text-center text-3xl font-bold">You’re progressing wonderfully!</h1>
-          <p className="text-center text-[#F47C92]">
-            You have the power to unlock the web3 world. Every challenge makes you stronger!
-          </p>
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          <Image
-            src="/Loader.gif"
-            alt="Book"
-            width={521}
-            height={521}
-            className="w-16 scale-110 object-contain"
-          />
-          <button
-            onClick={() => {
-              window.location.href = '/app';
-            }}
-            className="green-btn mt-6 w-fit"
-          >
-            I{"'"}m ready for the next task!
-          </button>
-        </div>
-      </div>
-    );
-  }
-  if (showToken) {
-    return (
-      <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg p-20">
-        <div className="flex flex-col items-center justify-center">
-          <Image
-            src="/mediBrain.png"
-            alt="Book"
-            width={521}
-            height={521}
-            className="size-24 w-fit object-contain pl-2"
-          />
-          <p>Hurrayy!!</p>
-        </div>
-        <div>
-          <h1 className="mb-2 text-center text-3xl font-bold">100</h1>
-        </div>
-        <div>
-          <h1 className="mb-2 text-center text-3xl font-bold">Token collected</h1>
-          <div className="flex flex-col items-center justify-center gap-8">
-            <button onClick={() => setShowEndScreen(true)} className="green-btn mt-10 w-fit">
-              Continue
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg p-20 pt-10">
-      <div className="flex flex-col items-center justify-center">
-        <Image
-          src="/mediBrain.png"
-          alt="Book"
-          width={521}
-          height={521}
-          className="size-24 w-fit object-contain pl-2"
-        />
-        <p>Hurrayy!!</p>
-      </div>
-
-      <div>
-        <h1 className="mb-2 text-center text-3xl font-bold">
-          Great job! you{"'"}ve completed Wallet Connection task!
-        </h1>
-        <div className="flex flex-col items-center justify-center gap-8">
-          <button onClick={() => setShowToken(true)} className="green-btn mt-10 w-fit">
-            Continue
-          </button>
-        </div>
-      </div>
     </div>
   );
 };
@@ -345,7 +250,7 @@ const TaskWithImage = ({ task }: { task: TaskWithImageType }) => {
     <div className="flex h-full flex-1 flex-col">
       {showLessonHeader && (
         <LessonHeader
-          title={task.lessons[currLesson].title}
+          lesson={task.lessons[currLesson]}
           currentPart={currLesson + 1}
           totalParts={totallessons}
           startLesson={startLesson}
@@ -363,7 +268,7 @@ const TaskWithImage = ({ task }: { task: TaskWithImageType }) => {
       {showSolflareConnect && (
         <SolflareConnect onConnected={handleOnConnected} taskId={task.index} />
       )}
-      {showResult && <EndResult />}
+      {showResult && <TaskEndOk tokens={Number(task.reward.split(' ')[0])} />}
     </div>
   );
 };
