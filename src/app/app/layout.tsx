@@ -1,3 +1,4 @@
+import ReturnBtn from '@/components/App/ReturnBtn';
 import UserAvatar from '@/components/App/UserAvatar';
 import WalletBtn from '@/components/WalletBtn';
 import dbConnect from '@/lib/dbConnect';
@@ -66,14 +67,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </div>
       </div>
-      <Link href="/">
-        <div className="fixed bottom-6 left-6 cursor-pointer text-white">
-          <span className="flex items-center justify-center gap-2">
-            <Image src="/returnIcon.png" alt="Logo" width={372} height={472} className="size-4" />
-            return to home
-          </span>
-        </div>
-      </Link>
+      <ReturnBtn />
     </Providers>
   );
 }
