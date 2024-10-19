@@ -9,7 +9,7 @@ import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession();
   const email = session?.user?.email;
   await dbConnect();
@@ -60,11 +60,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           backgroundImage: "url('/bg.jpeg')",
         }}
       ></div>
-      <div className="relative mt-[120px] flex min-h-[calc(100vh-120px)] items-center justify-center">
-        <div className="absolute inset-0 flex items-start justify-center">
-          <div className="hide-scrollbar max-h-[90%] max-w-[80%] overflow-auto rounded-xl bg-white shadow-xl max-md:h-[95%] max-md:w-[90%]">
-            {children}
-          </div>
+      <div className="relative mb-[60px] mt-[120px] flex min-h-[calc(100dvh-180px)] items-center justify-center">
+        <div className="max-h-full min-w-[60vw] max-w-[80%] overflow-hidden rounded-xl bg-white shadow-xl max-lg:max-w-[85%] max-md:max-w-[95%]">
+          <div className="h-[calc(100dvh-180px)] max-h-full">{children}</div>
         </div>
       </div>
       <ReturnBtn />

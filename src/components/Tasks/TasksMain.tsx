@@ -3,17 +3,13 @@ import LoaderComp from '@/components/LoaderComp';
 import TaskSimpleLessonQuiz from '@/components/Tasks/TaskSimpleLessonQuiz';
 import TaskWithImage from '@/components/Tasks/TaskWithImage';
 import { FulltasksType } from '@/Types/Task';
-import { redirect, useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const TaskMain = ({ userLevel }: { userLevel: number }) => {
+const TaskMain = () => {
   const { id } = useParams();
-  const taskNumber = parseInt(id as string);
+  const taskNumber = Number(id as string);
   const [Fulltasks, setFulltasks] = useState<FulltasksType[]>([]);
-
-  if (!(userLevel + 1 == taskNumber) || taskNumber <= 0) {
-    redirect('/app');
-  }
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -40,10 +36,10 @@ const TaskMain = ({ userLevel }: { userLevel: number }) => {
   }
 
   return (
-    <div className="relative flex h-full min-h-[70vh] min-w-[60vw] items-center justify-center">
+    <>
       {task.type === 'TaskWithLessonQuiz' && <TaskSimpleLessonQuiz task={task} />}
       {task.type === 'TaskWithImage' && <TaskWithImage task={task} />}
-    </div>
+    </>
   );
 };
 
