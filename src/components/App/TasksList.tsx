@@ -31,11 +31,11 @@ const TasksList = ({
   }, [currentTaskToDo]);
 
   return (
-    <>
+    <div className="h-min w-full lg:px-10">
       {tasks.map((task, index) => (
         <div
           key={task.id}
-          className="relative mx-auto mb-12 mt-5 max-w-[30vw] cursor-pointer"
+          className="relative mx-auto mb-12 ml-2 mt-5 cursor-pointer"
           onClick={() => setCurrentTask(index)}
           ref={index === currentTaskToDo ? ref : null}
         >
@@ -50,7 +50,8 @@ const TasksList = ({
               index <= currentTaskToDo ? 'bg-green-500' : 'bg-gray-300'
             }`}
           ></div>
-          <div className="relative ml-8 max-w-[30vw]">
+
+          <div className="relative ml-4 md:ml-8">
             <div className="rounded-3xl border border-[#DCD8D2] bg-[#FCFAF8] p-10 shadow-sm">
               <div className="absolute -top-1/2 left-1/2 mr-4 flex w-fit -translate-x-1/2 translate-y-[100%] items-center justify-center rounded-2xl bg-[#F47C92] p-3 text-white">
                 <span className="text-3xl font-bold">{task.id}</span>
@@ -73,7 +74,7 @@ const TasksList = ({
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 };
 
