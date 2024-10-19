@@ -1,88 +1,12 @@
-import { ContentType, LessonType, QuizType, TaskWithLessonQuizType } from '@/Types/Task';
+import { QuizType, TaskWithLessonQuizType } from '@/Types/Task';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import TaskEndOk from './TaskEndOk';
-
-const LessonHeader = ({
-  title,
-  currentPart,
-  totalParts,
-  startLesson,
-}: {
-  title: string;
-  currentPart: number;
-  totalParts: number;
-  startLesson: () => void;
-}) => (
-  <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg bg-[#7047A3] p-20 text-white">
-    <div className="flex justify-center">
-      <Image
-        src="/book.png"
-        alt="Book"
-        width={121}
-        height={121}
-        className="size-20 w-fit object-contain"
-      />
-    </div>
-    <div>
-      <h1 className="font-gliker mb-2 text-center text-3xl">
-        Lesson
-        <span className="font-bold"> {currentPart}</span>
-      </h1>
-      <h2 className="font-gliker mb-2 text-center text-3xl">{title}</h2>
-    </div>
-    <div className="mt-4 w-full">
-      <div className="flex gap-1">
-        {Array.from({ length: totalParts }).map((_, index) => (
-          <div
-            key={index}
-            className={`h-2.5 w-full rounded-full ${index < currentPart ? 'bg-green-500' : 'bg-white'}`}
-          />
-        ))}
-      </div>
-      <div className="flex items-center justify-center">
-        <button onClick={startLesson} className="green-btn mt-10 w-fit">
-          Continue
-        </button>
-      </div>
-    </div>
-  </div>
-);
-
-const LessonContent = ({
-  lesson,
-  index,
-  handleNextContent,
-}: {
-  lesson: LessonType;
-  index: number;
-  handleNextContent: () => void;
-}) => (
-  <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg">
-    <div className="w-full bg-[#F47C92] px-10 py-6 text-white">
-      <h2 className="font-gliker mb-2 text-2xl">Lesson: {index + 1}</h2>
-    </div>
-    <div className="overflow-scroll px-10 pb-10">
-      {lesson.content.map((content: ContentType, idx) => (
-        <div key={idx} className="mb-4">
-          <h2 className="mb-4 text-xl font-bold">{content.heading}</h2>
-          <p className="mb-4">{content.content}</p>
-        </div>
-      ))}
-      <div className="flex w-full items-center justify-center gap-4 rounded-t-lg bg-white">
-        <button
-          onClick={handleNextContent}
-          className="mt-4 w-fit rounded-full bg-green-500 p-4 px-5 py-3 font-bold text-white hover:bg-green-600"
-        >
-          Next
-        </button>
-      </div>
-    </div>
-  </div>
-);
+import LessonContent from './common/LessonContent';
+import LessonIntro from './common/LessonIntro';
 
 const QuizIntro = ({ onStart }: { onStart: () => void }) => (
-  <div className="absolute inset-0 flex h-full flex-col items-center gap-8 rounded-lg bg-[#7047A3] p-20 text-white">
+  <div className="flex h-full flex-col items-center gap-8 rounded-lg bg-[#7047A3] p-20 text-white">
     <div className="flex justify-center">
       <Image
         src="/book.png"
@@ -93,7 +17,7 @@ const QuizIntro = ({ onStart }: { onStart: () => void }) => (
       />
     </div>
     <div>
-      <h1 className="font-gliker mb-2 text-center text-3xl">Quiz Time</h1>
+      <h1 className="mb-2 text-center font-gliker text-3xl">Quiz Time</h1>
     </div>
     <div>
       <h1 className="font-bold">Instructions:</h1>
@@ -126,7 +50,7 @@ const Quiz = ({ quiz, nextQues }: { quiz: QuizType; nextQues: () => void }) => {
   };
 
   return (
-    <div className="absolute inset-0 flex h-full flex-col items-center rounded-lg bg-white">
+    <div className="flex h-full flex-col items-center rounded-lg bg-white">
       {showResult ? (
         <div
           className={`mb-4 flex w-full items-center justify-center gap-2 py-8 text-center text-white ${isCorrect ? 'bg-[#16C86D]' : 'bg-[#E93052]'}`}
@@ -264,10 +188,10 @@ const TaskSimpleLessonQuiz = ({ task }: { task: TaskWithLessonQuizType }) => {
   }, [showResult, task.index]);
 
   return (
-    <div className="flex h-full flex-1 flex-col">
+    <div className="flex h-full flex-1 flex-col overflow-y-scroll">
       {showLessonHeader && (
-        <LessonHeader
-          title={task.lessons[currLesson].title}
+        <LessonIntro
+          lesson={task.lessons[currLesson]}
           currentPart={currLesson + 1}
           totalParts={totallessons}
           startLesson={startLesson}
@@ -283,7 +207,12 @@ const TaskSimpleLessonQuiz = ({ task }: { task: TaskWithLessonQuizType }) => {
 
       {showQuizIntro && <QuizIntro onStart={handleStartQuiz} />}
       {showQuiz && <Quiz quiz={task.quiz[currentQuestionIndex]} nextQues={handleNextQuestion} />}
-      {showResult && <TaskEndOk tokens={Number(task.reward.split(' ')[0])} />}
+      {showResult && (
+        <TaskEndOk
+          endMessage="Congratulations! You have completed the Task."
+          tokens={Number(task.reward.split(' ')[0])}
+        />
+      )}
     </div>
   );
 };

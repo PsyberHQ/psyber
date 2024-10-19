@@ -25,33 +25,34 @@ const TaskParent = ({
   const firstName = session?.data?.user?.name?.split(' ')[0];
   return (
     <>
-      <div className="col-span-6 flex flex-col items-start justify-start p-10">
-        <div className="sticky left-0 top-0 z-50 -ml-3 mb-10 flex h-min w-[100%] items-center rounded-lg bg-white pl-10">
-          <div className="mr-4">
-            <Image
-              src="/mediBrain.png"
-              alt="Meditating Brain"
-              className="w-24"
-              height={972}
-              width={1148}
-            />
+      <div className="hide-scrollbar col-span-6 flex h-full flex-col items-start justify-start overflow-y-scroll p-6 !pt-0 md:p-10">
+        <div className="sticky left-0 right-0 top-0 z-50 mb-10 w-full bg-white pt-6">
+          <div className="flex items-center">
+            <div className="mr-4">
+              <Image
+                src="/mediBrain.png"
+                alt="Meditating Brain"
+                className="w-24"
+                height={972}
+                width={1148}
+              />
+            </div>
+            <div className="flex flex-col">
+              <h1 className="font-gliker text-3xl font-normal text-gray-800">Hi {firstName}</h1>
+              <p className="text-gray-600 max-md:hidden">Here are your tasks for today</p>
+            </div>
           </div>
-          <div>
-            <h1 className="font-gliker text-3xl font-normal text-gray-800">Hi {firstName}</h1>
-            <p className="text-gray-600">Here are your tasks for today</p>
-          </div>
+          <p className="text-center text-gray-600 md:hidden">Here are your tasks for today</p>
         </div>
-        <div className="h-min w-full">
-          <TasksList
-            currentTaskToDo={currentTaskToDo}
-            tasks={tasks}
-            setCurrentTask={setCurrentTask}
-          />
-        </div>
+        <TasksList
+          currentTaskToDo={currentTaskToDo}
+          tasks={tasks}
+          setCurrentTask={setCurrentTask}
+        />
       </div>
 
-      <div className="col-span-4 bg-[#7047A3] text-white">
-        <div className="sticky top-0 h-fit p-10">
+      <div className="hide-scrollbar col-span-4 h-full overflow-y-scroll bg-[#7047A3] text-white">
+        <div className="sticky top-0 h-fit p-6 md:p-10">
           <TaskDesc task={tasks[currentTask]} />
         </div>
       </div>
