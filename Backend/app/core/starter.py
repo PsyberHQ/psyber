@@ -4,6 +4,8 @@ from contextlib import asynccontextmanager
 from app.core.database import Base,engine
 from app.models.user import User
 from app.models.wallet import Wallet
+from app.models import task
+from app.models import quiz
 from app.core.configs import DEBUG_MODE,logger
 
 @asynccontextmanager # type: ignore
