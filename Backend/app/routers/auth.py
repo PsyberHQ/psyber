@@ -40,7 +40,7 @@ The previous token will be `blacklisted`'''
 
 @router.put('/refresh-token',response_model=Token,status_code=status.HTTP_200_OK,description=token_refresh_desc)
 async def refresh_token(current_user:ActiveUser,token:TokenDependecy) -> Token:
-    token_exp = await token_exp_time(token)
+    token_exp = await token_exp_time(token) #type: ignore
     await blacklist_token(token,token_exp) # type: ignore
     new_token = await create_access_token(data={"sub": current_user.email})
     return Token(access_token=new_token)
