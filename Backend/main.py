@@ -2,8 +2,7 @@ from fastapi import FastAPI
 from app.core.starter import lifespan
 from app.core.configs import DEBUG_MODE,origins
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import auth
-from app.routers import user
+from app.routers import auth,user,quiz
 
 app = FastAPI(
     lifespan=lifespan,
@@ -28,3 +27,4 @@ app.add_middleware(
 )
 app.include_router(auth.router,prefix='/api')
 app.include_router(user.router,prefix='/api')
+app.include_router(quiz.router,prefix='/api')
