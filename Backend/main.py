@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from app.core.starter import lifespan
-from app.core.configs import DEBUG_MODE,origins
+from app.core.configs import DEBUG_MODE,origins,SECRET_KEY
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth,user,quiz
+from starlette.middleware.sessions import SessionMiddleware
 
 app = FastAPI(
     lifespan=lifespan,
@@ -25,6 +26,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY) # type: ignore
 app.include_router(auth.router,prefix='/api')
 app.include_router(user.router,prefix='/api')
 app.include_router(quiz.router,prefix='/api')

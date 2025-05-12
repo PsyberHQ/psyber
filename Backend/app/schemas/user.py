@@ -12,7 +12,8 @@ class BaseUser(BaseModel):
 
 #!SECTION - Schema for User Signup
 class UserSignup(BaseUser):
-    password: Annotated[str,Field(examples=['admin']),BeforeValidator(hash_password)]
+    password: Annotated[Optional[str],Field(examples=['admin']),BeforeValidator(hash_password)] = None
+    image_url:Optional[Union[AnyUrl,AnyHttpUrl,str]] = None
 
 #!SECTION for showing User details
 class UserShow(BaseUser):

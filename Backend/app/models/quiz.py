@@ -2,6 +2,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, String, ForeignKey, DateTime, JSON, func, UniqueConstraint
 from app.core.database import Base
 from app.schemas.quiz import OptionSchema
+from datetime import datetime
 
 class InitQuizResult(Base):
     __tablename__ = "init_quiz_results"
@@ -11,7 +12,7 @@ class InitQuizResult(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False, unique=True)
     score: Mapped[int] = mapped_column(nullable=False)
     badge: Mapped[str] = mapped_column(String, nullable=False)
-    created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now(),default=datetime.now)
 
     user = relationship("User", backref="init_quiz_result")
 
@@ -22,5 +23,5 @@ class InitQuizQuestion(Base):
     #index: Mapped[int] = mapped_column(nullable=False)
     question: Mapped[str] = mapped_column(String, nullable=False)
     options: Mapped[list[OptionSchema]] = mapped_column(JSON, nullable=False)
-    created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now())
-    updated_at:Mapped[DateTime] = mapped_column(DateTime(timezone=True),onupdate=func.now())
+    created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now(),default=datetime.now)
+    updated_at:Mapped[DateTime] = mapped_column(DateTime(timezone=True),onupdate=datetime.now,server_default=func.now())

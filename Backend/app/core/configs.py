@@ -81,3 +81,15 @@ TEMPLATES = {
     "welcome": "welcome_email.txt",
     "reset_password": "reset_password.txt",
 }
+
+#SECTION Google Auth
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+GOOGLE_REDIRECT_URI = os.getenv('GOOGLE_REDIRECT_URI')
+SERVER_METADATA_URL = os.getenv('SERVER_METADATA_URL')
+
+#NOTE - Email
+EMAIL = os.getenv('EMAIL')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+APP_PASS = os.getenv('APP_PASS')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
