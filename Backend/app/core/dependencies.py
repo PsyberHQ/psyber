@@ -17,7 +17,7 @@ class CustomOAuth2PasswordRequestForm(OAuth2PasswordRequestForm):
         
         super().__init__(username=username,password=password)
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='api/auth/login')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='api/auth/login',scopes={'otp':'OTP'})
 TokenDependecy = Annotated[str,Depends(oauth2_scheme)]
 
 DBSession = Annotated[AsyncSession,Depends(get_db)]
