@@ -13,6 +13,7 @@ email_validator==2.2.0
 fastapi==0.115.12
 fastapi-cli==0.0.7
 greenlet==3.2.1
+gunicorn==23.0.0
 h11==0.16.0
 httpcore==1.0.9
 httptools==0.6.4
@@ -23,10 +24,12 @@ Jinja2==3.1.6
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 mdurl==0.1.2
+packaging==25.0
 passlib==1.7.4
 pycparser==2.22
 pydantic==2.11.4
 pydantic_core==2.33.2
+pyemaillib==0.1.2
 Pygments==2.19.1
 PyJWT==2.10.1
 python-dotenv==1.1.0
@@ -46,4 +49,3 @@ uvicorn==0.34.2
 uvloop==0.21.0
 watchfiles==1.0.5
 websockets==15.0.1
-gunicorn
