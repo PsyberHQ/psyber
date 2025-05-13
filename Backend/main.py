@@ -13,7 +13,7 @@ app = FastAPI(
     description='<h3><b>Health is wealth,Start with your mental health</b></h3>',
     servers=[
         {"url": "http://localhost:8000", "description": "Local Development"},
-        {"url": , "description": "Production Server"}
+        {"url":DEPLOYED_URL , "description": "Production Server"}
     ],
     docs_url='/'
     )
