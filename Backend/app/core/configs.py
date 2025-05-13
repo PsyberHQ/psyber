@@ -55,6 +55,7 @@ REDIS_URL = os.getenv('REDIS_URL')
 redis = aioredis.from_url(REDIS_URL)
 VERIFICATION_CODE_EXP_MIN = timedelta(minutes=int(os.getenv('VERIFICATION_CODE_EXP_MIN'))) # type: ignore
 DB_URL:str = os.getenv('DB_URL') # type: ignore
+DEPLOYED_URL:str = os.getenv('DEPLOYED_URL') # type: ignore
 
 
 #NOTE - Redis variables

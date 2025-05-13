@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.core.starter import lifespan
-from app.core.configs import DEBUG_MODE,origins,SECRET_KEY
+from app.core.configs import DEBUG_MODE,origins,SECRET_KEY,DEPLOYED_URL
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth,user,quiz
 from starlette.middleware.sessions import SessionMiddleware
@@ -13,7 +13,7 @@ app = FastAPI(
     description='<h3><b>Health is wealth,Start with your mental health</b></h3>',
     servers=[
         {"url": "http://localhost:8000", "description": "Local Development"},
-        {"url": "...", "description": "Production Server"}
+        {"url": , "description": "Production Server"}
     ],
     docs_url='/'
     )
