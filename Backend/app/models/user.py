@@ -16,7 +16,7 @@ class User(Base):
     )
     username: Mapped[str] = mapped_column(String(40), nullable=False, unique=True, index=True)
     
-    password: Mapped[Optional[str]] = mapped_column(String, nullable=False)
+    password: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     
     name: Mapped[str] = mapped_column(String, nullable=True)
     

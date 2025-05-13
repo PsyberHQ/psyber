@@ -3,9 +3,15 @@ from typing import Optional,List,Dict
 from datetime import datetime
 from app.schemas.enums import BadgeLevel
 
+
+
+class OptionSchema(BaseModel):
+    text: str
+    points: int
+
 # Base Schema
 class InitQuizQuestionBase(BaseModel):
-    index: int
+    id: int
     question: str
     options: List[Dict]
 
@@ -17,12 +23,13 @@ class InitQuizQuestionCreate(InitQuizQuestionBase):
 class InitQuizQuestionUpdate(BaseModel):
     index: Optional[int]
     question: Optional[str]
-    options: Optional[List[Dict]]
+    options: Optional[List[OptionSchema]]
 
 # Show Schema
 class InitQuizQuestionShow(InitQuizQuestionBase):
     id: int
     created_at: datetime
+    updated_at: datetime
 
     class Config:
         from_attributes = True
@@ -52,11 +59,6 @@ class InitQuizResultShow(InitQuizResultBase):
         
 
 
-class OptionSchema(BaseModel):
-    text: str
-    points: int
-
-
 class QuestionSchema(BaseModel):
     id: int
     index: int
@@ -72,6 +74,13 @@ class AnswerSchema(BaseModel):
 class SubmitQuizRequest(BaseModel):
     answers: List[AnswerSchema]
 
+comment = "You're just starting your web3 journey, and that's perfectly okay! Everyone begins somewhere. With a bit of guidance, you'll quickly pick up the basics."
+
+second_comment ="You might be unfamiliar with some web3 terms, but don't worry, we'll take it step-by-step."
+
 class SubmitQuizResponse(BaseModel):
     user_id:int
     badge: BadgeLevel
+    comment:Optional[str] = comment
+    second_comment:Optional[str] = second_comment
+    
