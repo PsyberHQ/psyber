@@ -9,7 +9,7 @@ from app.schemas.enums import BadgeLevel
 
 
 
-async def submit_quiz(user:User,data: SubmitQuizRequest, db: AsyncSession):
+async def submit_quiz(user:User,data: SubmitQuizRequest, db: AsyncSession) -> SubmitQuizResponse:
 
     if user.badge:
         raise HTTPException(status_code=400, detail="User has already completed the quiz")
@@ -34,3 +34,7 @@ async def submit_quiz(user:User,data: SubmitQuizRequest, db: AsyncSession):
     await db.refresh(user)
     return SubmitQuizResponse(user_id=user.id,badge=badge)
 
+async def load_quiz(db:AsyncSession):
+    result = await db.scalars(select(InitQuizQuestion).order_by(InitQuizQuestion.id))
+    questions = result.all()
+    return questions

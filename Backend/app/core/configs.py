@@ -55,6 +55,7 @@ REDIS_URL = os.getenv('REDIS_URL')
 redis = aioredis.from_url(REDIS_URL)
 VERIFICATION_CODE_EXP_MIN = timedelta(minutes=int(os.getenv('VERIFICATION_CODE_EXP_MIN'))) # type: ignore
 DB_URL:str = os.getenv('DB_URL') # type: ignore
+DEPLOYED_URL:str = os.getenv('DEPLOYED_URL') # type: ignore
 
 
 #NOTE - Redis variables
@@ -81,3 +82,15 @@ TEMPLATES = {
     "welcome": "welcome_email.txt",
     "reset_password": "reset_password.txt",
 }
+
+#SECTION Google Auth
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+GOOGLE_REDIRECT_URI = os.getenv('GOOGLE_REDIRECT_URI')
+SERVER_METADATA_URL = os.getenv('SERVER_METADATA_URL')
+
+#NOTE - Email
+EMAIL = os.getenv('EMAIL')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+APP_PASS = os.getenv('APP_PASS')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
