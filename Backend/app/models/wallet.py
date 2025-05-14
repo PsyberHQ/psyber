@@ -11,7 +11,7 @@ class Wallet(Base):
 
     id: Mapped[int] = mapped_column('id',primary_key=True, index=True,autoincrement= True)
     
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id",ondelete='CASCADE'), nullable=False)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id",ondelete='CASCADE'), nullable=False,unique=True)
     
     address: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     
@@ -29,4 +29,4 @@ class Wallet(Base):
     )
 
     # Optional: ORM relationship back to User
-    user: Mapped["User"] = relationship('User',back_populates="wallets",lazy='selectin') # type: ignore
+    user: Mapped["User"] = relationship('User',back_populates="wallet",lazy='selectin') # type: ignore

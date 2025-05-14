@@ -33,5 +33,5 @@ class User(Base):
     level: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     
     xp: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    wallets: Mapped[List['Wallet']] = relationship('Wallet', back_populates="user", cascade="all, delete-orphan", lazy='selectin')  # type: ignore
+    wallet: Mapped[List['Wallet']] = relationship('Wallet', back_populates="user", cascade="all, delete-orphan", lazy='selectin',uselist=False)  # type: ignore
     badge:Mapped[BadgeLevel] = mapped_column(Enum(BadgeLevel),nullable=False,default=BadgeLevel.BEGINNER)

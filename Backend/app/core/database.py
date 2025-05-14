@@ -11,9 +11,9 @@ elif DB_URL:
     connect_args = {}  # No special args for PostgreSQL
 else:
     raise ValueError("No valid database URL found. Check your configuration.")
-logger.info(DB_URL)
 
-connect_args = {'check_same_thread':False}
+
+
 engine = create_async_engine(url=db_url,connect_args=connect_args)
 AsyncSessionLocal = async_sessionmaker(bind=engine)
 Base = declarative_base()
