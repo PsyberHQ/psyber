@@ -22,9 +22,9 @@ async def update_user(update_data:UserUpdate,db:AsyncSession,user:User) -> User:
     update_fields = update_data.model_dump(exclude_unset=True,exclude_none = True)
 
     #NOTE -  Check for wallet data
-    if update_data.wallets:
-        user.wallets = [Wallet(**w.model_dump()) for w in update_data.wallets]
-        update_fields.pop('wallets',None) #NOTE -  Remove the wallet field
+    if update_data.wallet:
+        user.wallet = [Wallet(**w.model_dump()) for w in update_data.wallet]
+        update_fields.pop('wallet',None) #NOTE -  Remove the wallet field
         
     for key,value in update_fields.items():
         setattr(user,key,value)
