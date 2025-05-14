@@ -22,7 +22,7 @@ class UserShow(BaseUser):
     image_url:Optional[Union[AnyUrl,AnyHttpUrl]]
     level:int
     xp:int
-    wallets: Optional[List[Union[WalletBase,WalletShow]]] = []
+    wallet: Optional[WalletShow] = None
 
     class Config:
         from_attributes = True
@@ -34,7 +34,7 @@ class UserUpdate(BaseUser):
     image_url:Optional[str] = None
     level:Optional[int] = None
     xp: Optional[int] = None
-    wallets:Optional[List[WalletBase]] = None
+    wallet:Optional[WalletBase] = None
         
 #!SECTION File
 class FileShow(BaseModel):
