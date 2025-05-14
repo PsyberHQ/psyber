@@ -21,7 +21,7 @@ async def create_user_wallet(wallet: WalletBase, db: AsyncSession,current_user:U
     db.add(current_user)
     await db.commit()
     await db.refresh(current_user)
-    return current_user.wallet
+    return current_user.wallet # type: ignore
 
 async def get_current_user_wallet(current_user: User) -> WalletShow:
     """
@@ -30,4 +30,4 @@ async def get_current_user_wallet(current_user: User) -> WalletShow:
     wallet = current_user.wallet if current_user.wallet else None
     if not wallet:
         raise HTTPException(status_code=404, detail="Wallet not found")
-    return wallet
+    return wallet # type: ignore

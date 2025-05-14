@@ -12,8 +12,6 @@ elif DB_URL:
 else:
     raise ValueError("No valid database URL found. Check your configuration.")
 
-
-
 engine = create_async_engine(url=db_url,connect_args=connect_args)
 AsyncSessionLocal = async_sessionmaker(bind=engine)
 Base = declarative_base()
