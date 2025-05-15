@@ -7,7 +7,7 @@ from app.models.wallet import Wallet
 from app.models import task
 from app.models import quiz
 from app.core.configs import DEBUG_MODE,logger
-from app.tests.migration import main
+#from app.tests.migration import main
 
 
 @asynccontextmanager # type: ignore
@@ -21,7 +21,7 @@ async def lifespan(app:FastAPI) :
     
         await conn.run_sync(Base.metadata.create_all)
         logger.info("Tables Created")
-        await main()
+        #await main()
         
         
         
