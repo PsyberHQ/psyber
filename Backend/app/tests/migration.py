@@ -9,10 +9,9 @@ from app.models.task import Task, Lesson, Content, Quiz, Option  # Adjust if you
 from app.schemas.enums import ContentType, TaskType
 from app.core.database import AsyncSessionLocal
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.configs import logger
+from app.core.configs import logger,MONGO_URI
 
 # === 1. MongoDB Setup ===
-MONGO_URI = "mongodb+srv://psyberofficial01:M0SeMr83FlYrcGKR@psyberdb.rfmoq.mongodb.net/psyber"
 MONGO_DB_NAME = "psyber"
 
 client = MongoClient(MONGO_URI)
