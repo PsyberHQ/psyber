@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import GoogleSignInBtn from '@/components/App/GoogleSignInBtn';
 import Image from 'next/image';
+import AuthSwitcher from '@/components/App/AuthSwitcher';
 
 const Login = async () => {
   const session = await getServerSession();
@@ -9,7 +10,7 @@ const Login = async () => {
     redirect('/app');
   }
   return (
-    <div className="flex flex-col md:p-[4vw] p-[3vw]  pb-10 items-center justify-center text-center">
+    <div className="flex flex-col md:p-[4vw] p-[3vw] pb-10 items-center justify-center text-center">
       <div className="mb-4">
         <Image
           src="/mediBrain.png"
@@ -22,6 +23,8 @@ const Login = async () => {
       <h1 className="mb-2 text-3xl font-bold text-gray-800">Welcome to Psyber</h1>
       <p className="mb-6 text-gray-600 w-fit m-auto">Your journey to mastering web3 starts here!</p>
 
+      <AuthSwitcher />
+      
       <GoogleSignInBtn />
 
       <p className="mt-6 text-sm text-gray-500">
