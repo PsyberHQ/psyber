@@ -27,12 +27,14 @@ MarkupSafe==3.0.2
 mdurl==0.1.2
 packaging==25.0
 passlib==1.7.4
+psycopg2-binary==2.9.10
 pycparser==2.22
 pydantic==2.11.4
 pydantic_core==2.33.2
 pyemaillib==0.1.2
 Pygments==2.19.1
 PyJWT==2.10.1
+pymongo==4.13.0
 python-dotenv==1.1.0
 python-multipart==0.0.20
 PyYAML==6.0.2
