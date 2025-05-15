@@ -16,9 +16,9 @@ class Quiz(Base):
 
     id: Mapped[int] = mapped_column('id', primary_key=True, index=True, autoincrement=True)
     question: Mapped[str] = mapped_column(String, nullable=False)
-    correct_option_id: Mapped[int] = mapped_column(ForeignKey("options.id"))
+    correct_option_id: Mapped[int] = mapped_column(Integer, nullable=False)
 
-    options: Mapped[list["Option"]] = relationship("Option", cascade="all, delete", backref="quiz",foreign_keys=[Option.quiz_id])
+    options: Mapped[list["Option"]] = relationship("Option", cascade="all, delete", backref="quiz",foreign_keys=[Option.quiz_id],lazy="selectin")
     task_id: Mapped[int] = mapped_column(ForeignKey("tasks.id"))
 
 # Content
@@ -40,7 +40,7 @@ class Lesson(Base):
     title: Mapped[str] = mapped_column(String, nullable=False)
     special_image: Mapped[str | None] = mapped_column(String)
 
-    content: Mapped[list["Content"]] = relationship("Content", cascade="all, delete", backref="lesson")
+    content: Mapped[list["Content"]] = relationship("Content", cascade="all, delete", backref="lesson",lazy='selectin')
     task_id: Mapped[int] = mapped_column(ForeignKey("tasks.id"))
 
 # Task
@@ -53,8 +53,8 @@ class Task(Base):
     reward: Mapped[str] = mapped_column(String, nullable=False)
     type: Mapped[TaskType] = mapped_column(Enum(TaskType), nullable=False)
 
-    lessons: Mapped[list["Lesson"]] = relationship("Lesson", cascade="all, delete", backref="task")
-    quiz: Mapped[list["Quiz"]] = relationship("Quiz", cascade="all, delete", backref="task")
+    lessons: Mapped[list["Lesson"]] = relationship("Lesson", cascade="all, delete", backref="task",lazy="selectin")
+    quiz: Mapped[list["Quiz"]] = relationship("Quiz", cascade="all, delete", backref="task",lazy="selectin")
 
 
 
