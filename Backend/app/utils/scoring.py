@@ -1,5 +1,5 @@
 from typing import List
-from app.schemas.quiz import AnswerSchema
+from app.schemas.quiz import AnswerSchema,OptionSchema
 from app.models.quiz import InitQuizQuestion
 
 
