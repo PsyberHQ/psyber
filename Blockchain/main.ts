@@ -4,3 +4,5 @@ import { wormholeConnectHosted } from '@wormhole-foundation/wormhole-connect';
 const container = document.getElementById('bridge-container');
 
 wormholeConnectHosted(container);
+
+//Link to docs https://wormhole.com/docs/build/transfers/connect/overview/
