@@ -11,7 +11,7 @@ def calculate_score(answers: List[AnswerSchema], questions: List[InitQuizQuestio
         question = question_map.get(ans.id,0)
         if not question:
             continue
-        selected_option = next((opt for opt in question.options if opt.text == ans.answer), None) # type: ignore
+        selected_option = next((opt for opt in question.options if opt['text'] == ans.answer), None) # type: ignore
         if selected_option:
-            total += selected_option.points
+            total += selected_option['points'] # type: ignore
     return total

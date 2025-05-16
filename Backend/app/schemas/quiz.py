@@ -61,7 +61,6 @@ class InitQuizResultShow(InitQuizResultBase):
 
 class QuestionSchema(BaseModel):
     id: int
-    index: int
     question: str
     options: List[OptionSchema]
 
