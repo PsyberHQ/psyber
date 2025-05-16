@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wormhole Connect</title>
+</head>
+<body>
+  <div id="bridge-container"></div>
+
+  <script type="module">
+    import { wormholeConnectHosted } from 'https://cdn.skypack.dev/@wormhole-foundation/wormhole-connect';
+
+    const container = document.getElementById('bridge-container');
+    wormholeConnectHosted(container);
+  </script>
+</body>
+</html>

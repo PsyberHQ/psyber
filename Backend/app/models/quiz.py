@@ -20,7 +20,6 @@ class InitQuizResult(Base):
 class InitQuizQuestion(Base):
     __tablename__ = "init_quiz_questions"
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    #index: Mapped[int] = mapped_column(nullable=False)
     question: Mapped[str] = mapped_column(String, nullable=False)
     options: Mapped[list[OptionSchema]] = mapped_column(JSON, nullable=False)
     created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now(),default=datetime.now)

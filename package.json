@@ -14,6 +14,7 @@
     "@solana/wallet-adapter-react-ui": "^0.9.35",
     "@solana/wallet-adapter-wallets": "^0.19.32",
     "@solana/web3.js": "^1.95.3",
+    "@wormhole-foundation/wormhole-connect": "^2.5.0",
     "bcryptjs": "^2.4.3",
     "mongoose": "^8.7.0",
     "next": "14.2.13",
