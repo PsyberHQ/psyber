@@ -14,7 +14,7 @@ class InitQuizResult(Base):
     badge: Mapped[str] = mapped_column(String, nullable=False)
     created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now(),default=datetime.now)
 
-    user = relationship("User", backref="init_quiz_result",lazy="selectin")
+    user = relationship("User", backref="init_quiz_result",lazy="selectin",uselist=False)
 
 
 class InitQuizQuestion(Base):
