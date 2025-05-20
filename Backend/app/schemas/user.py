@@ -2,6 +2,7 @@ from pydantic import BaseModel, EmailStr,BeforeValidator,Field,AnyHttpUrl,AnyUrl
 from typing import Optional,Annotated,Union,List,Literal,Self
 from app.utils.utils import hash_password
 from app.schemas.wallet import WalletBase,WalletShow
+from app.schemas.quiz import InitQuizResultShow
 # Base schema for User
 class BaseUser(BaseModel):
     name:Optional[str] = None
@@ -23,8 +24,6 @@ class UserShow(BaseUser):
     level:int
     xp:int
     wallet: Optional[WalletShow] = None
-    
-    from app.schemas.quiz import InitQuizResultShow
     init_quiz_result:InitQuizResultShow
     is_onboarded:bool = False
     
