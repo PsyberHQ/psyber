@@ -21,6 +21,7 @@ interface AuthContextType {
   debugState: any;
   onboardingComplete: boolean;
   setOnboardingComplete: (value: boolean) => void;
+  onboardingCompleted?: boolean;
 }
 
 const PsyberAuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -89,18 +90,18 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
       setError(null);
       
       // Check if user has completed the quiz
-      // If they have a badge or any other identifier that shows onboarding completion
-      if (userData?.badge || userData?.onboardingCompleted) {
+      // If they have completed onboarding
+      if (userData && 'onboardingCompleted' in userData && userData.onboardingCompleted) {
         setOnboardingComplete(true);
       }
       
       // Update debug state
-      setDebugState(prev => ({
+      setDebugState((prev: any) => ({
         ...prev,
         lastRefresh: new Date().toISOString(),
         userLevel: userData?.level,
         userId: userData?.id,
-        onboardingComplete: !!userData?.badge || !!userData?.onboardingCompleted
+        onboardingComplete: !!userData?.onboardingCompleted
       }));
       
     } catch (err: any) {
@@ -112,7 +113,7 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
       apiClient.clearToken();
       
       // Update debug state
-      setDebugState(prev => ({
+      setDebugState((prev: any) => ({
         ...prev,
         lastError: errorMsg,
         errorTimestamp: new Date().toISOString()
@@ -130,7 +131,7 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
       console.log("Attempting login with username:", username);
       
       // Update debug state
-      setDebugState(prev => ({
+      setDebugState((prev: any) => ({
         ...prev,
         loginAttempt: {
           username,
@@ -151,7 +152,7 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
       console.log("Determining redirect path based on level:", userData.level);
       
       // Update debug state
-      setDebugState(prev => ({
+      setDebugState((prev: any) => ({
         ...prev,
         loginResult: {
           success: true,
@@ -174,7 +175,7 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
       setError(errorMsg);
       
       // Update debug state
-      setDebugState(prev => ({
+      setDebugState((prev: any) => ({
         ...prev,
         loginError: {
           message: errorMsg,
@@ -211,7 +212,7 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
       setError(errorMsg);
       
       // Update debug state
-      setDebugState(prev => ({
+      setDebugState((prev: any) => ({
         ...prev,
         signupError: {
           message: errorMsg,

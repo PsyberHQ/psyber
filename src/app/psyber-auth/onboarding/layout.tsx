@@ -12,7 +12,7 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
   useEffect(() => {
     if (!loading) {
       // If user has completed onboarding, redirect to app
-      if (onboardingComplete || (user?.level && user.level > 0) || user?.badge) {
+      if (onboardingComplete || (user?.level && user.level > 0) || (user as any)?.badge) {
         console.log("User has completed onboarding, redirecting to app");
         router.push('/app');
       }

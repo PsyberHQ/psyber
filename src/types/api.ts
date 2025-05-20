@@ -32,6 +32,7 @@ export interface WalletData {
 }
 
 export interface UserData {
+  onboardingCompleted: any;
   name: string;
   username: string;
   email: string;
