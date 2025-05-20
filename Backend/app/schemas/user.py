@@ -24,7 +24,7 @@ class UserShow(BaseUser):
     level:int
     xp:int
     wallet: Optional[WalletShow] = None
-    init_quiz_result:InitQuizResultShow
+    init_quiz_result:Optional[InitQuizResultShow] = None
     is_onboarded:bool = False
     
     @model_validator(mode='after')
