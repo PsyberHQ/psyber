@@ -180,15 +180,30 @@ class ApiClient {
       }
       
       if (!response.ok) {
-        const errorMessage = result.detail 
-          ? (Array.isArray(result.detail) 
-              ? result.detail.map(e => `${e.loc.join('.')}: ${e.msg}`).join(', ')
-              : result.detail)
-          : result.message || 'API request failed';
-          
-        if (this.debugMode) console.error("API error:", errorMessage, result);
-        
-        const error = new Error(errorMessage) as ApiError;
+        let detailedMessage = `API request to ${url} failed with status ${response.status}`;
+        try {
+            // result might not be defined if response.json() itself failed, e.g. for non-JSON error responses
+            if (result && result.detail && Array.isArray(result.detail)) {
+              detailedMessage = "Validation error(s): " + result.detail.map((e: any) => {
+                const loc = e.loc ? e.loc.join('.') : 'unknown_location';
+                const inputSnippet = e.input ? ` | input: ${JSON.stringify(e.input).substring(0, 50)}...` : '';
+                return `[Field: ${loc}, Message: ${e.msg}${inputSnippet}]`;
+              }).join("; ");
+            } else if (result && result.detail) {
+              detailedMessage = String(result.detail);
+            } else if (result && result.message) {
+              detailedMessage = String(result.message);
+            } else if (response.statusText) {
+                detailedMessage = response.statusText;
+            }
+        } catch (parseError) {
+            console.error("Error parsing API error response:", parseError);
+            // Use statusText if available and result parsing failed
+            detailedMessage = response.statusText || `HTTP error ${response.status}`;
+        }
+
+        console.error("API error response:", response.status, detailedMessage, "Full result:", result);
+        const error = new Error(detailedMessage) as ApiError;
         error.status = response.status;
         error.data = result;
         throw error;
@@ -221,6 +236,32 @@ class ApiClient {
    * Make a POST request
    */
   post<T>(endpoint: string, data?: any, options?: ApiOptions): Promise<T> {
+    if (endpoint === Endpoints.INIT_QUIZ) { // Ensure Endpoints.INIT_QUIZ is correctly defined
+      console.log("[apiClient.post] Received data for init-quiz submission:", JSON.parse(JSON.stringify(data)));
+      if (data && data.answers && Array.isArray(data.answers)) {
+        console.log("[apiClient.post] Checking/fixing items in data.answers for init-quiz...");
+        for (let i = 0; i < data.answers.length; i++) {
+          const answerItem = data.answers[i];
+          console.log(`[apiClient.post] Item ${i} in data.answers (before any fix):`, JSON.parse(JSON.stringify(answerItem)));
+          if (answerItem && typeof answerItem === 'object') {
+            if (!('id' in answerItem) && 'index' in answerItem && typeof answerItem.index === 'number') {
+              console.warn(`[apiClient.post] FIXING Item ${i}: Has 'index' (${answerItem.index}) but missing 'id'. Converting 'index' to 'id'.`);
+              answerItem.id = answerItem.index; // Assuming the value of 'index' was the intended 0-based ID
+              delete answerItem.index;
+              console.log(`[apiClient.post] Item ${i} in data.answers (after fix):`, JSON.parse(JSON.stringify(answerItem)));
+            } else if (!('id' in answerItem)) {
+              console.error(`[apiClient.post] Item ${i} in data.answers is MISSING 'id' and does not have a convertible 'index' key. Item:`, JSON.parse(JSON.stringify(answerItem)));
+              // This item will likely cause a validation error on the server.
+            } else {
+              console.log(`[apiClient.post] Item ${i} in data.answers appears to have 'id' (${answerItem.id}). No fix applied by safety check.`);
+            }
+          } else {
+            console.error(`[apiClient.post] Item ${i} in data.answers is not an object:`, JSON.parse(JSON.stringify(answerItem)));
+          }
+        }
+        console.log("[apiClient.post] Final data.answers for init-quiz after checks/fixes:", JSON.parse(JSON.stringify(data.answers)));
+      }
+    }
     return this.request<T>(endpoint, 'POST', data, options);
   }
   

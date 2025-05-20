@@ -19,6 +19,8 @@ interface AuthContextType {
   googleLogin: () => Promise<void>;
   clearError: () => void;
   debugState: any;
+  onboardingComplete: boolean;
+  setOnboardingComplete: (value: boolean) => void;
 }
 
 const PsyberAuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,6 +31,7 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [debugState, setDebugState] = useState<any>({});
+  const [onboardingComplete, setOnboardingComplete] = useState<boolean>(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -50,13 +53,14 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
       console.log("Auth state updated:", {
         isAuthenticated,
         pathname,
-        userLevel: user?.level
+        userLevel: user?.level,
+        onboardingComplete
       });
       
       if (isAuthenticated) {
         // If user is authenticated and tries to access login/signup pages, redirect to app
         if (pathname === '/psyber-auth/login' || pathname === '/psyber-auth/signup') {
-          if (user && (!user.level || user.level === 0)) {
+          if (user && !onboardingComplete && (!user.level || user.level === 0)) {
             console.log("Redirecting to onboarding");
             router.push('/psyber-auth/onboarding');
           } else {
@@ -66,7 +70,7 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
         }
       }
     }
-  }, [loading, isAuthenticated, user, pathname, router]);
+  }, [loading, isAuthenticated, user, pathname, router, onboardingComplete]);
 
   const clearError = () => {
     setError(null);
@@ -84,12 +88,19 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
       setIsAuthenticated(true);
       setError(null);
       
+      // Check if user has completed the quiz
+      // If they have a badge or any other identifier that shows onboarding completion
+      if (userData?.badge || userData?.onboardingCompleted) {
+        setOnboardingComplete(true);
+      }
+      
       // Update debug state
       setDebugState(prev => ({
         ...prev,
         lastRefresh: new Date().toISOString(),
         userLevel: userData?.level,
-        userId: userData?.id
+        userId: userData?.id,
+        onboardingComplete: !!userData?.badge || !!userData?.onboardingCompleted
       }));
       
     } catch (err: any) {
@@ -266,7 +277,9 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated,
         googleLogin,
         clearError,
-        debugState
+        debugState,
+        onboardingComplete,
+        setOnboardingComplete // Allow components to update this state
       }}
     >
       {children}

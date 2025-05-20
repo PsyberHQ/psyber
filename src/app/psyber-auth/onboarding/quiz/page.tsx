@@ -12,18 +12,16 @@ export default function PsyberQuizPage() {
   const [questions, setQuestions] = useState<any[]>([]);
   const [currQuesNum, setCurrQuesNum] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  // Updated structure to include id field
   const [answers, setAnswers] = useState<{id: number; answer: string}[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [postAns, setPostAns] = useState(false);
   const [submitted, setSubmitted] = useState<any | null>(null);
-  
-  const { user } = usePsyberAuth();
+
+  const { user, setOnboardingComplete } = usePsyberAuth();
   const router = useRouter();
 
-  // Fetch questions from API
   useEffect(() => {
     async function fetchQuestions() {
       try {
@@ -31,11 +29,11 @@ export default function PsyberQuizPage() {
         setQuestions(data);
         setLoading(false);
       } catch (err: any) {
+        console.error("Fetch questions error:", err);
         setError('Failed to load questions. Please try again later.');
         setLoading(false);
       }
     }
-    
     fetchQuestions();
   }, []);
 
@@ -43,25 +41,49 @@ export default function PsyberQuizPage() {
   useEffect(() => {
     const handleFinish = async () => {
       try {
+        if (answers.length === 0 && questions.length > 0) { // only error if there were questions to answer
+          setError('Please answer at least one question before submitting.');
+          setPostAns(false); // Reset flag
+          return;
+        }
+        if (answers.length === 0 && questions.length === 0) {
+            // No questions, nothing to submit, perhaps redirect or show a message
+            console.log("No questions loaded, skipping submission.");
+            setPostAns(false);
+            // Optionally redirect or show a specific message
+            // router.push('/app'); 
+            return;
+        }
+
+
         setSubmitLoading(true);
-        // Log the answers before submission to debug
-        console.log("Submitting answers:", answers);
-        
-        const result = await quizService.submitInitQuiz({
-          userEmail: user?.email,
-          answers: answers,
-        });
+        console.log("[PsyberQuizPage/handleFinish] Submitting answers state:", JSON.parse(JSON.stringify(answers)));
+
+        const result = await quizService.submitInitQuiz(answers);
         setSubmitted(result);
+        
+        // Mark onboarding as complete
+        setOnboardingComplete(true);
+        
       } catch (err: any) {
-        console.error("Quiz submission error:", err);
-        setError('Failed to submit quiz. Please try again.');
+        console.error("[PsyberQuizPage/handleFinish] Quiz submission error:", err);
+        const errorMessage = err.message || 'Failed to submit quiz. Please try again.';
+        
+        if (err.status === 400 && err.data?.detail === "User has already completed the quiz") {
+          console.log("User already completed quiz, redirecting to app");
+          setOnboardingComplete(true); // Set this flag even if they've already completed it
+          router.push('/app');
+          return;
+        }
+        
+        setError(errorMessage);
       } finally {
         setSubmitLoading(false);
       }
     };
     
     if (postAns) handleFinish();
-  }, [postAns, answers, user?.email]);
+  }, [postAns, answers, router, setOnboardingComplete]);
 
   const handleAnswer = (text: string) => {
     setSelectedAnswer(text);
@@ -69,12 +91,23 @@ export default function PsyberQuizPage() {
 
   const handleNext = () => {
     if (selectedAnswer !== null) {
-      // Include question ID with the answer
-      // Use currQuesNum + 1 as the ID since array is 0-based but IDs typically start at 1
-      setAnswers([...answers, { 
-        id: currQuesNum + 1, 
-        answer: selectedAnswer 
-      }]);
+      const questionId = currQuesNum; // This is 0-indexed
+      const answerText = selectedAnswer;
+
+      // Ensure the object keys are explicitly 'id' and 'answer'
+      const newAnswerObject = {
+        'id': Number(questionId), // Explicitly 'id', ensure it's a number
+        'answer': String(answerText)  // Explicitly 'answer', ensure it's a string
+      };
+
+      console.log(`[PsyberQuizPage/handleNext] Current Question Index (currQuesNum): ${currQuesNum}`);
+      console.log(`[PsyberQuizPage/handleNext] Creating new answer object:`, JSON.parse(JSON.stringify(newAnswerObject)));
+
+      setAnswers(prevAnswers => {
+        const updatedAnswers = [...prevAnswers, newAnswerObject];
+        console.log(`[PsyberQuizPage/handleNext] Updated answers state (after setAnswers):`, JSON.parse(JSON.stringify(updatedAnswers)));
+        return updatedAnswers;
+      });
     }
 
     if (currQuesNum < questions.length - 1) {
@@ -103,7 +136,7 @@ export default function PsyberQuizPage() {
       <div className="p-6 text-center">
         <div className="rounded-md bg-red-50 p-4 text-red-700">
           <h2 className="mb-2 text-xl font-semibold">Error</h2>
-          <p>{error}</p>
+          <p>{error}</p> {/* This should now show the formatted error message */}
           <button
             onClick={() => router.push('/psyber-auth/onboarding')}
             className="mt-4 rounded-md bg-purple-600 px-4 py-2 text-white hover:bg-purple-700"
@@ -133,11 +166,19 @@ export default function PsyberQuizPage() {
             <p className="text-center text-3xl font-gliker font-bold">&quot;{submitted.badge}&quot;</p>
             <p className="text-center text-[#F47C92]">{submitted.comment}</p>
             <p className="text-center text-slate-400">what this means for you</p>
-            <p className="text-center text-xl font-semibold text-gray-800">{submitted.comment2}</p>
+            <p className="text-center text-xl font-semibold text-gray-800">{submitted.second_comment || submitted.comment2}</p>
           </div>
           <div className="mt-6 flex items-center justify-center">
             <Link href="/app">
-              <button className="green-btn !py-3">Start your journey</button>
+              <button 
+                className="green-btn !py-3"
+                onClick={() => {
+                  // Extra click handler to ensure the flag is set
+                  setOnboardingComplete(true);
+                }}
+              >
+                Start your journey
+              </button>
             </Link>
           </div>
         </div>
@@ -145,9 +186,16 @@ export default function PsyberQuizPage() {
     );
   }
 
-  if (questions.length === 0) {
-    return <div className="p-6 text-center text-xl">No questions available.</div>;
+  if (questions.length === 0 && !loading) { // Check !loading to avoid showing this during initial load
+    return <div className="p-6 text-center text-xl">No questions available to display.</div>;
   }
+  
+  // Ensure questions[currQuesNum] exists before trying to access its properties
+  const currentQuestionData = questions[currQuesNum];
+  if (!currentQuestionData && !loading && questions.length > 0) {
+      return <div className="p-6 text-center text-xl">Error loading current question.</div>;
+  }
+
 
   return (
     <div className="p-10 !py-6 md:p-20">
@@ -173,9 +221,9 @@ export default function PsyberQuizPage() {
       <div className="mt-6 flex flex-col items-center justify-center">
         <div className="flex w-fit flex-col space-y-4">
           <h2 className="mb-6 text-center text-xl font-semibold">
-            #{currQuesNum + 1} {questions[currQuesNum]?.question}
+            #{currQuesNum + 1} {currentQuestionData?.question}
           </h2>
-          {questions[currQuesNum]?.options.map((option: any, index: number) => (
+          {currentQuestionData?.options.map((option: any, index: number) => (
             <button
               key={index}
               onClick={() => handleAnswer(option.text)}

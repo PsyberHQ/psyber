@@ -18,7 +18,7 @@ export default function PsyberRouteGuard({
   children, 
   requireOnboarding = true 
 }: PsyberRouteGuardProps) {
-  const { user, loading, isAuthenticated } = usePsyberAuth();
+  const { user, loading, isAuthenticated, onboardingComplete } = usePsyberAuth();
   const [checking, setChecking] = useState(true);
   const router = useRouter();
 
@@ -27,7 +27,7 @@ export default function PsyberRouteGuard({
       if (!isAuthenticated) {
         // Not authenticated, redirect to login
         router.push('/psyber-auth/login');
-      } else if (requireOnboarding && (!user?.level || user.level === 0)) {
+      } else if (requireOnboarding && !onboardingComplete && (!user?.level || user.level === 0)) {
         // User hasn't completed onboarding, redirect to onboarding
         router.push('/psyber-auth/onboarding');
       } else {
@@ -35,7 +35,7 @@ export default function PsyberRouteGuard({
         setChecking(false);
       }
     }
-  }, [loading, isAuthenticated, user, router, requireOnboarding]);
+  }, [loading, isAuthenticated, user, router, requireOnboarding, onboardingComplete]);
 
   if (loading || checking) {
     return <LoaderComp text="Loading..." />;

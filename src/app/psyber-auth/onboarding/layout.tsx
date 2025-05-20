@@ -6,15 +6,18 @@ import { usePsyberAuth } from '@/contexts/PsyberAuthContext';
 import LoaderComp from '@/components/LoaderComp';
 
 export default function OnboardingLayout({ children }: { children: React.ReactNode }) {
-  const { user, loading } = usePsyberAuth();
+  const { user, loading, onboardingComplete } = usePsyberAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && user?.level && user.level > 0) {
-      // User has already completed onboarding
-      router.push('/app');
+    if (!loading) {
+      // If user has completed onboarding, redirect to app
+      if (onboardingComplete || (user?.level && user.level > 0) || user?.badge) {
+        console.log("User has completed onboarding, redirecting to app");
+        router.push('/app');
+      }
     }
-  }, [loading, user, router]);
+  }, [loading, user, router, onboardingComplete]);
 
   if (loading) {
     return <LoaderComp text="Loading..." />;

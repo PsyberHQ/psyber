@@ -10,7 +10,7 @@ interface PsyberAppWrapperProps {
 }
 
 export default function PsyberAppWrapper({ children }: PsyberAppWrapperProps) {
-  const { user, loading, isAuthenticated } = usePsyberAuth();
+  const { user, loading, isAuthenticated, onboardingComplete } = usePsyberAuth();
   const [checking, setChecking] = useState(true);
   const router = useRouter();
 
@@ -19,7 +19,7 @@ export default function PsyberAppWrapper({ children }: PsyberAppWrapperProps) {
       if (!isAuthenticated) {
         // Not authenticated with Psyber API, let NextAuth handle it
         setChecking(false);
-      } else if (!user?.level || user.level === 0) {
+      } else if (!onboardingComplete && (!user?.level || user.level === 0)) {
         // User authenticated with Psyber API but hasn't completed onboarding
         router.push('/psyber-auth/onboarding');
       } else {
@@ -27,7 +27,7 @@ export default function PsyberAppWrapper({ children }: PsyberAppWrapperProps) {
         setChecking(false);
       }
     }
-  }, [loading, isAuthenticated, user, router]);
+  }, [loading, isAuthenticated, user, router, onboardingComplete]);
 
   if (loading || checking) {
     return <LoaderComp text="Loading..." />;
