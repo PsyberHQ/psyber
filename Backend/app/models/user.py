@@ -36,4 +36,5 @@ class User(Base):
     wallet: Mapped[List['Wallet']] = relationship('Wallet', back_populates="user", cascade="all, delete-orphan", lazy='selectin',uselist=False)  # type: ignore
     badge:Mapped[BadgeLevel] = mapped_column(Enum(BadgeLevel),nullable=False,default=BadgeLevel.BEGINNER)
     
-    #ANCHOR - quiz_result = relationship('InitQuizResult',lazy='selectin')
+    init_quiz_result: Mapped[Optional['InitQuizResult']] = relationship("InitQuizResult",back_populates="user",lazy="selectin",uselist=False) # type: ignore
+
