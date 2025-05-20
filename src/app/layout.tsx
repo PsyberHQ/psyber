@@ -1,25 +1,8 @@
 import { Urbanist } from 'next/font/google';
 import './globals.css';
-import localFont from 'next/font/local';
-
-const gliker = localFont({
-  src: [
-    {
-      path: '/fonts/GlikerRegular.ttf',
-      weight: '400',
-    },
-    {
-      path: '/fonts/GlikerBold.ttf',
-      weight: '700',
-    },
-    {
-      path: '/fonts/GlikerSemiBold.ttf',
-      weight: '600',
-    },
-  ],
-  variable: '--font-gliker',
-  display: 'swap',
-});
+import { AuthProvider } from '@/contexts/AuthContext';
+import { PsyberAuthProvider } from '@/contexts/PsyberAuthContext';
+import ApiDebugPanel from '@/components/Debug/ApiDebugPanel';
 
 const urbanist = Urbanist({
   subsets: ['latin'],
@@ -35,10 +18,11 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${urbanist.variable} ${gliker.variable} font-urbanist tracking-[0.01rem] antialiased`}
-      >
-        {children}
+      <body className={`${urbanist.variable} ${gloock.variable} antialiased`}>
+        <PsyberAuthProvider>
+          {children}
+          {process.env.NODE_ENV === 'development' && <ApiDebugPanel />}
+        </PsyberAuthProvider>
       </body>
     </html>
   );

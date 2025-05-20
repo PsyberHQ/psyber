@@ -1,13 +1,8 @@
 'use client';
-import { Wallet } from '@/components/Wallet';
-import { SessionProvider } from 'next-auth/react';
+import { PsyberAuthProvider } from '@/contexts/PsyberAuthContext';
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <SessionProvider>
-      <Wallet>{children}</Wallet>
-    </SessionProvider>
-  );
+  return <PsyberAuthProvider>{children}</PsyberAuthProvider>;
 };
 
 export default Providers;

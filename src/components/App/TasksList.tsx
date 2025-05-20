@@ -2,78 +2,88 @@
 
 import { useEffect, useRef } from 'react';
 
-const TasksList = ({
-  tasks,
-  setCurrentTask,
-  currentTaskToDo,
-}: {
-  tasks: {
-    id: string;
-    title: string;
-    description: string;
-    learningTip: string;
-    reward: string;
-    progress: number;
-  }[];
-  setCurrentTask: (index: number) => void;
-  currentTaskToDo: number;
-}) => {
-  const ref = useRef<HTMLDivElement | null>(null);
+interface Task {
+  id: string | number;
+  title: string;
+  description?: string;
+  learningTip?: string;
+  learning_tip?: string; // API might use snake_case
+  reward?: string;
+  progress?: number;
+  // Add API fields
+  type?: string;
+  lessons?: any[];
+  quiz?: any[];
+}
 
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'center',
-      });
-    }
-  }, [currentTaskToDo]);
+interface TasksListProps {
+  tasks: Task[];
+  activeTask: Task;
+  setActiveTask: (task: Task) => void;
+}
+
+const TasksList = ({ tasks, activeTask, setActiveTask }: TasksListProps) => {
+  // Normalize task properties (handle both camelCase and snake_case)
+  const normalizeTask = (task: Task) => {
+    return {
+      ...task,
+      id: String(task.id), // Ensure ID is a string
+      learningTip: task.learningTip || task.learning_tip || '',
+      progress: typeof task.progress === 'number' ? task.progress : 0,
+    };
+  };
+
+  // Debug log to see what's happening
+  console.log('TasksList rendered with tasks:', tasks?.length);
+  console.log('Active task ID:', activeTask?.id);
+
+  // Ensure we always have an array to map over
+  const tasksToRender = Array.isArray(tasks) ? tasks : [];
 
   return (
-    <div className="h-min w-full lg:px-10">
-      {tasks.map((task, index) => (
-        <div
-          key={task.id}
-          className="relative mx-auto mb-12 ml-2 mt-5 cursor-pointer"
-          onClick={() => setCurrentTask(index)}
-          ref={index === currentTaskToDo ? ref : null}
-        >
-          <div
-            className={
-              'absolute -left-[1px] bottom-0 top-0 w-0 border-r-[3px] border-dashed' +
-              (index <= currentTaskToDo ? ' border-green-300' : ' border-gray-300')
-            }
-          ></div>
-          <div
-            className={`absolute left-[-8px] top-0 h-4 w-4 rounded-full ${
-              index <= currentTaskToDo ? 'bg-green-500' : 'bg-gray-300'
-            }`}
-          ></div>
+    <div className="space-y-6">
+      {tasksToRender.length === 0 ? (
+        <div className="rounded-lg bg-gray-100 p-4 text-center text-gray-600">
+          No tasks available
+        </div>
+      ) : (
+        tasksToRender.map((task, index) => {
+          const normalizedTask = normalizeTask(task);
+          const isActive = String(activeTask?.id) === String(task.id);
 
-          <div className="relative ml-4 md:ml-8">
-            <div className="rounded-3xl border border-[#DCD8D2] bg-[#FCFAF8] p-10 shadow-sm">
-              <div className="absolute -top-1/2 left-1/2 mr-4 flex w-fit -translate-x-1/2 translate-y-[100%] items-center justify-center rounded-2xl bg-[#F47C92] p-3 text-white">
-                <span className="text-3xl font-bold">{task.id}</span>
+          return (
+            <div
+              key={task.id}
+              className={`relative cursor-pointer rounded-lg border-2 p-4 transition ${
+                isActive
+                  ? 'border-purple-500 bg-purple-50'
+                  : 'border-gray-200 bg-white hover:border-purple-300'
+              }`}
+              onClick={() => setActiveTask(task)}
+            >
+              <div className="absolute -left-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-purple-600 text-xs text-white">
+                {index + 1}
               </div>
-              <div className="flex flex-col gap-3">
-                <h2 className="pt-4 text-xl font-semibold text-purple-700">{task.title}</h2>
-                <div className="flex justify-between">
-                  <p className="text-sm text-gray-600">Progress</p>
-                  <p className="mt-1 text-sm text-gray-600">{task.progress}%</p>
+
+              <div className="ml-2">
+                <h3 className="mb-2 font-semibold">{task.title}</h3>
+
+                <div className="mb-1 flex justify-between text-xs">
+                  <span>Progress</span>
+                  <span>{normalizedTask.progress}%</span>
                 </div>
 
-                <div className="h-2.5 w-full rounded-full bg-gray-200">
+                <div className="h-2 w-full rounded-full bg-gray-200">
                   <div
-                    className="h-2.5 rounded-full bg-green-500"
-                    style={{ width: `${task.progress + 10 > 100 ? 100 : task.progress + 10}%` }}
+                    className="h-2 rounded-full bg-green-500"
+                    style={{ width: `${normalizedTask.progress}%` }}
                   ></div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      ))}
+          );
+        })
+      )}
     </div>
   );
 };

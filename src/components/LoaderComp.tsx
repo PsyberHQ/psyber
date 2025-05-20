@@ -1,21 +1,16 @@
-import Image from 'next/image';
+import React from 'react';
 
-const LoaderComp = ({ text }: { text: string }) => {
+interface LoaderCompProps {
+  text?: string;
+}
+
+const LoaderComp: React.FC<LoaderCompProps> = ({ text = 'Loading...' }) => {
   return (
-    <div className="absolute inset-0">
-      <div className="flex h-full flex-col items-center justify-center p-6">
-        <div className="flex flex-col items-center justify-center rounded-xl bg-white p-10 md:p-20">
-          <Image
-            src="/Loader.gif"
-            alt="Book"
-            width={521}
-            height={521}
-            className="w-16 scale-110 object-contain"
-          />
-          {text && <p className="text-center text-slate-500">{text}</p>}
-        </div>
-      </div>
+    <div className="flex min-h-[300px] flex-col items-center justify-center p-8">
+      <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-purple-200 border-t-purple-600"></div>
+      {text && <p className="text-center text-gray-600">{text}</p>}
     </div>
   );
 };
+
 export default LoaderComp;

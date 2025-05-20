@@ -5,35 +5,44 @@ import { getServerSession } from 'next-auth';
 const page = async () => {
   const session = await getServerSession();
   return (
-    <div className="xs:p-10 p-6 max-md:text-center md:p-20">
-      <div className="mb-4">
-        <Image
-          src="/mediBrain.png"
-          alt="Meditating Brain"
-          className="mx-auto h-36 w-36"
-          height={972}
-          width={1148}
-        />
-      </div>
-      <h1 className="mb-2 text-3xl font-bold text-gray-800">
-        Welcome to Psyber , {session?.user?.name}
-      </h1>
-      <p className="mb-6 text-center text-gray-600">Are you new to Web3 or already a pro?</p>
-      <div className="mt-10 flex flex-wrap-reverse justify-between gap-4 max-sm:justify-center">
-        <div>
-          <button
-            disabled
-            className="mx-auto flex w-fit max-w-xs items-center justify-center rounded-full border px-4 py-2 font-semibold text-slate-400 shadow-sm"
-          >
-            I{"'"}m Existing Web3.0 User
-          </button>
-          <span className="mt-2 block text-center text-gray-400">coming soon !</span>
+    <>
+        <div className='md:p-7 p-3'>
+          <div className="md:mb-4 mb-1">
+            <Image
+              src="/mediBrain.png"
+              alt="Meditating Brain"
+              className="mx-auto h-36 w-36"
+              height={972}
+              width={1148}
+            />
+          </div>
+
+          <div className='md:p-[4vw] p-[3vw]'>
+              <h1 className="mb-2 md:text-3xl text-xl w-fit m-auto font-bold text-gray-800 text-center">
+                Welcome to Psyber, {session?.user?.name}
+              </h1>
+              <p className="mb-6 text-center text-gray-600">Your journey to mastering web3 starts here!</p>
+              <p className="mb-6 text-center text-gray-700 font-semibold">Are you new to Web3 or already a pro?</p>
+            
+                  <div className='grid sm:grid-cols-2 grid-cols-1 gap-4 w-fit m-auto '>
+                      <div>
+                        <button className="mx-auto m-auto  flex w-fit max-w-xs items-center justify-center rounded-full px-6 border-[1px] border-neutral-600 py-2 md:text-base text-sm font-semibold text-neutral-600 hover:bg-purple-800 hover:text-white">
+                          I'm an existing web 3.0 user
+                        </button>
+                        <div className='md:mt-2 mt-[3px] w-60 text-center'>
+                          <em className=' text-neutral-500'>coming soon!</em>
+                        </div>
+                      </div>
+
+                      <Link href="/app/onboarding/new">
+                        <button className="mx-auto flex w-[240px]  max-w-xs items-center justify-center rounded-full bg-purple-600 px-6  py-2 md:text-base text-sm font-semibold text-white hover:bg-purple-800">
+                          I'm new to Web 3.0
+                        </button>
+                      </Link>
+                      </div>
+           </div>
         </div>
-        <Link href="/app/onboarding/new">
-          <button className="purple-btn mx-auto flex w-fit">I{"'"}m New to Web3.0</button>
-        </Link>
-      </div>
-    </div>
+    </>
   );
 };
 

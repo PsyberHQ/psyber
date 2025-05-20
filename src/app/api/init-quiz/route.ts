@@ -68,7 +68,15 @@ export async function POST(request: Request) {
     session.startTransaction();
     try {
       await quizResult.save({ session });
-      await UserModel.updateOne({ _id: user._id }, { badge }, { session });
+      await UserModel.updateOne(
+        { _id: user._id },
+        {
+          badge,
+          level: score >= 10 ? 1 : 0, // Set level based on score
+          onboardingCompleted: true,
+        },
+        { session }
+      );
       await session.commitTransaction();
     } catch (error) {
       await session.abortTransaction();

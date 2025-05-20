@@ -89,23 +89,20 @@ const Quiz = () => {
     if (postAns) handleFinish();
   }, [answers, postAns, questions, session.data?.user?.email]);
 
-  if (submitLoading || !questions.length) {
-    return (
-      <LoaderComp text={submitLoading ? 'Submitting your answers...' : 'Loading questions...'} />
-    );
+  if (submitLoading) {
+    return <div className='md:p-24 p-20 rounded-[20px] md:text-3xl text-2xl'>Loading...</div>;
   }
 
   if (submitted) {
     return (
-      <div className="max-w-[812px] p-6 pt-0 xs:p-10 xs:pt-0 md:p-20 md:pt-0">
-        <div className="flex w-full items-center justify-center">
-          <Image
-            src="/mediBrain.png"
-            alt="Meditating Brain"
-            className="mx-auto w-36"
-            height={972}
-            width={1148}
-          />
+      <div className="mx-auto w-fit max-w-lg md:p-10 p-6 md:px-[4vw] px-[3vw]">
+        {/* <h2 className="mb-6 text-center text-xl font-semibold">Quiz Completed!</h2> */}
+        <div className="space-y-4">
+          <p className='md:text-xl text-base text-neutral-700'>You web 3.0 readiness level is</p>
+          <p className="text-center md:text-4xl text-2xl">&quot;{submitted.badge}&quot;</p><br />
+          <p className="text-center text-[#F47C92]">{submitted.comment}</p>
+          <p className='text-neutral-700 w-fit m-auto mb-3'>what this means for you</p>
+          <p className="text-center w-fit m-auto md:text-xl text-base">{submitted.comment2}</p>
         </div>
         <div className="space-x-5">
           <h2 className="mb-6 text-center font-semibold">Your web 3.0 readiness level is</h2>
@@ -126,63 +123,39 @@ const Quiz = () => {
   }
 
   return (
-    <div className="p-10 !py-6 md:p-20">
-      <div className="flex">
-        <div className="w-fit">
-          <Image
-            src="/mediBrain.png"
-            alt="Meditating Brain"
-            className="mx-auto w-36"
-            height={972}
-            width={1148}
-          />
-        </div>
-        <div className="flex flex-col items-start justify-center">
-          <h1 className="text-2xl font-bold text-gray-800">
-            Let{"'"}s Get Started on Your Web 3.0 Journey
-          </h1>
-          <h2 className="text-gray-600">
-            First, let{"'"}s assess your readiness to ensure you get the most out of this experience
-          </h2>
-        </div>
+    <div className="mx-auto w-fit max-w-lg py-6 px-4 rounded-[16px]">
+      <h2 className="mb-6 text-center text-xl font-semibold">
+        #{currQuesNum + 1} {questions[currQuesNum].question}
+      </h2>
+      <div className="space-y-4">
+        {questions[currQuesNum].options.map((option, index) => (
+          <button
+            key={index}
+            onClick={() => handleAnswer(option.points)}
+            className={`w-full rounded-full px-4 py-3 text-center transition-colors ${
+              selectedAnswer === option.points
+                ? 'bg-purple-600 text-white'
+                : 'bg-gray-100 hover:bg-gray-200'
+            }`}
+          >
+            {option.text}
+          </button>
+        ))}
       </div>
-      <div className="mt-6 flex flex-col items-center justify-center">
-        <div className="flex w-fit flex-col space-y-4">
-          <h2 className="mb-6 text-center text-xl font-semibold">
-            #{currQuesNum + 1} {questions[currQuesNum]?.question}
-          </h2>
-          {questions[currQuesNum]?.options.map((option, index) => (
-            <button
-              key={index}
-              onClick={() => handleAnswer(option.text)}
-              className={`rounded-full px-4 py-3 text-center shadow-md transition-colors ${
-                selectedAnswer === option.text
-                  ? 'bg-[#7047A3] text-white'
-                  : 'border border-[#F47C92] hover:bg-gray-100'
-              }`}
-            >
-              {option.text}
-            </button>
-          ))}
 
-          <div className="mt-10 flex w-full justify-between">
-            <button
-              onClick={handleSkip}
-              className="rounded-full bg-gray-200 px-6 py-2 transition-colors hover:bg-gray-300"
-            >
-              Skip
-            </button>
-            <button
-              disabled={
-                selectedAnswer === null && currQuesNum < questions.length - 1 ? true : false
-              }
-              onClick={handleNext}
-              className="green-btn"
-            >
-              {currQuesNum < questions.length - 1 ? 'Next' : 'Finish'}
-            </button>
-          </div>
-        </div>
+      <div className="mt-8 flex justify-between">
+        <button
+          onClick={handleSkip}
+          className="rounded-full bg-gray-200 px-6 py-2 font-bold transition-colors hover:bg-gray-300"
+        >
+          Skip
+        </button>
+        <button
+          onClick={handleNext}
+          className="rounded-full bg-green-500 font-bold px-6 py-2 text-white transition-colors hover:bg-green-600"
+        >
+          {currQuesNum < questions.length - 1 ? 'Next' : 'Finish'}
+        </button>
       </div>
     </div>
   );
