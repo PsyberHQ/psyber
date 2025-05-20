@@ -5,20 +5,20 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('psyber_token')?.value;
   const path = request.nextUrl.pathname;
   
-  // If accessing /app routes and no API token, check for NextAuth session
-  if (path.startsWith('/app') && !token) {
-    // Let NextAuth handle the authentication at the component level
-    return NextResponse.next();
-  }
-  
-  // If accessing /psyber-auth/onboarding and no token, redirect to login
+  // Add a debug log
+  console.log(`Middleware checking path: ${path}`);
+
+  // Only handle specific paths
   if (path.startsWith('/psyber-auth/onboarding') && !token) {
+    console.log('Middleware: Redirecting from onboarding to login due to missing token');
     return NextResponse.redirect(new URL('/psyber-auth/login', request.url));
   }
   
+  // Let client-side auth handle the rest
   return NextResponse.next();
 }
 
+// Update matcher to be more specific and exclude task paths
 export const config = {
-  matcher: ['/app/:path*', '/psyber-auth/onboarding/:path*'],
+  matcher: ['/psyber-auth/onboarding/:path*'],
 };

@@ -7,6 +7,26 @@ import { UserData } from '@/types/api';
 import apiClient from '@/lib/api/client';
 import { useRouter, usePathname } from 'next/navigation';
 
+// Add this function at the top to handle localStorage safely
+const safeLocalStorage = {
+  getItem: (key: string): string | null => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem(key);
+    }
+    return null;
+  },
+  setItem: (key: string, value: string): void => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(key, value);
+    }
+  },
+  removeItem: (key: string): void => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(key);
+    }
+  }
+};
+
 interface AuthContextType {
   user: UserData | null;
   loading: boolean;
@@ -21,7 +41,6 @@ interface AuthContextType {
   debugState: any;
   onboardingComplete: boolean;
   setOnboardingComplete: (value: boolean) => void;
-  onboardingCompleted?: boolean;
 }
 
 const PsyberAuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,6 +52,7 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [debugState, setDebugState] = useState<any>({});
   const [onboardingComplete, setOnboardingComplete] = useState<boolean>(false);
+  const [redirectInProgress, setRedirectInProgress] = useState<boolean>(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -41,16 +61,23 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
     const token = apiClient.getToken();
     console.log("Initial auth check - Token exists:", !!token);
     
+    // Also check localStorage for authentication state
+    const storedAuthState = safeLocalStorage.getItem('psyber_authenticated') === 'true';
+    const storedOnboardingState = safeLocalStorage.getItem('psyber_onboarding_complete') === 'true';
+    
     if (token) {
+      setIsAuthenticated(true);
+      setOnboardingComplete(storedOnboardingState);
       refreshUser();
     } else {
       setLoading(false);
+      setIsAuthenticated(false);
     }
   }, []);
 
   // Additional effect to handle redirects based on authentication state
   useEffect(() => {
-    if (!loading) {
+    if (!loading && !redirectInProgress) {
       console.log("Auth state updated:", {
         isAuthenticated,
         pathname,
@@ -59,15 +86,23 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
       });
       
       if (isAuthenticated) {
-        // If user is authenticated and tries to access login/signup pages, redirect to app
+        // Only redirect if we're on a login/signup page
         if (pathname === '/psyber-auth/login' || pathname === '/psyber-auth/signup') {
-          if (user && !onboardingComplete && (!user.level || user.level === 0)) {
+          // Prevent redirect loops by setting a flag
+          setRedirectInProgress(true);
+          
+          if (user && !onboardingComplete && (!user.level || user.level === 0) && !user.is_onboarded) {
             console.log("Redirecting to onboarding");
             router.push('/psyber-auth/onboarding');
           } else {
             console.log("Redirecting to app");
             router.push('/app');
           }
+          
+          // Reset the flag after navigation
+          setTimeout(() => {
+            setRedirectInProgress(false);
+          }, 1000);
         }
       }
     }
@@ -82,43 +117,47 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
       setLoading(true);
       console.log("Refreshing user data");
       
+      // Get stored onboarding status
+      const storedOnboardingStatus = safeLocalStorage.getItem('psyber_onboarding_complete') === 'true';
+      
       const userData = await userService.getCurrentUser();
       console.log("User data fetched:", !!userData);
       
       setUser(userData);
       setIsAuthenticated(true);
+      safeLocalStorage.setItem('psyber_authenticated', 'true');
       setError(null);
       
-      // Check if user has completed the quiz
-      // If they have completed onboarding
-      if (userData && 'onboardingCompleted' in userData && userData.onboardingCompleted) {
-        setOnboardingComplete(true);
+      // Use the is_onboarded field directly and also check stored status
+      const isOnboarded = !!userData?.is_onboarded || storedOnboardingStatus;
+      setOnboardingComplete(isOnboarded);
+      
+      if (isOnboarded) {
+        safeLocalStorage.setItem('psyber_onboarding_complete', 'true');
       }
       
-      // Update debug state
-      setDebugState((prev: any) => ({
-        ...prev,
-        lastRefresh: new Date().toISOString(),
-        userLevel: userData?.level,
-        userId: userData?.id,
-        onboardingComplete: !!userData?.onboardingCompleted
-      }));
+      // Debug output to check what values are being used
+      console.log("Onboarding check:", {
+        badge: userData?.badge,
+        init_quiz_result: !!userData?.init_quiz_result,
+        level: userData?.level,
+        is_onboarded: userData?.is_onboarded,
+        stored_status: storedOnboardingStatus,
+        result: isOnboarded
+      });
       
     } catch (err: any) {
       const errorMsg = err.message || 'Failed to refresh user';
       console.error("User refresh error:", errorMsg);
       setError(errorMsg);
-      setUser(null);
-      setIsAuthenticated(false);
-      apiClient.clearToken();
       
-      // Update debug state
-      setDebugState((prev: any) => ({
-        ...prev,
-        lastError: errorMsg,
-        errorTimestamp: new Date().toISOString()
-      }));
-      
+      // Keep authentication if we have a token
+      const hasToken = !!apiClient.getToken();
+      if (!hasToken) {
+        setUser(null);
+        setIsAuthenticated(false);
+        safeLocalStorage.removeItem('psyber_authenticated');
+      }
     } finally {
       setLoading(false);
     }
@@ -235,6 +274,9 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
       await authService.logout();
       setUser(null);
       setIsAuthenticated(false);
+      setOnboardingComplete(false);
+      safeLocalStorage.removeItem('psyber_authenticated');
+      safeLocalStorage.removeItem('psyber_onboarding_complete');
       router.push('/');
       
       console.log("Logout successful");
@@ -247,21 +289,13 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const googleLogin = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      // Redirect to Google login page
-      console.log("Redirecting to Google login");
-      window.location.href = `${apiClient.getBaseUrl()}${authService.getGoogleLoginUrl()}`;
-    } catch (err: any) {
-      const errorMsg = err.message || 'Google login failed. Please try again.';
-      console.error("Google login error:", errorMsg);
-      setError(errorMsg);
-      throw err;
-    } finally {
-      setLoading(false);
+  // Set onboarding complete with localStorage persistence
+  const setOnboardingCompleteWithStorage = (value: boolean) => {
+    setOnboardingComplete(value);
+    if (value) {
+      safeLocalStorage.setItem('psyber_onboarding_complete', 'true');
+    } else {
+      safeLocalStorage.removeItem('psyber_onboarding_complete');
     }
   };
 
@@ -276,11 +310,11 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
         logout,
         refreshUser,
         isAuthenticated,
-        googleLogin,
+        
         clearError,
         debugState,
         onboardingComplete,
-        setOnboardingComplete // Allow components to update this state
+        setOnboardingComplete: setOnboardingCompleteWithStorage
       }}
     >
       {children}

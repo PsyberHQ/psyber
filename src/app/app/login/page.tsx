@@ -1,14 +1,26 @@
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import GoogleSignInBtn from '@/components/App/GoogleSignInBtn';
 import Image from 'next/image';
-import AuthSwitcher from '@/components/App/AuthSwitcher';
+import { usePsyberAuth } from '@/contexts/PsyberAuthContext';
+import { useEffect } from 'react';
+import Link from 'next/link';
 
-const Login = async () => {
-  const session = await getServerSession();
-  if (session) {
-    redirect('/app');
-  }
+const Login = () => {
+  const { isAuthenticated, onboardingComplete } = usePsyberAuth();
+  const router = useRouter();
+  
+  useEffect(() => {
+    if (isAuthenticated) {
+      if (!onboardingComplete) {
+        router.push('/psyber-auth/onboarding');
+      } else {
+        router.push('/app');
+      }
+    }
+  }, [isAuthenticated, onboardingComplete, router]);
+  
   return (
     <div className="flex flex-col md:p-[4vw] p-[3vw] pb-10 items-center justify-center text-center">
       <div className="mb-4">
@@ -23,10 +35,24 @@ const Login = async () => {
       <h1 className="mb-2 text-3xl font-bold text-gray-800">Welcome to Psyber</h1>
       <p className="mb-6 text-gray-600 w-fit m-auto">Your journey to mastering web3 starts here!</p>
 
-      <AuthSwitcher />
+      <div className="mb-6 rounded-md bg-blue-50 p-3 text-sm text-blue-700">
+        <p className="mb-2">
+          Use our Psyber authentication system:
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <Link href="/psyber-auth/login">
+            <button className="rounded-md bg-blue-600 px-3 py-1 text-white hover:bg-blue-700">
+              Login
+            </button>
+          </Link>
+          <Link href="/psyber-auth/signup">
+            <button className="rounded-md border border-blue-600 px-3 py-1 text-blue-600 hover:bg-blue-50">
+              Sign up
+            </button>
+          </Link>
+        </div>
+      </div>
       
-      <GoogleSignInBtn />
-
       <p className="mt-6 text-sm text-gray-500">
         By signing up, you agree to our{' '}
         <a href="/terms" className="text-purple-600 underline">

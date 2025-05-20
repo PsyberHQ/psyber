@@ -41,42 +41,22 @@ export default function PsyberQuizPage() {
   useEffect(() => {
     const handleFinish = async () => {
       try {
-        if (answers.length === 0 && questions.length > 0) { // only error if there were questions to answer
-          setError('Please answer at least one question before submitting.');
-          setPostAns(false); // Reset flag
-          return;
-        }
-        if (answers.length === 0 && questions.length === 0) {
-            // No questions, nothing to submit, perhaps redirect or show a message
-            console.log("No questions loaded, skipping submission.");
-            setPostAns(false);
-            // Optionally redirect or show a specific message
-            // router.push('/app'); 
-            return;
-        }
-
-
         setSubmitLoading(true);
-        console.log("[PsyberQuizPage/handleFinish] Submitting answers state:", JSON.parse(JSON.stringify(answers)));
-
-        const result = await quizService.submitInitQuiz(answers);
-        setSubmitted(result);
+        console.log("[apiClient.post] Final data.answers for init-quiz after checks/fixes:", answers);
         
-        // Mark onboarding as complete
+        const response = await quizService.submitInitQuiz(answers);
+        setSubmitted(response);
+        
+        // Set onboarding complete in context
         setOnboardingComplete(true);
         
-      } catch (err: any) {
-        console.error("[PsyberQuizPage/handleFinish] Quiz submission error:", err);
-        const errorMessage = err.message || 'Failed to submit quiz. Please try again.';
-        
-        if (err.status === 400 && err.data?.detail === "User has already completed the quiz") {
-          console.log("User already completed quiz, redirecting to app");
-          setOnboardingComplete(true); // Set this flag even if they've already completed it
+        // Add a small delay before redirecting to ensure the backend has time to process
+        setTimeout(() => {
           router.push('/app');
-          return;
-        }
-        
-        setError(errorMessage);
+        }, 1500);
+      } catch (error) {
+        console.error("Error submitting quiz:", error);
+        setError('Failed to submit quiz. Please try again.');
       } finally {
         setSubmitLoading(false);
       }

@@ -1,35 +1,38 @@
 import SignOutBtn from '@/components/App/SignOutBtn';
 import Providers from '@/lib/Providers';
-import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import PsyberAppWrapper from '@/components/App/PsyberAppWrapper';
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession();
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <Providers>
-      <div className="max-w-screen py-4 ">
-        <div className="mx-auto flex h-full min-w-[300px] min-h-[80vh]">
-          <div className="flex flex-col justify-between w-full">
-            <nav className="sticky top-0 p-1  w-full">
-              <div className="flex items-center justify-between">
-                <div className="flex">
-                  <Image src="/mediBrain.png" alt="Meditating Brain" height={50} width={50} />
-                  <span className="my-auto text-gray-600 font-bold">Psyber</span>
-                </div>
+    <main>
+      <Providers>
+        <PsyberAppWrapper>
+          <div className="flex min-h-screen flex-col">
+            <header className="flex items-center justify-between bg-white p-4 shadow-md">
+              <div className="flex items-center space-x-4">
+                <Image
+                  src="/mediBrain.png"
+                  width={40}
+                  height={40}
+                  alt="Psyber Logo"
+                />
+                <h1 className="text-2xl font-bold">PSYBER</h1>
+              </div>
+              <div className="flex items-center space-x-4">
+                <Link href="/app">Dashboard</Link>
+                <Link href="/app/tasks">Tasks</Link>
+                <Link href="/app/learn">Learn</Link>
                 <SignOutBtn />
               </div>
-            </nav>
-            
-            {/* Now PsyberAppWrapper will have access to the PsyberAuthProvider */}
-            <PsyberAppWrapper>
+            </header>
+            <div className="flex flex-1 flex-col p-4">
               {children}
-            </PsyberAppWrapper>
+            </div>
           </div>
-        </div>
-      </div>
-    </Providers>
+        </PsyberAppWrapper>
+      </Providers>
+    </main>
   );
 }
