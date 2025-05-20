@@ -13,7 +13,7 @@ const Section1 = () => {
 
       <div className="h-fit w-full items-center gap-2 md:grid md:grid-cols-2">
         <div className="mb-4">
-          <h1 className="mb-[18px] font-gloock text-3xl font-[600] text-brand-darkbrown sm:leading-[36px] md:text-4xl md:leading-[48px] lg:text-[48px] lg:leading-[57px]">
+          <h1 className="font-gliker mb-[18px] text-3xl text-brand-darkbrown sm:leading-[36px] md:text-4xl md:leading-[48px] lg:text-[48px] lg:leading-[57px]">
             Feeling Lost in the Web3 Buzz? Don&rsquo;t Worry, We&rsquo;ve Got You
           </h1>
 

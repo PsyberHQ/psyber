@@ -15,7 +15,7 @@ const Section3 = () => {
       </div>
 
       <div className="mt-[-20px] pb-6 text-left sm:mt-0 md:order-2 md:pb-10">
-        <h1 className="font-gloock text-2xl font-[600] leading-[31px] text-brand-darkbrown md:text-[40px] md:leading-[44px]">
+        <h1 className="font-gliker text-2xl leading-[31px] text-brand-darkbrown md:text-[40px] md:leading-[44px]">
           Breathe Easy {'–'} Psyber Makes Web3 Learning Simple
         </h1>
         <br />

@@ -5,7 +5,7 @@ const Section8 = () => {
   return (
     <section className="py h-fit items-center gap-4 px-[3vw] md:grid md:grid-cols-10 md:px-[4vw] md:pt-[40px]">
       <div className="col-span-6 max-w-[692px]">
-        <h1 className="text-center font-gloock text-2xl font-[600] leading-[31px] text-brand-darkbrown sm:text-left md:text-[40px] md:leading-[44px]">
+        <h1 className="font-gliker text-center text-2xl leading-[31px] text-brand-darkbrown sm:text-left md:text-[40px] md:leading-[44px]">
           What&rsquo;s Next on Your Psyber Journey?
         </h1>
         <br />

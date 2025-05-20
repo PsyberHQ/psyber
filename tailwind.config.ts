@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         urbanist: ['var(--font-urbanist)', 'sans-serif'],
-        gloock: ['var(--font-gloock)', 'serif'],
+        gliker: ['var(--font-gliker)', 'serif'],
       },
       boxShadow: {
         'custom-light': '4px 4px 10px rgba(0, 0, 0, 0.3)',
@@ -24,6 +24,10 @@ const config: Config = {
           'button-color': '#4E4B49',
           'button-purple': '#BA68C8',
         },
+      },
+      screens: {
+        xs: '325px',
+        '2xl': '1536px',
       },
     },
   },

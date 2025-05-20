@@ -37,7 +37,7 @@ export default function AppPage() {
   if (loading || pageLoading) {
     return <LoaderComp text="Loading dashboard..." />;
   }
-
+  const userLevel = user.level;
   return (
     <div className="p-4">
       <div className="mb-6">

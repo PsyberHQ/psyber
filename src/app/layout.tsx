@@ -1,4 +1,4 @@
-import { Urbanist, Gloock } from 'next/font/google';
+import { Urbanist } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { PsyberAuthProvider } from '@/contexts/PsyberAuthContext';
@@ -7,13 +7,7 @@ import ApiDebugPanel from '@/components/Debug/ApiDebugPanel';
 const urbanist = Urbanist({
   subsets: ['latin'],
   variable: '--font-urbanist',
-  weight: ['100', '400', '600'],
-});
-
-const gloock = Gloock({
-  subsets: ['latin'],
-  variable: '--font-gloock',
-  weight: '400',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
 });
 
 export const metadata = {
