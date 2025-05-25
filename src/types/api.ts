@@ -42,6 +42,7 @@ export interface UserData {
   level: number;
   xp: number;
   wallet?: WalletData;
+  is_onboarded: boolean;
 }
 
 // Quiz types
