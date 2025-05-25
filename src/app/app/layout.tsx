@@ -6,7 +6,7 @@ import Providers from '@/lib/Providers';
 import Image from 'next/image';
 import Link from 'next/link';
 import PsyberAppWrapper from '@/components/App/PsyberAppWrapper';
-import SignOutBtn from '@/components/SignOutBtn';
+import SignOutBtn from '@/components/App/SignOutBtn';
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
