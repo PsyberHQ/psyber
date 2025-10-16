@@ -24,6 +24,13 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        {/* Boxicons CDN */}
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+        />
+      </head>
       <body className={`${urbanist.variable} ${gliker.variable} antialiased`}>
         <PsyberAuthProvider>
           {children}
