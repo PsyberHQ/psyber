@@ -37,6 +37,11 @@
 }
 .button {
   @apply h-[40px] w-[150px] rounded-[32px] bg-gradient-to-br from-[#efbff6] to-[#731981] px-[12px] text-[14px] font-semibold text-white shadow-custom-light sm:text-[16px] md:h-[50px] md:w-[212px] md:rounded-[42px] md:px-4 md:text-[20px];
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
 }
 
 /* CSS class to hide scrollbar */
@@ -67,4 +72,32 @@ button.wallet-adapter-button-trigger:hover {
   background-color: #7043a7 !important;
   filter: brightness(1.1);
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom animations for landing page */
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
