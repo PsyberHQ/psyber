@@ -27,7 +27,7 @@ export default function Home() {
   // Show loader while auth context is loading
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-purple-900">
+      <div className="flex items-center justify-center min-h-screen" style={{ backgroundColor: '#2C083F' }}>
         <div className="text-white text-center">
           <div className="animate-pulse mb-4">
             <div className="w-16 h-16 bg-purple-600 rounded-full mx-auto"></div>
@@ -39,7 +39,7 @@ export default function Home() {
   }
 
   return (
-    <div className="bg-gradient-to-b from-purple-900 via-purple-800 to-black min-h-screen">
+    <div className="min-h-screen" style={{ backgroundColor: '#2C083F' }}>
       <Header />
       <HeroSection />
       <WhatIsPsyber />
