@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const CTASection = () => {
   return (
-    <section className="relative px-[3vw] py-16 md:px-[4vw] md:py-24 bg-gradient-to-b from-purple-900 via-purple-800 to-purple-900 overflow-hidden">
+    <section className="relative px-[3vw] py-16 md:px-[4vw] md:py-24 overflow-hidden" style={{ backgroundColor: '#2C083F' }}>
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
@@ -25,22 +25,19 @@ const CTASection = () => {
         </div>
 
         <h2 className="font-gliker text-3xl md:text-5xl font-bold text-white mb-6">
-          Join the Psyber Movement
+          Stay ahead of the game with Psyber!
         </h2>
 
         <p className="font-urbanist text-lg text-gray-200 mb-10 leading-relaxed">
-          Your journey to emotional balance and productivity begins now. Sign up today and be part of the first digital wellness community built for the web3 era.
+          Whether you're just starting or looking to advance your skills, Psyber is your go-to platform.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <Link href="/psyber-auth/signup">
             <button className="button h-[50px] px-10 rounded-[42px] bg-gradient-to-br from-[#efbff6] to-[#731981] text-white font-semibold hover:from-[#e0a5e5] hover:to-[#621570] transition-all duration-300 shadow-lg hover:shadow-xl text-lg">
-              Get Started Free
+              Get Started
             </button>
           </Link>
-          <button className="h-[50px] px-10 rounded-[42px] border-2 border-white text-white font-semibold hover:bg-white hover:text-purple-900 transition-all duration-300 text-lg">
-            Join Beta Waitlist
-          </button>
         </div>
 
         <p className="text-gray-400 font-urbanist text-sm">
