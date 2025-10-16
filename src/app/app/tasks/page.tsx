@@ -7,12 +7,13 @@ import TaskParent from '@/components/App/TaskParent';
 import LoaderComp from '@/components/LoaderComp';
 import apiClient from '@/lib/api/client';
 import { Endpoints } from '@/lib/api/config';
+import { FulltasksType } from '@/Types/Task';
 
 export default function TasksPage() {
   const { user, loading, isAuthenticated, onboardingComplete } = usePsyberAuth();
   const [pageLoading, setPageLoading] = useState(true);
-  const [tasks, setTasks] = useState([]);
-  const [error, setError] = useState(null);
+  const [tasks, setTasks] = useState<FulltasksType[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -44,7 +45,7 @@ export default function TasksPage() {
       }
     } catch (err) {
       console.error("Failed to fetch tasks:", err);
-      setError(err.message || "Failed to load tasks");
+      setError(err instanceof Error ? err.message : "Failed to load tasks");
     } finally {
       setPageLoading(false);
     }

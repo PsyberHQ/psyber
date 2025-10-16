@@ -27,8 +27,8 @@ const Quiz = () => {
   } | null>(null);
   const [postAns, setPostAns] = useState(false);
 
-  const handleAnswer = (text: string) => {
-    setSelectedAnswer(text);
+  const handleAnswer = (text: string | number) => {
+    setSelectedAnswer(text.toString());
   };
 
   const handleNext = () => {
@@ -133,7 +133,7 @@ const Quiz = () => {
             key={index}
             onClick={() => handleAnswer(option.points)}
             className={`w-full rounded-full px-4 py-3 text-center transition-colors ${
-              selectedAnswer === option.points
+              selectedAnswer === option.points.toString()
                 ? 'bg-purple-600 text-white'
                 : 'bg-gray-100 hover:bg-gray-200'
             }`}

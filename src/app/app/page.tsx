@@ -37,6 +37,11 @@ export default function AppPage() {
   if (loading || pageLoading) {
     return <LoaderComp text="Loading dashboard..." />;
   }
+
+  if (!user) {
+    return <LoaderComp text="Loading user data..." />;
+  }
+
   const userLevel = user.level;
   return (
     <div className="p-4">

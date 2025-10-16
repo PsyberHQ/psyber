@@ -4,6 +4,8 @@ import { UserModel } from '@/model/User';
 import { getServerSession } from 'next-auth';
 import { WalletModel } from '@/model/Wallet';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   const userSession = await getServerSession();
   const userEmail = userSession?.user?.email;

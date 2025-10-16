@@ -43,6 +43,8 @@ export interface UserData {
   xp: number;
   wallet?: WalletData;
   is_onboarded: boolean;
+  badge?: string;
+  init_quiz_result?: any;
 }
 
 // Quiz types

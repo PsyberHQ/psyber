@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import { InitQuizQuestionsModel, InitQuizResultsModel } from '@/model/InitQuiz';
 import { UserModel } from '@/model/User';
+
+export const dynamic = 'force-dynamic';
 type Option = {
   text: string;
   points: number;

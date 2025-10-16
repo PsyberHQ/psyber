@@ -289,6 +289,27 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const googleLogin = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      console.log("Attempting Google login");
+      
+      const googleUrl = authService.getGoogleLoginUrl();
+      console.log("Redirecting to Google login:", googleUrl);
+      
+      // Redirect to Google OAuth
+      window.location.href = googleUrl;
+    } catch (err: any) {
+      const errorMsg = err.message || 'Google login failed. Please try again.';
+      console.error("Google login error:", errorMsg);
+      setError(errorMsg);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Set onboarding complete with localStorage persistence
   const setOnboardingCompleteWithStorage = (value: boolean) => {
     setOnboardingComplete(value);
@@ -310,7 +331,7 @@ export function PsyberAuthProvider({ children }: { children: ReactNode }) {
         logout,
         refreshUser,
         isAuthenticated,
-        
+        googleLogin,
         clearError,
         debugState,
         onboardingComplete,

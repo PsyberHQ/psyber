@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { authService } from '@/lib/api/services/authService';
 import { userService } from '@/lib/api/services/userService';
@@ -8,7 +8,7 @@ import { usePsyberAuth } from '@/contexts/PsyberAuthContext';
 import Image from 'next/image';
 import LoaderComp from '@/components/LoaderComp';
 
-export default function GoogleCallbackPage() {
+function GoogleCallbackContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -79,4 +79,12 @@ export default function GoogleCallbackPage() {
   }
   
   return <LoaderComp text="Redirecting..." />;
+}
+
+export default function GoogleCallbackPage() {
+  return (
+    <Suspense fallback={<LoaderComp text="Loading..." />}>
+      <GoogleCallbackContent />
+    </Suspense>
+  );
 }
